@@ -37,7 +37,7 @@ jobs:
 
       - if: runner.os == 'Windows'
         run: |
-            echo 'PATH=/c/Python38:/c/Python38/Scripts:/c/Strawberry/perl/site/bin:/c/Strawberry/perl/bin:/c/Strawberry/c/bin:$PATH' >> $GITHUB_ENV
+            echo 'PATH=/c/Python39:/c/Python39/Scripts:/c/Strawberry/perl/site/bin:/c/Strawberry/perl/bin:/c/Strawberry/c/bin:$PATH' >> $GITHUB_ENV
             echo 'RUSTFLAGS=-Ctarget-feature=+crt-static' >> $GITHUB_ENV
             echo 'RUSTFLAGS=-Ctarget-feature=+crt-static' >> $GITHUB_ENV
             echo 'CIBW_BEFORE_BUILD=python -m pip install --upgrade pip' >> $GITHUB_ENV
