@@ -39,7 +39,7 @@ dependencies = [
 
 [[package]]
 name = "fastcrc"
-version = "0.1.0-alpha0"
+version = "0.1.0"
 dependencies = [
  "crc",
  "pyo3",

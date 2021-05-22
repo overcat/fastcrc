@@ -1,6 +1,6 @@
 [package]
 name = "fastcrc"
-version = "0.1.0-alpha0"
+version = "0.1.0"
 authors = ["overcat <4catcode@gmail.com>"]
 edition = "2018"
 description = "A hyper-fast Python module for computing CRC checksum"
