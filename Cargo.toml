@@ -1,0 +1,22 @@
+[package]
+name = "fastcrc"
+version = "0.1.0-alpha0"
+authors = ["overcat <4catcode@gmail.com>"]
+edition = "2018"
+description = "A hyper-fast Python module for computing CRC checksum"
+license = "MIT License"
+repository = "https://github.com/overcat/fastcrc"
+homepage = "https://github.com/overcat/fastcrc"
+readme = "README.md"
+keywords = ["crc", "crc16", "crc32", "crc64"]
+
+[lib]
+name = "fastcrc"
+crate-type = ["cdylib"]
+
+[dependencies]
+crc = "2.0.0-rc.1"
+
+[dependencies.pyo3]
+version = "0.13.2"
+features = ["extension-module"]
