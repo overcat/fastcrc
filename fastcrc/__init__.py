@@ -1,3 +1,11 @@
-from . import crc16
-from . import crc32
-from . import crc64
+from . import crc16, crc32, crc64
+from .__info__ import (
+    __author__,
+    __author_email__,
+    __description__,
+    __issues__,
+    __license__,
+    __title__,
+    __url__,
+    __version__,
+)

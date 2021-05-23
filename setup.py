@@ -7,11 +7,11 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 about = {}
 with open(
-    os.path.join(here, "fastcrc", "__version__.py"), mode="r", encoding="utf-8"
+    os.path.join(here, "fastcrc", "__info__.py"), mode="r", encoding="utf-8"
 ) as f:
     exec(f.read(), about)
 
-with open("README.md", mode="r", encoding="utf-8") as f:
+with open("README.rst", mode="r", encoding="utf-8") as f:
     readme = f.read()
 
 setup(
@@ -19,7 +19,6 @@ setup(
     version=about["__version__"],
     description=about["__description__"],
     long_description=readme,
-    long_description_content_type="text/markdown",
     author=about["__author__"],
     author_email=about["__author_email__"],
     url=about["__url__"],
@@ -39,7 +38,6 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
         "License :: OSI Approved :: MIT License",
         "Operating System :: MacOS",
         "Operating System :: Microsoft :: Windows",
