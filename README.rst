@@ -36,6 +36,10 @@ Usage
    print(f"crc32 checksum with aixm algorithm: {crc32.aixm(data)}")
    print(f"crc64 checksum with ecma_182 algorithm: {crc64.ecma_182(data)}")
 
+Documentation
+=============
+fastcrc's documentation can be found at https://fastcrc.readthedocs.io
+
 License
 =======
 
