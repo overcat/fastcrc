@@ -4,7 +4,7 @@ fastcrc
 
 .. image:: https://img.shields.io/readthedocs/fastcrc.svg?style=flat&maxAge=1800
     :alt: Read the Docs
-    :target: https://fastcrc.readthedocs.io/en/latest/
+    :target: https://fastcrc.readthedocs.io/
 
 .. image:: https://img.shields.io/pypi/v/fastcrc.svg?style=flat&maxAge=1800
     :alt: PyPI
