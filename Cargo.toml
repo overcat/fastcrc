@@ -1,13 +1,13 @@
 [package]
 name = "fastcrc"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["overcat <4catcode@gmail.com>"]
 edition = "2018"
 description = "A hyper-fast Python module for computing CRC(16, 32, 64) checksum"
 license = "MIT License"
 repository = "https://github.com/overcat/fastcrc"
 homepage = "https://github.com/overcat/fastcrc"
-readme = "README.md"
+readme = "README.rst"
 keywords = ["crc", "crc16", "crc32", "crc64"]
 
 [lib]
