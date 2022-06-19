@@ -1,14 +1,14 @@
 name: Build
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        python-version: [ "3.6", "3.7", "3.8", "3.9", "3.10" ]
 
     steps:
       - uses: actions/checkout@v2
@@ -41,105 +41,58 @@ jobs:
           cd tests
           python test_fastcrc.py
 
-  build_wheels:
+  build_package:
     name: Build wheels on ${{ matrix.os }}
-    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-    needs: [test]
+    needs: [ test ]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
-    env:
-      CIBW_BUILD_VERBOSITY: 1
-      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && yum install -y openssl-devel"
-      CIBW_BEFORE_BUILD_LINUX: "pip3 install --upgrade keyrings.alt"
-      CIBW_ARCHS_LINUX: "auto aarch64"
-      CIBW_ARCHS_MACOS: "x86_64 universal2" # Apple Silicon not works
-      CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
-      CIBW_SKIP: "cp27-* cp34-* cp35-* pp* *-win32"
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - uses: actions-rs/toolchain@v1
+      - if: runner.os == 'macOS'
+        name: Build on macOS
+        uses: messense/maturin-action@v1
         with:
-          toolchain: stable
-          override: true
-
-      - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
+          command: build
+          args: --release --no-sdist -o dist
 
       - if: runner.os == 'Windows'
-        run: |
-          echo 'PATH=/c/Python39:/c/Python39/Scripts:/c/Strawberry/perl/site/bin:/c/Strawberry/perl/bin:/c/Strawberry/c/bin:$PATH' >> $GITHUB_ENV
-          echo 'RUSTFLAGS=-Ctarget-feature=+crt-static' >> $GITHUB_ENV
-          echo 'RUSTFLAGS=-Ctarget-feature=+crt-static' >> $GITHUB_ENV
-          echo 'CIBW_BEFORE_BUILD=python -m pip install --upgrade pip' >> $GITHUB_ENV
-
-      - if: runner.os != 'Linux'
-        name: Setup env when not using docker
-        run: |
-          python -m pip install --upgrade wheel setuptools setuptools-rust
+        name: Build on Windows
+        uses: messense/maturin-action@v1
+        with:
+          command: build
+          args: --release --no-sdist -o dist
 
       - if: runner.os == 'Linux'
-        name: Set up QEMU
-        id: qemu
-        uses: docker/setup-qemu-action@v1
+        name: Build on Linux
+        uses: messense/maturin-action@v1
         with:
-          image: tonistiigi/binfmt:latest
-          platforms: arm64
+          manylinux: auto
+          command: build
+          args: --release -o dist
 
-      - uses: actions/setup-python@v2
-        name: Install Python
+      - name: Upload wheels
+        uses: actions/upload-artifact@v2
         with:
-          python-version: "3.9"
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.7.0
-
-      - uses: actions/upload-artifact@v2
-        with:
-          path: ./wheelhouse/*.whl
-
-  build_sdist:
-    name: Build source distribution
-    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        name: Install Python
-        with:
-          python-version: "3.9"
-
-      - name: Install setuptools and setuptools-rust
-        run: |
-          python -m pip install --upgrade wheel setuptools setuptools-rust
-
-      - name: Build sdist
-        run: python setup.py sdist
-
-      - uses: actions/upload-artifact@v2
-        with:
-          path: dist/*.tar.gz
+          name: wheels
+          path: dist
 
   upload_pypi:
-    needs: [build_wheels, build_sdist]
+    needs: [ build_package ]
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: artifact
-          path: dist
-
-      - uses: pypa/gh-action-pypi-publish@master
+          name: wheels
+      - name: Publish to PyPI
+        uses: messense/maturin-action@v1
+        env:
+          MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
-          skip_existing: true
+          command: upload
+          args: --skip-existing *
