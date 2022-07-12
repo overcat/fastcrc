@@ -55,25 +55,25 @@ jobs:
 
       - if: runner.os == 'macOS'
         name: Build on macOS
-        uses: messense/maturin-action@v1
+        uses: messense/maturin-action@v1.28.2
         with:
           command: build
-          args: --release --no-sdist -o dist
+          args: --release -o dist
 
       - if: runner.os == 'Windows'
         name: Build on Windows
-        uses: messense/maturin-action@v1
+        uses: messense/maturin-action@v1.28.2
         with:
           command: build
-          args: --release --no-sdist -o dist
+          args: --release -o dist
 
       - if: runner.os == 'Linux'
         name: Build on Linux
-        uses: messense/maturin-action@v1
+        uses: messense/maturin-action@v1.28.2
         with:
           manylinux: auto
           command: build
-          args: --release -o dist
+          args: --release --sdist -o dist
 
       - name: Upload wheels
         uses: actions/upload-artifact@v2
@@ -90,7 +90,7 @@ jobs:
         with:
           name: wheels
       - name: Publish to PyPI
-        uses: messense/maturin-action@v1
+        uses: messense/maturin-action@v1.28.2
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         with:
