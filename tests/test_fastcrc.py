@@ -283,17 +283,17 @@ class TestCrc32(unittest.TestCase):
     def test_xfer_init(self):
         self.assertEqual(3171672888, crc32.xfer(data_part2, crc32.xfer(data_part1)))
 
-    def test_reversed_reciprocal_refin(self):
+    def test_k_reversed_reciprocal_refin(self):
         self.assertEqual(
             1239285113,
-            crc32.reversed_reciprocal_refin(data),
+            crc32.k_reversed_reciprocal_refin(data),
         )
 
-    def test_reversed_reciprocal_refin_init(self):
+    def test_k_reversed_reciprocal_refin_init(self):
         self.assertEqual(
             1239285113,
-            crc32.reversed_reciprocal_refin(
-                data_part2, crc32.reversed_reciprocal_refin(data_part1)
+            crc32.k_reversed_reciprocal_refin(
+                data_part2, crc32.k_reversed_reciprocal_refin(data_part1)
             ),
         )
 

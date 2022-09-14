@@ -15,7 +15,7 @@ from .fastcrc import crc_32_jamcrc as _crc_32_jamcrc
 from .fastcrc import crc_32_mpeg_2 as _crc_32_mpeg_2
 from .fastcrc import crc_32_xfer as _crc_32_xfer
 from .fastcrc import (
-    crc_32_reversed_reciprocal_refin as _crc_32_reversed_reciprocal_refin,
+    crc_32_k_reversed_reciprocal_refin as _crc_32_k_reversed_reciprocal_refin,
 )
 from .utils import _ensure_bytes
 
@@ -191,7 +191,7 @@ def xfer(data: bytes, initial: Optional[int] = None) -> int:
     return _crc_32_xfer(data, initial)
 
 
-def reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> int:
+def k_reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the reversed reciprocal refin algorithm.
 
@@ -204,4 +204,4 @@ def reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> int
     :raises TypeError: if the data is not a bytes-like object
     """
     _ensure_bytes(data)
-    return _crc_32_reversed_reciprocal_refin(data, initial)
+    return _crc_32_k_reversed_reciprocal_refin(data, initial)
