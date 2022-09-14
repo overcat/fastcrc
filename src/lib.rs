@@ -24,7 +24,7 @@ macro_rules! define_crc_fn {
                     None => CRC.digest(),
                     Some(mut value) => {
                         value ^= $crc_type.xorout;
-                        if $crc_type.refin {
+                        if $crc_type.refin && $crc_type.refout {
                             value = value.reverse_bits()
                         }
                         CRC.digest_with_initial(value)
