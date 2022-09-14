@@ -6,7 +6,7 @@ use crc::{
     CRC_16_RIELLO, CRC_16_SPI_FUJITSU, CRC_16_T10_DIF, CRC_16_TELEDISK, CRC_16_TMS37157,
     CRC_16_UMTS, CRC_16_USB, CRC_16_XMODEM, CRC_32_AIXM, CRC_32_AUTOSAR, CRC_32_BASE91_D,
     CRC_32_BZIP2, CRC_32_CD_ROM_EDC, CRC_32_CKSUM, CRC_32_ISCSI, CRC_32_ISO_HDLC, CRC_32_JAMCRC,
-    CRC_32_MPEG_2, CRC_32_XFER, CRC_64_ECMA_182, CRC_64_GO_ISO, CRC_64_WE, CRC_64_XZ,
+    CRC_32_MPEG_2, CRC_32_XFER, CRC_64_ECMA_182, CRC_64_GO_ISO, CRC_64_WE, CRC_64_XZ, Algorithm
 };
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
@@ -37,13 +37,15 @@ macro_rules! define_crc_fn {
     };
 }
 
-const CRC_16_IBM_REFIN: Algorithm<u16> = Algorithm {
+const CRC_16_IBM_REFIN: Algorithm<u16> = Algorithm  {
     width: 16,
     poly: 0x8005,
     init: 0xf0f0,
     refin: true,
     refout: false,
     xorout: 0x0000,
+    check: 0x3cd0,
+    residue: 0x0000
 };
 
 const CRC_32_REVERSED_RECIPROCAL_REFIN: Algorithm<u32> = Algorithm {
@@ -52,7 +54,9 @@ const CRC_32_REVERSED_RECIPROCAL_REFIN: Algorithm<u32> = Algorithm {
     init: 0xf0f0f0f0,
     refin: true,
     refout: false,
-    xorout: 0x0000,
+    xorout: 0x00000000,
+    check: 0x49ddfd79, 
+    residue: 0x00000000
 };
 
 define_crc_fn!(crc_16_arc, u16, CRC_16_ARC);
