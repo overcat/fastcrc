@@ -34,7 +34,7 @@ setup(
         "Code": "https://github.com/overcat/fastcrc",
         "Issue tracker": "https://github.com/overcat/fastcrc/issues",
     },
-    python_requires=">=3.6.0",
+    python_requires=">=3.7.0",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -43,7 +43,6 @@ setup(
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
