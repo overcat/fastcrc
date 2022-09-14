@@ -54,6 +54,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Python ${{ matrix.python-version }} on ${{ matrix.os }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+          
       - if: runner.os == 'macOS'
         name: Build on macOS
         uses: messense/maturin-action@v1
