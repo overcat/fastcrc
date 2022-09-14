@@ -58,7 +58,7 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-          
+
       - if: runner.os == 'macOS'
         name: Build on macOS
         uses: messense/maturin-action@v1
@@ -77,7 +77,7 @@ jobs:
 
       - if: runner.os == 'Linux'
         name: Build on Linux
-        uses: messense/maturin-action@v1.28.2
+        uses: messense/maturin-action@v1
         with:
           maturin-version: latest
           manylinux: auto
@@ -99,7 +99,7 @@ jobs:
         with:
           name: wheels
       - name: Publish to PyPI
-        uses: messense/maturin-action@v1.28.2
+        uses: messense/maturin-action@v1
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         with:
