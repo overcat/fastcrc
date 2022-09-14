@@ -34,8 +34,26 @@ macro_rules! define_crc_fn {
                 Ok(digest.finalize())
             }
         }
-    }
+    };
 }
+
+const CRC_16_IBM_REFIN: Algorithm<u16> = Algorithm {
+    width: 16,
+    poly: 0x8005,
+    init: 0xf0f0,
+    refin: true,
+    refout: false,
+    xorout: 0x0000,
+};
+
+const CRC_32_REVERSED_RECIPROCAL_REFIN: Algorithm<u32> = Algorithm {
+    width: 32,
+    poly: 0xba0dc66b,
+    init: 0xf0f0f0f0,
+    refin: true,
+    refout: false,
+    xorout: 0x0000,
+};
 
 define_crc_fn!(crc_16_arc, u16, CRC_16_ARC);
 define_crc_fn!(crc_16_cdma2000, u16, CRC_16_CDMA2000);
@@ -67,6 +85,7 @@ define_crc_fn!(crc_16_tms37157, u16, CRC_16_TMS37157);
 define_crc_fn!(crc_16_umts, u16, CRC_16_UMTS);
 define_crc_fn!(crc_16_usb, u16, CRC_16_USB);
 define_crc_fn!(crc_16_xmodem, u16, CRC_16_XMODEM);
+define_crc_fn!(crc_16_ibm_refin, u16, CRC_16_IBM_REFIN);
 define_crc_fn!(crc_32_aixm, u32, CRC_32_AIXM);
 define_crc_fn!(crc_32_autosar, u32, CRC_32_AUTOSAR);
 define_crc_fn!(crc_32_base91_d, u32, CRC_32_BASE91_D);
@@ -78,6 +97,11 @@ define_crc_fn!(crc_32_iso_hdlc, u32, CRC_32_ISO_HDLC);
 define_crc_fn!(crc_32_jamcrc, u32, CRC_32_JAMCRC);
 define_crc_fn!(crc_32_mpeg_2, u32, CRC_32_MPEG_2);
 define_crc_fn!(crc_32_xfer, u32, CRC_32_XFER);
+define_crc_fn!(
+    crc_32_reversed_reciprocal_refin,
+    u32,
+    CRC_32_REVERSED_RECIPROCAL_REFIN
+);
 define_crc_fn!(crc_64_ecma_182, u64, CRC_64_ECMA_182);
 define_crc_fn!(crc_64_go_iso, u64, CRC_64_GO_ISO);
 define_crc_fn!(crc_64_we, u64, CRC_64_WE);
@@ -115,6 +139,7 @@ fn fastcrc(_: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(crc_16_umts, m)?)?;
     m.add_function(wrap_pyfunction!(crc_16_usb, m)?)?;
     m.add_function(wrap_pyfunction!(crc_16_xmodem, m)?)?;
+    m.add_function(wrap_pyfunction!(crc_16_ibm_refin, m)?)?;
     m.add_function(wrap_pyfunction!(crc_32_aixm, m)?)?;
     m.add_function(wrap_pyfunction!(crc_32_autosar, m)?)?;
     m.add_function(wrap_pyfunction!(crc_32_base91_d, m)?)?;
@@ -126,6 +151,7 @@ fn fastcrc(_: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(crc_32_jamcrc, m)?)?;
     m.add_function(wrap_pyfunction!(crc_32_mpeg_2, m)?)?;
     m.add_function(wrap_pyfunction!(crc_32_xfer, m)?)?;
+    m.add_function(wrap_pyfunction!(crc_32_reversed_reciprocal_refin, m)?)?;
     m.add_function(wrap_pyfunction!(crc_64_ecma_182, m)?)?;
     m.add_function(wrap_pyfunction!(crc_64_go_iso, m)?)?;
     m.add_function(wrap_pyfunction!(crc_64_we, m)?)?;

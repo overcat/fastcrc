@@ -33,6 +33,7 @@ from .fastcrc import crc_16_tms37157 as _crc_16_tms37157
 from .fastcrc import crc_16_umts as _crc_16_umts
 from .fastcrc import crc_16_usb as _crc_16_usb
 from .fastcrc import crc_16_xmodem as _crc_16_xmodem
+from .fastcrc import crc_16_ibm_refin as _crc_16_ibm_refin
 from .utils import _ensure_bytes
 
 __always_supported = (
@@ -490,3 +491,19 @@ def xmodem(data: bytes, initial: Optional[int] = None) -> int:
     """
     _ensure_bytes(data)
     return _crc_16_xmodem(data, initial)
+
+
+def ibm_refin(data: bytes, initial: Optional[int] = None) -> int:
+    """
+    Compute a CRC-16 checksum of data with the ibm refin algorithm.
+
+    **This method may be removed in the future.**
+
+    :param bytes data: The data to be computed
+    :param Optional[int] initial: The optional starting value of the checksum
+    :return: The checksum
+    :rtype: int
+    :raises TypeError: if the data is not a bytes-like object
+    """
+    _ensure_bytes(data)
+    return _crc_16_ibm_refin(data, initial)
