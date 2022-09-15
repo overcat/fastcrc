@@ -23,6 +23,7 @@ macro_rules! define_crc_fn {
                 let mut digest = match initial {
                     None => CRC.digest(),
                     Some(mut value) => {
+                        // TODO: This might be a bug in crc-rs, let's fix it later.
                         value ^= $crc_type.xorout;
                         if $crc_type.refout {
                             value = value.reverse_bits()
