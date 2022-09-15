@@ -193,7 +193,7 @@ def xfer(data: bytes, initial: Optional[int] = None) -> int:
 
 def k_reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the reversed reciprocal refin algorithm.
+    Compute a CRC-32 checksum of data with the x reversed reciprocal refin algorithm.
 
     **This method may be removed in the future.**
 
