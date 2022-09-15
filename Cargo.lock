@@ -37,7 +37,7 @@ checksum = "2d0165d2900ae6778e36e80bbc4da3b5eefccee9ba939761f9c2882a5d9af3ff"
 
 [[package]]
 name = "fastcrc"
-version = "0.2.1-dev.7"
+version = "0.2.1-dev.8"
 dependencies = [
  "crc",
  "paste 1.0.9",
