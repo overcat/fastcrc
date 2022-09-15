@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-latest ]
         python-version: [ "3.7", "3.8", "3.9", "3.10" ]
 
     steps:
@@ -44,6 +44,8 @@ jobs:
   build_package:
     # Adapted from https://github.com/pydantic/pydantic-core/blob/main/.github/workflows/ci.yml
     name: build on ${{ matrix.platform || matrix.os }} (${{ matrix.target }} - ${{ matrix.manylinux || 'auto' }})
+    needs: [ test ]
+    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
     strategy:
       fail-fast: false
       matrix:
@@ -131,9 +133,25 @@ jobs:
           name: wheels
           path: dist
 
+  list-pypi-files:
+    needs: [ build_package ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: get dist artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels
+          path: dist
+
+      - run: ls -lh dist/
+      - run: echo "`ls dist | wc -l` files"
+
   upload_pypi:
     needs: [ build_package ]
-    if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
+    # if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
