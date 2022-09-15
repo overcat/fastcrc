@@ -2,6 +2,10 @@ name: Build
 
 on: [ push, pull_request ]
 
+env:
+  PACKAGE_NAME: fastcrc
+  PYTHON_VERSION: "3.6" # to build abi3 wheels
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -56,20 +60,15 @@ jobs:
             platform: linux
           - os: windows
             ls: dir
-            interpreter: 3.6 3.7 3.8 3.9 3.10
           - os: windows
             ls: dir
             target: i686
             python-architecture: x86
-            interpreter: 3.6 3.7 3.8 3.9 3.10
           - os: macos
             target: aarch64
-            interpreter: 3.6 3.7 3.8 3.9 3.10
           - os: ubuntu
             platform: linux
             target: i686
-          # GCC 4.8.5 in manylinux2014 container doesn't support c11 atomic
-          # we use manylinux_2_24 container for aarch64 and armv7 targets instead,
           - os: ubuntu
             platform: linux
             target: aarch64
@@ -78,7 +77,6 @@ jobs:
             platform: linux
             target: armv7
             container: messense/manylinux_2_24-cross:armv7
-            interpreter: 3.6 3.7 3.8 3.9 3.10
           # musllinux
           - os: ubuntu
             platform: linux
@@ -96,18 +94,11 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: install Python 3.6 on Windows
-        if: ${{ matrix.os == 'windows' }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.6'
-          architecture: ${{ matrix.python-architecture || 'x64' }}
-          
+      
       - name: set up python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: ${{ env.PYTHON_VERSION }}
           architecture: ${{ matrix.python-architecture || 'x64' }}
 
       - name: build sdist
@@ -124,7 +115,7 @@ jobs:
           target: ${{ matrix.target }}
           manylinux: ${{ matrix.manylinux || 'auto' }}
           container: ${{ matrix.container }}
-          args: --release --out dist --interpreter ${{ matrix.interpreter || '3.6 3.7 3.8 3.9 3.10 pypy3.7 pypy3.8 pypy3.9' }}
+          args: --release --out dist
           rust-toolchain: stable
 
       - run: ${{ matrix.ls || 'ls -lh' }} dist/
