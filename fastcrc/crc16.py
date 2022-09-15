@@ -34,7 +34,6 @@ from .fastcrc import crc_16_umts as _crc_16_umts
 from .fastcrc import crc_16_usb as _crc_16_usb
 from .fastcrc import crc_16_xmodem as _crc_16_xmodem
 from .fastcrc import crc_16_ibm_refin as _crc_16_ibm_refin
-from .utils import _ensure_bytes
 
 __always_supported = (
     "arc",
@@ -90,7 +89,6 @@ def arc(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_arc(data, initial)
 
 
@@ -111,7 +109,6 @@ def cdma2000(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_cdma2000(data, initial)
 
 
@@ -132,7 +129,6 @@ def cms(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_cms(data, initial)
 
 
@@ -153,7 +149,6 @@ def dds_110(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_dds_110(data, initial)
 
 
@@ -174,7 +169,6 @@ def dect_r(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_dect_r(data, initial)
 
 
@@ -195,7 +189,6 @@ def dect_x(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_dect_x(data, initial)
 
 
@@ -216,7 +209,6 @@ def dnp(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_dnp(data, initial)
 
 
@@ -237,7 +229,6 @@ def en_13757(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_en_13757(data, initial)
 
 
@@ -258,7 +249,6 @@ def genibus(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_genibus(data, initial)
 
 
@@ -279,7 +269,6 @@ def gsm(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_gsm(data, initial)
 
 
@@ -300,7 +289,6 @@ def ibm_3740(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_ibm_3740(data, initial)
 
 
@@ -321,7 +309,6 @@ def ibm_sdlc(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_ibm_sdlc(data, initial)
 
 
@@ -342,7 +329,6 @@ def iso_iec_14443_3_a(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_iso_iec_14443_3_a(data, initial)
 
 
@@ -363,7 +349,6 @@ def kermit(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_kermit(data, initial)
 
 
@@ -384,7 +369,6 @@ def lj1200(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_lj1200(data, initial)
 
 
@@ -405,7 +389,6 @@ def maxim_dow(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_maxim_dow(data, initial)
 
 
@@ -426,7 +409,6 @@ def mcrf4xx(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_mcrf4xx(data, initial)
 
 
@@ -447,7 +429,6 @@ def modbus(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_modbus(data, initial)
 
 
@@ -468,7 +449,6 @@ def nrsc_5(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_nrsc_5(data, initial)
 
 
@@ -489,7 +469,6 @@ def opensafety_a(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_opensafety_a(data, initial)
 
 
@@ -510,7 +489,6 @@ def opensafety_b(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_opensafety_b(data, initial)
 
 
@@ -531,7 +509,6 @@ def profibus(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_profibus(data, initial)
 
 
@@ -552,7 +529,6 @@ def riello(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_riello(data, initial)
 
 
@@ -573,7 +549,6 @@ def spi_fujitsu(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_spi_fujitsu(data, initial)
 
 
@@ -594,7 +569,6 @@ def t10_dif(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_t10_dif(data, initial)
 
 
@@ -615,7 +589,6 @@ def teledisk(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_teledisk(data, initial)
 
 
@@ -636,7 +609,6 @@ def tms37157(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_tms37157(data, initial)
 
 
@@ -657,7 +629,6 @@ def umts(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_umts(data, initial)
 
 
@@ -678,7 +649,6 @@ def usb(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_usb(data, initial)
 
 
@@ -699,7 +669,6 @@ def xmodem(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_xmodem(data, initial)
 
 
@@ -722,5 +691,4 @@ def ibm_refin(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_16_ibm_refin(data, initial)

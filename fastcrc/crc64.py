@@ -7,7 +7,6 @@ from .fastcrc import crc_64_ecma_182 as _crc_64_ecma_182
 from .fastcrc import crc_64_go_iso as _crc_64_go_iso
 from .fastcrc import crc_64_we as _crc_64_we
 from .fastcrc import crc_64_xz as _crc_64_xz
-from .utils import _ensure_bytes
 
 __always_supported = ("ecma_182", "go_iso", "we", "xz")
 
@@ -32,7 +31,6 @@ def ecma_182(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_64_ecma_182(data, initial)
 
 
@@ -53,7 +51,6 @@ def go_iso(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_64_go_iso(data, initial)
 
 
@@ -74,7 +71,6 @@ def we(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_64_we(data, initial)
 
 
@@ -95,5 +91,4 @@ def xz(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_64_xz(data, initial)

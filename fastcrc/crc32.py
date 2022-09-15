@@ -17,7 +17,6 @@ from .fastcrc import crc_32_xfer as _crc_32_xfer
 from .fastcrc import (
     crc_32_k_reversed_reciprocal_refin as _crc_32_k_reversed_reciprocal_refin,
 )
-from .utils import _ensure_bytes
 
 __always_supported = (
     "aixm",
@@ -54,7 +53,6 @@ def aixm(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_aixm(data, initial)
 
 
@@ -75,7 +73,6 @@ def autosar(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_autosar(data, initial)
 
 
@@ -96,7 +93,6 @@ def base91_d(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_base91_d(data, initial)
 
 
@@ -117,7 +113,6 @@ def bzip2(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_bzip2(data, initial)
 
 
@@ -138,7 +133,6 @@ def cd_rom_edc(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_cd_rom_edc(data, initial)
 
 
@@ -159,7 +153,6 @@ def cksum(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_cksum(data, initial)
 
 
@@ -180,7 +173,6 @@ def iscsi(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_iscsi(data, initial)
 
 
@@ -201,7 +193,6 @@ def iso_hdlc(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_iso_hdlc(data, initial)
 
 
@@ -222,7 +213,6 @@ def jamcrc(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_jamcrc(data, initial)
 
 
@@ -243,7 +233,6 @@ def mpeg_2(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_mpeg_2(data, initial)
 
 
@@ -264,7 +253,6 @@ def xfer(data: bytes, initial: Optional[int] = None) -> int:
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_xfer(data, initial)
 
 
@@ -287,5 +275,4 @@ def k_reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> i
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
-    _ensure_bytes(data)
     return _crc_32_k_reversed_reciprocal_refin(data, initial)
