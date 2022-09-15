@@ -20,4 +20,4 @@ paste = "1.0.6"
 
 [dependencies.pyo3]
 version = "0.15.1" # Python 3.6 support, dont upgrade
-features = ["extension-module"]
+features = ["extension-module", "abi3-py36"]
