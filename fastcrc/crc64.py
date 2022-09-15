@@ -17,7 +17,14 @@ algorithms_available = set(__always_supported)
 
 def ecma_182(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-64 checksum of data with the ecma_182 algorithm.
+    Compute a CRC-64 checksum of data with the `ecma 182` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x42f0e1eba9ea3693
+        - init: 0x0000000000000000
+        - xorout: 0x0000000000000000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -31,7 +38,14 @@ def ecma_182(data: bytes, initial: Optional[int] = None) -> int:
 
 def go_iso(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-64 checksum of data with the go_iso algorithm.
+    Compute a CRC-64 checksum of data with the `go iso` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x000000000000001b
+        - init: 0xffffffffffffffff
+        - xorout: 0xffffffffffffffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -45,7 +59,14 @@ def go_iso(data: bytes, initial: Optional[int] = None) -> int:
 
 def we(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-64 checksum of data with the we algorithm.
+    Compute a CRC-64 checksum of data with the `we` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x42f0e1eba9ea3693
+        - init: 0xffffffffffffffff
+        - xorout: 0xffffffffffffffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -59,7 +80,14 @@ def we(data: bytes, initial: Optional[int] = None) -> int:
 
 def xz(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-64 checksum of data with the xz algorithm.
+    Compute a CRC-64 checksum of data with the `xz` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x42f0e1eba9ea3693
+        - init: 0xffffffffffffffff
+        - xorout: 0xffffffffffffffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum

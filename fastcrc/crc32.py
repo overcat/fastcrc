@@ -39,7 +39,14 @@ algorithms_available = set(__always_supported)
 
 def aixm(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the aixm algorithm.
+    Compute a CRC-32 checksum of data with the `aixm` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x814141ab
+        - init: 0x00000000
+        - xorout: 0x00000000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -53,7 +60,14 @@ def aixm(data: bytes, initial: Optional[int] = None) -> int:
 
 def autosar(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the autosar algorithm.
+    Compute a CRC-32 checksum of data with the `autosar` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0xf4acfb13
+        - init: 0xffffffff
+        - xorout: 0xffffffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -67,7 +81,14 @@ def autosar(data: bytes, initial: Optional[int] = None) -> int:
 
 def base91_d(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the base91_d algorithm.
+    Compute a CRC-32 checksum of data with the `base91 d` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0xa833982b
+        - init: 0xffffffff
+        - xorout: 0xffffffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -81,7 +102,14 @@ def base91_d(data: bytes, initial: Optional[int] = None) -> int:
 
 def bzip2(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the bzip2 algorithm.
+    Compute a CRC-32 checksum of data with the `bzip2` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x04c11db7
+        - init: 0xffffffff
+        - xorout: 0xffffffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -95,7 +123,14 @@ def bzip2(data: bytes, initial: Optional[int] = None) -> int:
 
 def cd_rom_edc(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the cd_rom_edc algorithm.
+    Compute a CRC-32 checksum of data with the `cd rom edc` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8001801b
+        - init: 0x00000000
+        - xorout: 0x00000000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -109,7 +144,14 @@ def cd_rom_edc(data: bytes, initial: Optional[int] = None) -> int:
 
 def cksum(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the cksum algorithm.
+    Compute a CRC-32 checksum of data with the `cksum` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x04c11db7
+        - init: 0x00000000
+        - xorout: 0xffffffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -123,7 +165,14 @@ def cksum(data: bytes, initial: Optional[int] = None) -> int:
 
 def iscsi(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the iscsi algorithm.
+    Compute a CRC-32 checksum of data with the `iscsi` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1edc6f41
+        - init: 0xffffffff
+        - xorout: 0xffffffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -137,7 +186,14 @@ def iscsi(data: bytes, initial: Optional[int] = None) -> int:
 
 def iso_hdlc(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the iso_hdlc algorithm.
+    Compute a CRC-32 checksum of data with the `iso hdlc` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x04c11db7
+        - init: 0xffffffff
+        - xorout: 0xffffffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -151,7 +207,14 @@ def iso_hdlc(data: bytes, initial: Optional[int] = None) -> int:
 
 def jamcrc(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the jamcrc algorithm.
+    Compute a CRC-32 checksum of data with the `jamcrc` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x04c11db7
+        - init: 0xffffffff
+        - xorout: 0x00000000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -165,7 +228,14 @@ def jamcrc(data: bytes, initial: Optional[int] = None) -> int:
 
 def mpeg_2(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the mpeg_2 algorithm.
+    Compute a CRC-32 checksum of data with the `mpeg 2` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x04c11db7
+        - init: 0xffffffff
+        - xorout: 0x00000000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -179,7 +249,14 @@ def mpeg_2(data: bytes, initial: Optional[int] = None) -> int:
 
 def xfer(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the xfer algorithm.
+    Compute a CRC-32 checksum of data with the `xfer` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x000000af
+        - init: 0x00000000
+        - xorout: 0x00000000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -193,9 +270,16 @@ def xfer(data: bytes, initial: Optional[int] = None) -> int:
 
 def k_reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-32 checksum of data with the x reversed reciprocal refin algorithm.
+    Compute a CRC-32 checksum of data with the `k reversed reciprocal refin` algorithm.
 
     **This method may be removed in the future.**
+
+    Algorithm parameters:
+        - ploy: 0xba0dc66b
+        - init: 0xf0f0f0f0
+        - xorout: 0x00000000
+        - refin: True
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum

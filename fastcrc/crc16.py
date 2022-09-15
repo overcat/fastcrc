@@ -75,7 +75,14 @@ algorithms_available = set(__always_supported)
 
 def arc(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the arc algorithm.
+    Compute a CRC-16 checksum of data with the `arc` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -89,7 +96,14 @@ def arc(data: bytes, initial: Optional[int] = None) -> int:
 
 def cdma2000(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the cdma2000 algorithm.
+    Compute a CRC-16 checksum of data with the `cdma2000` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0xc867
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -103,7 +117,14 @@ def cdma2000(data: bytes, initial: Optional[int] = None) -> int:
 
 def cms(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the cms algorithm.
+    Compute a CRC-16 checksum of data with the `cms` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -117,7 +138,14 @@ def cms(data: bytes, initial: Optional[int] = None) -> int:
 
 def dds_110(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the dds_110 algorithm.
+    Compute a CRC-16 checksum of data with the `dds 110` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0x800d
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -131,7 +159,14 @@ def dds_110(data: bytes, initial: Optional[int] = None) -> int:
 
 def dect_r(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the dect_r algorithm.
+    Compute a CRC-16 checksum of data with the `dect r` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x0589
+        - init: 0x0000
+        - xorout: 0x0001
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -145,7 +180,14 @@ def dect_r(data: bytes, initial: Optional[int] = None) -> int:
 
 def dect_x(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the dect_x algorithm.
+    Compute a CRC-16 checksum of data with the `dect x` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x0589
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -159,7 +201,14 @@ def dect_x(data: bytes, initial: Optional[int] = None) -> int:
 
 def dnp(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the dnp algorithm.
+    Compute a CRC-16 checksum of data with the `dnp` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x3d65
+        - init: 0x0000
+        - xorout: 0xffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -173,7 +222,14 @@ def dnp(data: bytes, initial: Optional[int] = None) -> int:
 
 def en_13757(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the en_13757 algorithm.
+    Compute a CRC-16 checksum of data with the `en 13757` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x3d65
+        - init: 0x0000
+        - xorout: 0xffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -187,7 +243,14 @@ def en_13757(data: bytes, initial: Optional[int] = None) -> int:
 
 def genibus(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the genibus algorithm.
+    Compute a CRC-16 checksum of data with the `genibus` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0xffff
+        - xorout: 0xffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -201,7 +264,14 @@ def genibus(data: bytes, initial: Optional[int] = None) -> int:
 
 def gsm(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the gsm algorithm.
+    Compute a CRC-16 checksum of data with the `gsm` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0x0000
+        - xorout: 0xffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -215,7 +285,14 @@ def gsm(data: bytes, initial: Optional[int] = None) -> int:
 
 def ibm_3740(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the ibm_3740 algorithm.
+    Compute a CRC-16 checksum of data with the `ibm 3740` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -229,7 +306,14 @@ def ibm_3740(data: bytes, initial: Optional[int] = None) -> int:
 
 def ibm_sdlc(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the ibm_sdlc algorithm.
+    Compute a CRC-16 checksum of data with the `ibm sdlc` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0xffff
+        - xorout: 0xffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -243,7 +327,14 @@ def ibm_sdlc(data: bytes, initial: Optional[int] = None) -> int:
 
 def iso_iec_14443_3_a(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the iso_iec_14443_3_a algorithm.
+    Compute a CRC-16 checksum of data with the `iso iec 14443 3 a` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0xc6c6
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -257,7 +348,14 @@ def iso_iec_14443_3_a(data: bytes, initial: Optional[int] = None) -> int:
 
 def kermit(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the kermit algorithm.
+    Compute a CRC-16 checksum of data with the `kermit` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -271,7 +369,14 @@ def kermit(data: bytes, initial: Optional[int] = None) -> int:
 
 def lj1200(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the lj1200 algorithm.
+    Compute a CRC-16 checksum of data with the `lj1200` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x6f63
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -285,7 +390,14 @@ def lj1200(data: bytes, initial: Optional[int] = None) -> int:
 
 def maxim_dow(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the maxim_dow algorithm.
+    Compute a CRC-16 checksum of data with the `maxim dow` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0x0000
+        - xorout: 0xffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -299,7 +411,14 @@ def maxim_dow(data: bytes, initial: Optional[int] = None) -> int:
 
 def mcrf4xx(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the mcrf4xx algorithm.
+    Compute a CRC-16 checksum of data with the `mcrf4xx` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -313,7 +432,14 @@ def mcrf4xx(data: bytes, initial: Optional[int] = None) -> int:
 
 def modbus(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the modbus algorithm.
+    Compute a CRC-16 checksum of data with the `modbus` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -327,7 +453,14 @@ def modbus(data: bytes, initial: Optional[int] = None) -> int:
 
 def nrsc_5(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the nrsc_5 algorithm.
+    Compute a CRC-16 checksum of data with the `nrsc 5` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x080b
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -341,7 +474,14 @@ def nrsc_5(data: bytes, initial: Optional[int] = None) -> int:
 
 def opensafety_a(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the opensafety_a algorithm.
+    Compute a CRC-16 checksum of data with the `opensafety a` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x5935
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -355,7 +495,14 @@ def opensafety_a(data: bytes, initial: Optional[int] = None) -> int:
 
 def opensafety_b(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the opensafety_b algorithm.
+    Compute a CRC-16 checksum of data with the `opensafety b` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x755b
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -369,7 +516,14 @@ def opensafety_b(data: bytes, initial: Optional[int] = None) -> int:
 
 def profibus(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the profibus algorithm.
+    Compute a CRC-16 checksum of data with the `profibus` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1dcf
+        - init: 0xffff
+        - xorout: 0xffff
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -383,7 +537,14 @@ def profibus(data: bytes, initial: Optional[int] = None) -> int:
 
 def riello(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the riello algorithm.
+    Compute a CRC-16 checksum of data with the `riello` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0xb2aa
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -397,7 +558,14 @@ def riello(data: bytes, initial: Optional[int] = None) -> int:
 
 def spi_fujitsu(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the spi_fujitsu algorithm.
+    Compute a CRC-16 checksum of data with the `spi fujitsu` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0x1d0f
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -411,7 +579,14 @@ def spi_fujitsu(data: bytes, initial: Optional[int] = None) -> int:
 
 def t10_dif(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the t10_dif algorithm.
+    Compute a CRC-16 checksum of data with the `t10 dif` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8bb7
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -425,7 +600,14 @@ def t10_dif(data: bytes, initial: Optional[int] = None) -> int:
 
 def teledisk(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the teledisk algorithm.
+    Compute a CRC-16 checksum of data with the `teledisk` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0xa097
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -439,7 +621,14 @@ def teledisk(data: bytes, initial: Optional[int] = None) -> int:
 
 def tms37157(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the tms37157 algorithm.
+    Compute a CRC-16 checksum of data with the `tms37157` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0x89ec
+        - xorout: 0x0000
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -453,7 +642,14 @@ def tms37157(data: bytes, initial: Optional[int] = None) -> int:
 
 def umts(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the umts algorithm.
+    Compute a CRC-16 checksum of data with the `umts` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -467,7 +663,14 @@ def umts(data: bytes, initial: Optional[int] = None) -> int:
 
 def usb(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the usb algorithm.
+    Compute a CRC-16 checksum of data with the `usb` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0xffff
+        - xorout: 0xffff
+        - refin: True
+        - refout: True
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -481,7 +684,14 @@ def usb(data: bytes, initial: Optional[int] = None) -> int:
 
 def xmodem(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the xmodem algorithm.
+    Compute a CRC-16 checksum of data with the `xmodem` algorithm.
+
+    Algorithm parameters:
+        - ploy: 0x1021
+        - init: 0x0000
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum
@@ -495,9 +705,16 @@ def xmodem(data: bytes, initial: Optional[int] = None) -> int:
 
 def ibm_refin(data: bytes, initial: Optional[int] = None) -> int:
     """
-    Compute a CRC-16 checksum of data with the ibm refin algorithm.
+    Compute a CRC-16 checksum of data with the `ibm refin` algorithm.
 
     **This method may be removed in the future.**
+
+    Algorithm parameters:
+        - ploy: 0x8005
+        - init: 0xf0f0
+        - xorout: 0x0000
+        - refin: True
+        - refout: False
 
     :param bytes data: The data to be computed
     :param Optional[int] initial: The optional starting value of the checksum

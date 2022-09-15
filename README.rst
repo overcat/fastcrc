@@ -35,6 +35,7 @@ Usage
    print(f"crc16 checksum with xmodem algorithm: {crc16.xmodem(data)}")
    print(f"crc32 checksum with aixm algorithm: {crc32.aixm(data)}")
    print(f"crc64 checksum with ecma_182 algorithm: {crc64.ecma_182(data)}")
+   print(f"crc16 checksum with xmodem algorithm (with initial data): {crc16.xmodem(b'56789', crc16.xmodem(b'1234'))}")
 
 Documentation
 =============
