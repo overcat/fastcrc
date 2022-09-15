@@ -40,22 +40,22 @@ macro_rules! define_crc_fn {
 const CRC_16_IBM_REFIN: Algorithm<u16> = Algorithm  {
     width: 16,
     poly: 0x8005,
-    init: 0xf0f0,
+    init: 0x0000,
     refin: true,
     refout: false,
     xorout: 0x0000,
-    check: 0x3cd0,
+    check: 0xbcdd,
     residue: 0x0000
 };
 
 const CRC_32_K_REVERSED_RECIPROCAL_REFIN: Algorithm<u32> = Algorithm {
     width: 32,
     poly: 0xba0dc66b,
-    init: 0xf0f0f0f0,
+    init: 0x00000000,
     refin: true,
     refout: false,
     xorout: 0x00000000,
-    check: 0x49ddfd79, 
+    check: 0x949d7183, 
     residue: 0x00000000
 };
 

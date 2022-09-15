@@ -200,11 +200,11 @@ class TestCrc16(unittest.TestCase):
         self.assertEqual(12739, crc16.xmodem(data_part2, crc16.xmodem(data_part1)))
 
     def test_ibm_refin(self):
-        self.assertEqual(15568, crc16.ibm_refin(data))
+        self.assertEqual(48349, crc16.ibm_refin(data))
 
     def test_ibm_refin_init(self):
         self.assertEqual(
-            15568, crc16.ibm_refin(data_part2, crc16.ibm_refin(data_part1))
+            48349, crc16.ibm_refin(data_part2, crc16.ibm_refin(data_part1))
         )
 
 
@@ -285,13 +285,13 @@ class TestCrc32(unittest.TestCase):
 
     def test_k_reversed_reciprocal_refin(self):
         self.assertEqual(
-            1239285113,
+            2493346179,
             crc32.k_reversed_reciprocal_refin(data),
         )
 
     def test_k_reversed_reciprocal_refin_init(self):
         self.assertEqual(
-            1239285113,
+            2493346179,
             crc32.k_reversed_reciprocal_refin(
                 data_part2, crc32.k_reversed_reciprocal_refin(data_part1)
             ),

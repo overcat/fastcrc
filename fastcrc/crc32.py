@@ -264,7 +264,7 @@ def k_reversed_reciprocal_refin(data: bytes, initial: Optional[int] = None) -> i
 
     Algorithm parameters:
         - ploy: 0xba0dc66b
-        - init: 0xf0f0f0f0
+        - init: 0x00000000
         - xorout: 0x00000000
         - refin: True
         - refout: False

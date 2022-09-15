@@ -680,7 +680,7 @@ def ibm_refin(data: bytes, initial: Optional[int] = None) -> int:
 
     Algorithm parameters:
         - ploy: 0x8005
-        - init: 0xf0f0
+        - init: 0x0000
         - xorout: 0x0000
         - refin: True
         - refout: False
