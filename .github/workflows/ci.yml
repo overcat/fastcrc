@@ -77,7 +77,7 @@ jobs:
           - os: ubuntu
             platform: linux
             target: armv7
-            container: messense/manylinux_2_24-cross:armv7
+            container: messense/manylinux2014-cross:armv7
             interpreter: 3.6 3.7 3.8 3.9 3.10
           # musllinux
           - os: ubuntu
