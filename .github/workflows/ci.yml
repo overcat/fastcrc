@@ -133,6 +133,21 @@ jobs:
 
       - run: twine check dist/*
 
+      - uses: uraimo/run-on-arch-action@v2
+        if: matrix.target = 'armv7'
+        name: Install built wheel
+        with:
+          arch: ${{ matrix.target }}
+          distro: ubuntu20.04
+          install: |
+            apt-get update
+            apt-get install -y --no-install-recommends python3 python3-pip
+            pip3 install -U pip
+          run: |
+            pip3 install fastcrc --no-index --find-links dist/ --force-reinstall
+            cd tests
+            python test_fastcrc.py
+
       - name: Upload wheels
         uses: actions/upload-artifact@v2
         with:
