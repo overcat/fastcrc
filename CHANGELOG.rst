@@ -6,7 +6,7 @@ This document records all notable changes to `fastcrc <https://github.com/overca
 
 0.2.1 (September 15, 2022)
 ---------------------
-* feat: add `fastcrc.crc16.ibm_refin` and `cfastcrc.crc32.reversed_reciprocal_refin`, these are two experimental functions that may be removed in the future.
+* feat: add `fastcrc.crc16.ibm_refin` and `fastcrc.crc32.reversed_reciprocal_refin`, these are two experimental functions that may be removed in the future.
 * chore: build wheels for more platforms.
 * docs: improve documentation.
 
