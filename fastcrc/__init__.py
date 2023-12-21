@@ -1,4 +1,4 @@
-from . import crc16, crc32, crc64
+from . import crc8, crc16, crc32, crc64
 from .__info__ import (
     __author__,
     __author_email__,

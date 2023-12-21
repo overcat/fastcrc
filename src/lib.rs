@@ -1,12 +1,15 @@
 use crc::{
-    Crc, CRC_16_ARC, CRC_16_CDMA2000, CRC_16_CMS, CRC_16_DDS_110, CRC_16_DECT_R, CRC_16_DECT_X,
+    Crc, CRC_8_AUTOSAR, CRC_8_BLUETOOTH, CRC_8_CDMA2000, CRC_8_DARC, CRC_8_DVB_S2, CRC_8_GSM_A,
+    CRC_8_GSM_B, CRC_8_I_432_1, CRC_8_I_CODE, CRC_8_LTE, CRC_8_MAXIM_DOW, CRC_8_MIFARE_MAD,
+    CRC_8_NRSC_5, CRC_8_OPENSAFETY, CRC_8_ROHC, CRC_8_SAE_J1850, CRC_8_SMBUS, CRC_8_TECH_3250,
+    CRC_8_WCDMA, CRC_16_ARC, CRC_16_CDMA2000, CRC_16_CMS, CRC_16_DDS_110, CRC_16_DECT_R, CRC_16_DECT_X,
     CRC_16_DNP, CRC_16_EN_13757, CRC_16_GENIBUS, CRC_16_GSM, CRC_16_IBM_3740, CRC_16_IBM_SDLC,
     CRC_16_ISO_IEC_14443_3_A, CRC_16_KERMIT, CRC_16_LJ1200, CRC_16_MAXIM_DOW, CRC_16_MCRF4XX,
     CRC_16_MODBUS, CRC_16_NRSC_5, CRC_16_OPENSAFETY_A, CRC_16_OPENSAFETY_B, CRC_16_PROFIBUS,
     CRC_16_RIELLO, CRC_16_SPI_FUJITSU, CRC_16_T10_DIF, CRC_16_TELEDISK, CRC_16_TMS37157,
     CRC_16_UMTS, CRC_16_USB, CRC_16_XMODEM, CRC_32_AIXM, CRC_32_AUTOSAR, CRC_32_BASE91_D,
     CRC_32_BZIP2, CRC_32_CD_ROM_EDC, CRC_32_CKSUM, CRC_32_ISCSI, CRC_32_ISO_HDLC, CRC_32_JAMCRC,
-    CRC_32_MPEG_2, CRC_32_XFER, CRC_64_ECMA_182, CRC_64_GO_ISO, CRC_64_WE, CRC_64_XZ, Algorithm
+    CRC_32_MPEG_2, CRC_32_XFER, CRC_64_ECMA_182, CRC_64_GO_ISO, CRC_64_WE, CRC_64_XZ, Algorithm,
 };
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
@@ -60,6 +63,25 @@ const CRC_32_K_REVERSED_RECIPROCAL_REFIN: Algorithm<u32> = Algorithm {
     residue: 0x00000000
 };
 
+define_crc_fn!(crc_8_autosar, u8, CRC_8_AUTOSAR);
+define_crc_fn!(crc_8_bluetooth, u8, CRC_8_BLUETOOTH);
+define_crc_fn!(crc_8_cdma2000, u8, CRC_8_CDMA2000);
+define_crc_fn!(crc_8_darc, u8, CRC_8_DARC);
+define_crc_fn!(crc_8_dvb_s2, u8, CRC_8_DVB_S2);
+define_crc_fn!(crc_8_gsm_a, u8, CRC_8_GSM_A);
+define_crc_fn!(crc_8_gsm_b, u8, CRC_8_GSM_B);
+define_crc_fn!(crc_8_i_432_1, u8, CRC_8_I_432_1);
+define_crc_fn!(crc_8_i_code, u8, CRC_8_I_CODE);
+define_crc_fn!(crc_8_lte, u8, CRC_8_LTE);
+define_crc_fn!(crc_8_maxim_dow, u8, CRC_8_MAXIM_DOW);
+define_crc_fn!(crc_8_mifare_mad, u8, CRC_8_MIFARE_MAD);
+define_crc_fn!(crc_8_nrsc_5, u8, CRC_8_NRSC_5);
+define_crc_fn!(crc_8_opensafety, u8, CRC_8_OPENSAFETY);
+define_crc_fn!(crc_8_rohc, u8, CRC_8_ROHC);
+define_crc_fn!(crc_8_sae_j1850, u8, CRC_8_SAE_J1850);
+define_crc_fn!(crc_8_smbus, u8, CRC_8_SMBUS);
+define_crc_fn!(crc_8_tech_3250, u8, CRC_8_TECH_3250);
+define_crc_fn!(crc_8_wcdma, u8, CRC_8_WCDMA);
 define_crc_fn!(crc_16_arc, u16, CRC_16_ARC);
 define_crc_fn!(crc_16_cdma2000, u16, CRC_16_CDMA2000);
 define_crc_fn!(crc_16_cms, u16, CRC_16_CMS);
@@ -114,6 +136,25 @@ define_crc_fn!(crc_64_xz, u64, CRC_64_XZ);
 
 #[pymodule]
 fn fastcrc(_: Python, m: &PyModule) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(crc_8_autosar,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_bluetooth,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_cdma2000,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_darc,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_dvb_s2,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_gsm_a,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_gsm_b,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_i_432_1,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_i_code,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_lte,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_maxim_dow,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_mifare_mad,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_nrsc_5,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_opensafety,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_rohc,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_sae_j1850,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_smbus,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_tech_3250,m)?)?;
+    m.add_function(wrap_pyfunction!(crc_8_wcdma,m)?)?;
     m.add_function(wrap_pyfunction!(crc_16_arc, m)?)?;
     m.add_function(wrap_pyfunction!(crc_16_cdma2000, m)?)?;
     m.add_function(wrap_pyfunction!(crc_16_cms, m)?)?;
