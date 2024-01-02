@@ -10,11 +10,11 @@ fastcrc
     :alt: PyPI
     :target: https://pypi.python.org/pypi/fastcrc
 
-.. image:: https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue?style=flat
+.. image:: https://img.shields.io/badge/python-%3E%3D3.7-blue?style=flat
     :alt: Python - Version
     :target: https://pypi.python.org/pypi/fastcrc
 
-A hyper-fast Python module for computing CRC(16, 32, 64) checksum.
+A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum.
 
 
 Installation

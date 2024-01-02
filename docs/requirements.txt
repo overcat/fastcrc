@@ -1,2 +1,2 @@
-fastcrc==0.2.1
+fastcrc==0.3.0
 sphinx

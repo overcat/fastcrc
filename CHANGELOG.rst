@@ -4,8 +4,9 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
-Pending
--------
+0.3.0 (January 2, 2024)
+-----------------------
+* feat: add support for 8 bit CRCs. (`#5 <https://github.com/overcat/fastcrc/pull/5>`_)
 * chore: drop support for Python 3.6. (`#6 <https://github.com/overcat/fastcrc/pull/6>`_)
 
 0.2.1 (September 15, 2022)

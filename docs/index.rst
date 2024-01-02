@@ -3,6 +3,13 @@
 API Reference
 =============
 
+CRC 8
+-----
+
+.. automodule:: fastcrc.crc8
+   :members:
+   :undoc-members:
+
 CRC 16
 ------
 
