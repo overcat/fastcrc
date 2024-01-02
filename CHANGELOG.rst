@@ -4,6 +4,10 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+Pending
+-------
+* chore: drop support for Python 3.6. (`#6 <https://github.com/overcat/fastcrc/pull/6>`_)
+
 0.2.1 (September 15, 2022)
 ---------------------
 * feat: add `fastcrc.crc16.ibm_refin` and `fastcrc.crc32.reversed_reciprocal_refin`, these are two experimental functions that may be removed in the future.
