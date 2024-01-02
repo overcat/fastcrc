@@ -1,10 +1,101 @@
 import unittest
 
-from fastcrc import crc16, crc32, crc64
+from fastcrc import crc8, crc16, crc32, crc64
 
 data = b"123456789"
 data_part1 = b"1234"
 data_part2 = b"56789"
+
+class TestCrc8(unittest.TestCase):
+    def test_bluetooth(self):
+        self.assertEqual(38, crc8.bluetooth(data))
+    def test_bluetooth_init(self):
+        self.assertEqual(38, crc8.bluetooth(data_part2, crc8.bluetooth(data_part1)))
+
+    def test_cdma2000(self):
+        self.assertEqual(218, crc8.cdma2000(data))
+    def test_cdma2000_init(self):
+        self.assertEqual(218, crc8.cdma2000(data_part2, crc8.cdma2000(data_part1)))
+
+    def test_darc(self):
+        self.assertEqual(21, crc8.darc(data))
+    def test_darc_init(self):
+        self.assertEqual(21, crc8.darc(data_part2, crc8.darc(data_part1)))
+
+    def test_dvb_s2(self):
+        self.assertEqual(188, crc8.dvb_s2(data))
+    def test_dvb_s2_init(self):
+        self.assertEqual(188, crc8.dvb_s2(data_part2, crc8.dvb_s2(data_part1)))
+
+    def test_gsm_a(self):
+        self.assertEqual(55, crc8.gsm_a(data))
+    def test_gsm_a_init(self):
+        self.assertEqual(55, crc8.gsm_a(data_part2, crc8.gsm_a(data_part1)))
+
+    def test_gsm_b(self):
+        self.assertEqual(148, crc8.gsm_b(data))
+    def test_gsm_b_init(self):
+        self.assertEqual(148, crc8.gsm_b(data_part2, crc8.gsm_b(data_part1)))
+
+    def test_i_432_1(self):
+        self.assertEqual(161, crc8.i_432_1(data))
+    def test_i_432_1_init(self):
+        self.assertEqual(161, crc8.i_432_1(data_part2, crc8.i_432_1(data_part1)))
+
+    def test_i_code(self):
+        self.assertEqual(126, crc8.i_code(data))
+    def test_i_code_init(self):
+        self.assertEqual(126, crc8.i_code(data_part2, crc8.i_code(data_part1)))
+
+    def test_lte(self):
+        self.assertEqual(234, crc8.lte(data))
+    def test_lte_init(self):
+        self.assertEqual(234, crc8.lte(data_part2, crc8.lte(data_part1)))
+
+    def test_maxim_dow(self):
+        self.assertEqual(161, crc8.maxim_dow(data))
+    def test_maxim_dow_init(self):
+        self.assertEqual(161, crc8.maxim_dow(data_part2, crc8.maxim_dow(data_part1)))
+
+    def test_mifare_mad(self):
+        self.assertEqual(153, crc8.mifare_mad(data))
+    def test_mifare_mad_init(self):
+        self.assertEqual(153, crc8.mifare_mad(data_part2, crc8.mifare_mad(data_part1)))
+
+    def test_nrsc_5(self):
+        self.assertEqual(247, crc8.nrsc_5(data))
+    def test_nrsc_5_init(self):
+        self.assertEqual(247, crc8.nrsc_5(data_part2, crc8.nrsc_5(data_part1)))
+
+    def test_opensafety(self):
+        self.assertEqual(62, crc8.opensafety(data))
+    def test_opensafety_init(self):
+        self.assertEqual(62, crc8.opensafety(data_part2, crc8.opensafety(data_part1)))
+
+    def test_rohc(self):
+        self.assertEqual(208, crc8.rohc(data))
+    def test_rohc_init(self):
+        self.assertEqual(208, crc8.rohc(data_part2, crc8.rohc(data_part1)))
+
+    def test_sae_j1850(self):
+        self.assertEqual(75, crc8.sae_j1850(data))
+    def test_sae_j1850_init(self):
+        self.assertEqual(75, crc8.sae_j1850(data_part2, crc8.sae_j1850(data_part1)))
+
+    def test_smbus(self):
+        self.assertEqual(244, crc8.smbus(data))
+    def test_smbus_init(self):
+        self.assertEqual(244, crc8.smbus(data_part2, crc8.smbus(data_part1)))
+
+    def test_tech_3250(self):
+        self.assertEqual(151, crc8.tech_3250(data))
+    def test_tech_3250_init(self):
+        self.assertEqual(151, crc8.tech_3250(data_part2, crc8.tech_3250(data_part1)))
+
+    def test_wcdma(self):
+        self.assertEqual(37, crc8.wcdma(data))
+    def test_wcdma_init(self):
+        self.assertEqual(37, crc8.wcdma(data_part2, crc8.wcdma(data_part1)))
 
 
 class TestCrc16(unittest.TestCase):
