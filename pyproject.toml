@@ -4,8 +4,7 @@ version = "0.3.0"
 requires-python = ">=3.7"
 readme = "README.rst"
 description = "A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum"
-author = "overcat <4catcode@gmail.com>"
-maintainer = "overcat <4catcode@gmail.com>"
+authors = [{ name = "overcat", email = "4catcode@gmail.com" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -19,21 +18,15 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
 ]
+keywords = ["crc", "crc8", "crc16", "crc32", "crc64"]
+
+[project.urls]
 homepage = "https://github.com/overcat/fastcrc"
 repository = "https://github.com/overcat/fastcrc"
-keywords = [
-    "crc",
-    "crc8",
-    "crc16",
-    "crc32",
-    "crc64",
-]
-
-[tool.poetry.urls]
-"Bug Tracker" = "https://github.com/overcat/fastcrc/issues"
+documentation = "https://fastcrc.readthedocs.io"
 
 [build-system]
-requires = ["maturin>=1.4,<2.0"]
+requires = ["maturin>=1.5,<2.0"]
 build-backend = "maturin"
 
 [tool.maturin]

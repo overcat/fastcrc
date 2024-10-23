@@ -1,20 +1,20 @@
 [package]
 name = "fastcrc"
-version = "0.3.0"
+version = "0.3.1"
 authors = ["overcat <4catcode@gmail.com>"]
-edition = "2018"
-description = "A hyper-fast Python module for computing CRC(16, 32, 64) checksum"
+edition = "2021"
+description = "A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum"
 license = "MIT License"
 repository = "https://github.com/overcat/fastcrc"
 homepage = "https://github.com/overcat/fastcrc"
 readme = "README.rst"
-keywords = ["crc", "crc16", "crc32", "crc64"]
+keywords = ["crc", "crc8", "crc16", "crc32", "crc64"]
 
 [lib]
 name = "fastcrc"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.19.0"
-crc = "3.0.0"
-paste = "1.0.6"
+pyo3 = "0.22.5"
+crc = "3.2.1"
+paste = "1.0.15"
