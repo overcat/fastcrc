@@ -1,6 +1,6 @@
 [package]
 name = "fastcrc"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["overcat <4catcode@gmail.com>"]
 edition = "2021"
 description = "A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum"
@@ -15,6 +15,6 @@ name = "fastcrc"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.22.5"
-crc = "3.2.1"
+pyo3 = "0.26.0"
+crc = "3.3.0"
 paste = "1.0.15"
