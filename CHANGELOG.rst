@@ -4,6 +4,9 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+0.3.3 (October 09, 2025)
+* chore: bump third-party dependencies.
+
 0.3.1 (October 23, 2024)
 * chore: add wheels for Python 3.13, pypy 3.8, pypy 3.9 and pypy 3.10.
 
