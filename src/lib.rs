@@ -136,7 +136,7 @@ define_crc_fn!(crc_64_go_iso, u64, CRC_64_GO_ISO);
 define_crc_fn!(crc_64_we, u64, CRC_64_WE);
 define_crc_fn!(crc_64_xz, u64, CRC_64_XZ);
 
-#[pymodule]
+#[pymodule(gil_used = false)]
 fn fastcrc(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(crc_8_autosar, m)?)?;
     m.add_function(wrap_pyfunction!(crc_8_bluetooth, m)?)?;
