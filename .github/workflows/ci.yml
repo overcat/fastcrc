@@ -170,12 +170,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
-      - name: Install maturin
+      - name: Install fastcrc
         run: |
           python -m pip install --upgrade pip
           python -m pip install maturin
-      - name: Build fastcrc
-        run: maturin develop --release --locked
+          python -m pip install .
       - name: Run unit tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
 
