@@ -1,4 +1,4 @@
-Runtime Infomation
+Runtime Information
 OS: macOS 11.3.1 20E241 arm64
 Host: MacBookAir10,1
 
