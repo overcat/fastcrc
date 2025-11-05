@@ -230,9 +230,9 @@ jobs:
     strategy:
       matrix:
         platform:
-          - runner: windows-2022
+          - runner: windows-latest
             target: x64
-          - runner: windows-2022
+          - runner: windows-latest
             target: x86
         python-version:
           - "3.7"
@@ -243,6 +243,7 @@ jobs:
         with:
           python-version: 3.x
           architecture: ${{ matrix.platform.target }}
+      - run: choco install python --version=3.7.0 -y
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
