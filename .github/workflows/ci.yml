@@ -36,11 +36,20 @@ jobs:
             target: s390x
           - runner: ubuntu-22.04
             target: ppc64le
+          - runner: ubuntu-22.04
+            target: riscv64
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with:
           python-version: 3.x
+      
+      - name: Set up QEMU
+        if: matrix.platform.target == 'riscv64'
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: riscv64
+
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
