@@ -4,6 +4,10 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+0.3.5 (January 01, 2026)
+------------------------
+* feat: add `riscv64gc-unknown-linux-gnu` build target. (`#27 <https://github.com/overcat/fastcrc/pull/27>`_)
+
 0.3.4 (October 26, 2025)
 ------------------------
 * chore: mark module as gil-free. (`#17 <https://github.com/overcat/fastcrc/pull/17>`_)
