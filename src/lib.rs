@@ -65,6 +65,17 @@ const CRC_32_K_REVERSED_RECIPROCAL_REFIN: Algorithm<u32> = Algorithm {
     residue: 0x00000000,
 };
 
+const CRC_64_TMS570_ISO: Algorithm<u64> = Algorithm {
+    width: 64,
+    poly: 0x000000000000001b,
+    init: 0x0000000000000000,
+    refin: false,
+    refout: false,
+    xorout: 0x0000000000000000,
+    check: 0xe4ffbea588933790,
+    residue: 0x0000000000000000,
+};
+
 define_crc_fn!(crc_8_autosar, u8, CRC_8_AUTOSAR);
 define_crc_fn!(crc_8_bluetooth, u8, CRC_8_BLUETOOTH);
 define_crc_fn!(crc_8_cdma2000, u8, CRC_8_CDMA2000);
@@ -135,6 +146,7 @@ define_crc_fn!(crc_64_ecma_182, u64, CRC_64_ECMA_182);
 define_crc_fn!(crc_64_go_iso, u64, CRC_64_GO_ISO);
 define_crc_fn!(crc_64_we, u64, CRC_64_WE);
 define_crc_fn!(crc_64_xz, u64, CRC_64_XZ);
+define_crc_fn!(crc_64_tms570_iso, u64, CRC_64_TMS570_ISO);
 
 #[pymodule(gil_used = false)]
 fn fastcrc(m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -204,5 +216,6 @@ fn fastcrc(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(crc_64_go_iso, m)?)?;
     m.add_function(wrap_pyfunction!(crc_64_we, m)?)?;
     m.add_function(wrap_pyfunction!(crc_64_xz, m)?)?;
+    m.add_function(wrap_pyfunction!(crc_64_tms570_iso, m)?)?;
     Ok(())
 }
