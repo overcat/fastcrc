@@ -194,9 +194,7 @@ jobs:
         uses: actions/attest-build-provenance@v4
         with:
           subject-path: "wheels-*/*"
+      - uses: astral-sh/setup-uv@v7
       - name: Publish to PyPI
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        uses: PyO3/maturin-action@v1
-        with:
-          command: upload
-          args: --non-interactive --skip-existing wheels-*/*
+        run: uv publish wheels-*/*
