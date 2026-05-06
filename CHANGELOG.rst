@@ -4,6 +4,10 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+0.3.6 (May 06, 2026)
+--------------------
+* feat: add `fastcrc.crc64.tms570_iso` for the TI Hercules TMS570 CRC-64-ISO algorithm. (`#30 <https://github.com/overcat/fastcrc/pull/30>`_)
+
 0.3.5 (January 01, 2026)
 ------------------------
 * feat: add `riscv64gc-unknown-linux-gnu` build target. (`#27 <https://github.com/overcat/fastcrc/pull/27>`_)
