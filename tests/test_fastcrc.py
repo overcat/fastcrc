@@ -422,6 +422,15 @@ class TestCrc64(unittest.TestCase):
             11051210869376104954, crc64.xz(data_part2, crc64.xz(data_part1))
         )
 
+    def test_tms570_iso(self):
+        self.assertEqual(16501117177879017360, crc64.tms570_iso(data))
+
+    def test_tms570_iso_init(self):
+        self.assertEqual(
+            16501117177879017360,
+            crc64.tms570_iso(data_part2, crc64.tms570_iso(data_part1)),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
