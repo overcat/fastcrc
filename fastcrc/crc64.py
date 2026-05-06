@@ -7,8 +7,9 @@ from .fastcrc import crc_64_ecma_182 as _crc_64_ecma_182
 from .fastcrc import crc_64_go_iso as _crc_64_go_iso
 from .fastcrc import crc_64_we as _crc_64_we
 from .fastcrc import crc_64_xz as _crc_64_xz
+from .fastcrc import crc_64_tms570_iso as _crc_64_tms570_iso
 
-__always_supported = ("ecma_182", "go_iso", "we", "xz")
+__always_supported = ("ecma_182", "go_iso", "we", "xz", "tms570_iso")
 
 algorithms_guaranteed = set(__always_supported)
 algorithms_available = set(__always_supported)
@@ -92,3 +93,23 @@ def xz(data: bytes, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
     return _crc_64_xz(data, initial)
+
+
+def tms570_iso(data: bytes, initial: Optional[int] = None) -> int:
+    """
+    Compute a CRC-64 checksum of data with the `tms570_iso` algorithm.
+
+    Algorithm parameters:
+        - poly: 0x000000000000001b
+        - init: 0x0000000000000000
+        - xorout: 0x0000000000000000
+        - refin: False
+        - refout: False
+
+    :param bytes data: The data to be computed
+    :param Optional[int] initial: The optional starting value of the checksum
+    :return: The checksum
+    :rtype: int
+    :raises TypeError: if the data is not a bytes-like object
+    """
+    return _crc_64_tms570_iso(data, initial)
