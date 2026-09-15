@@ -1,9 +1,15 @@
+import sys
 from typing import Optional, Set
+
+if sys.version_info >= (3, 12):
+    from collections.abc import Buffer
+else:
+    from typing_extensions import Buffer
 
 algorithms_guaranteed: Set[str]
 algorithms_available: Set[str]
 
-def autosar(data: bytes, initial: Optional[int] = None) -> int:
+def autosar(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `autosar` algorithm.
 
@@ -14,14 +20,14 @@ def autosar(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def bluetooth(data: bytes, initial: Optional[int] = None) -> int:
+def bluetooth(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `bluetooth` algorithm.
 
@@ -32,14 +38,14 @@ def bluetooth(data: bytes, initial: Optional[int] = None) -> int:
         - refin: True
         - refout: True
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def cdma2000(data: bytes, initial: Optional[int] = None) -> int:
+def cdma2000(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `cdma2000` algorithm.
 
@@ -50,14 +56,14 @@ def cdma2000(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def darc(data: bytes, initial: Optional[int] = None) -> int:
+def darc(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `darc` algorithm.
 
@@ -68,14 +74,14 @@ def darc(data: bytes, initial: Optional[int] = None) -> int:
         - refin: True
         - refout: True
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def dvb_s2(data: bytes, initial: Optional[int] = None) -> int:
+def dvb_s2(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `dvb_s2` algorithm.
 
@@ -86,14 +92,14 @@ def dvb_s2(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def gsm_a(data: bytes, initial: Optional[int] = None) -> int:
+def gsm_a(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `gsm_a` algorithm.
 
@@ -104,14 +110,14 @@ def gsm_a(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def gsm_b(data: bytes, initial: Optional[int] = None) -> int:
+def gsm_b(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `gsm_b` algorithm.
 
@@ -122,14 +128,14 @@ def gsm_b(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def i_432_1(data: bytes, initial: Optional[int] = None) -> int:
+def i_432_1(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `i_432_1` algorithm.
 
@@ -140,14 +146,14 @@ def i_432_1(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def i_code(data: bytes, initial: Optional[int] = None) -> int:
+def i_code(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `i_code` algorithm.
 
@@ -158,14 +164,14 @@ def i_code(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def lte(data: bytes, initial: Optional[int] = None) -> int:
+def lte(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `lte` algorithm.
 
@@ -176,14 +182,14 @@ def lte(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def maxim_dow(data: bytes, initial: Optional[int] = None) -> int:
+def maxim_dow(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `maxim_dow` algorithm.
 
@@ -194,14 +200,14 @@ def maxim_dow(data: bytes, initial: Optional[int] = None) -> int:
         - refin: True
         - refout: True
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def mifare_mad(data: bytes, initial: Optional[int] = None) -> int:
+def mifare_mad(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `mifare_mad` algorithm.
 
@@ -212,14 +218,14 @@ def mifare_mad(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def nrsc_5(data: bytes, initial: Optional[int] = None) -> int:
+def nrsc_5(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `nrsc_5` algorithm.
 
@@ -230,14 +236,14 @@ def nrsc_5(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def opensafety(data: bytes, initial: Optional[int] = None) -> int:
+def opensafety(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `opensafety` algorithm.
 
@@ -248,14 +254,14 @@ def opensafety(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def rohc(data: bytes, initial: Optional[int] = None) -> int:
+def rohc(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `rohc` algorithm.
 
@@ -266,14 +272,14 @@ def rohc(data: bytes, initial: Optional[int] = None) -> int:
         - refin: True
         - refout: True
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def sae_j1850(data: bytes, initial: Optional[int] = None) -> int:
+def sae_j1850(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `sae_j1850` algorithm.
 
@@ -284,14 +290,14 @@ def sae_j1850(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def smbus(data: bytes, initial: Optional[int] = None) -> int:
+def smbus(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `smbus` algorithm.
 
@@ -302,14 +308,14 @@ def smbus(data: bytes, initial: Optional[int] = None) -> int:
         - refin: False
         - refout: False
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def tech_3250(data: bytes, initial: Optional[int] = None) -> int:
+def tech_3250(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `tech_3250` algorithm.
 
@@ -320,14 +326,14 @@ def tech_3250(data: bytes, initial: Optional[int] = None) -> int:
         - refin: True
         - refout: True
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def wcdma(data: bytes, initial: Optional[int] = None) -> int:
+def wcdma(data: Buffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `wcdma` algorithm.
 
@@ -338,7 +344,7 @@ def wcdma(data: bytes, initial: Optional[int] = None) -> int:
         - refin: True
         - refout: True
 
-    :param bytes data: The data to be computed
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
     :param Optional[int] initial: The optional starting value of the checksum
     :return: The checksum
     :rtype: int

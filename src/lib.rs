@@ -14,7 +14,8 @@ use std::sync::OnceLock;
 
 use crc_fast::{checksum, checksum_with_params, CrcAlgorithm, CrcParams, Digest};
 use pyo3::prelude::*;
-use pyo3::wrap_pyfunction;
+use pyo3::types::PyBytes;
+use pyo3::{ffi, wrap_pyfunction};
 
 /// Rocksoft-model parameters of a CRC variant, as listed in the reveng CRC
 /// catalogue (<https://reveng.sourceforge.io/crc-catalogue/all.htm>).
@@ -194,13 +195,73 @@ impl ByteTable {
 /// Python threads can run while the checksum is computed.
 const DETACH_THRESHOLD: usize = 16 * 1024;
 
-#[inline(always)]
-fn run<T: Send>(py: Python<'_>, len: usize, f: impl FnOnce() -> T + Send) -> T {
-    if len >= DETACH_THRESHOLD {
-        py.detach(f)
-    } else {
-        f()
+/// A borrowed, contiguous, read-only view of any object that supports the
+/// buffer protocol, obtained the way CPython's `y*` argument format does it.
+struct SimpleBuffer(ffi::Py_buffer);
+
+impl SimpleBuffer {
+    fn get(obj: &Bound<'_, PyAny>) -> PyResult<Self> {
+        let mut view = std::mem::MaybeUninit::<ffi::Py_buffer>::uninit();
+        // SAFETY: `PyObject_GetBuffer` fully initialises `view` when it
+        // returns 0, and sets a Python exception otherwise.
+        let rc =
+            unsafe { ffi::PyObject_GetBuffer(obj.as_ptr(), view.as_mut_ptr(), ffi::PyBUF_SIMPLE) };
+        if rc != 0 {
+            return Err(PyErr::fetch(obj.py()));
+        }
+        Ok(Self(unsafe { view.assume_init() }))
     }
+
+    fn as_bytes(&self) -> &[u8] {
+        if self.0.len == 0 {
+            return &[];
+        }
+        // SAFETY: a simple buffer is contiguous, `len` bytes long and stays
+        // valid until `PyBuffer_Release`, which happens when `self` drops.
+        // Immutability during the borrow is the documented caller contract
+        // (see `with_data`).
+        unsafe { std::slice::from_raw_parts(self.0.buf as *const u8, self.0.len as usize) }
+    }
+}
+
+impl Drop for SimpleBuffer {
+    fn drop(&mut self) {
+        // SAFETY: the view was filled in by a successful `PyObject_GetBuffer`
+        // and is released exactly once, with the GIL held.
+        unsafe { ffi::PyBuffer_Release(&mut self.0) }
+    }
+}
+
+/// Runs `f` on the contents of `data`. `bytes` objects are borrowed directly;
+/// anything else goes through the buffer protocol. Large inputs are processed
+/// with the GIL released; the buffer export keeps the memory alive, and a
+/// `bytearray` unresizable, for the duration.
+///
+/// Like `hashlib`, `zlib` and other zero-copy consumers, this borrows the
+/// buffer as an immutable slice instead of copying it. The caller must not
+/// write to a mutable buffer from another thread while its checksum is being
+/// computed: that is a data race, undefined behaviour in Rust, and at best
+/// produces a meaningless checksum. Copying would make every non-`bytes`
+/// input roughly twice as slow, so the contract is documented instead.
+#[inline(always)]
+fn with_data<T: Send>(
+    py: Python<'_>,
+    data: &Bound<'_, PyAny>,
+    f: impl FnOnce(&[u8]) -> T + Send,
+) -> PyResult<T> {
+    let buffer;
+    let bytes: &[u8] = match data.downcast::<PyBytes>() {
+        Ok(bytes) => bytes.as_bytes(),
+        Err(_) => {
+            buffer = SimpleBuffer::get(data)?;
+            buffer.as_bytes()
+        }
+    };
+    Ok(if bytes.len() >= DETACH_THRESHOLD {
+        py.detach(move || f(bytes))
+    } else {
+        f(bytes)
+    })
 }
 
 /// Slice-by-16 tables for an 8-bit CRC: `tables[k][v]` is the register after
@@ -272,7 +333,7 @@ fn crc8_update(mut crc: u8, tables: &[[u8; 256]; 16], data: &[u8]) -> u8 {
 // Shared tail of every function's docstring.
 macro_rules! doc_tail {
     () => {
-        "\n\n:param bytes data: The data to be computed\n:param Optional[int] initial: The optional starting value of the checksum\n:return: The checksum\n:rtype: int\n:raises TypeError: if the data is not a bytes-like object"
+        "\n\n:param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed\n:param Optional[int] initial: The optional starting value of the checksum\n:return: The checksum\n:rtype: int\n:raises TypeError: if the data is not a bytes-like object"
     };
 }
 
@@ -282,10 +343,10 @@ macro_rules! define_crc8_fn {
         #[pyfunction]
         #[pyo3(name = $pyname, signature = (data, initial=None))]
         #[doc = concat!($doc, doc_tail!())]
-        fn $name(py: Python<'_>, data: &[u8], initial: Option<u8>) -> PyResult<u8> {
+        fn $name(py: Python<'_>, data: &Bound<'_, PyAny>, initial: Option<u8>) -> PyResult<u8> {
             const _: () = assert!($params.width == 8 && $params.refin == $params.refout);
             static TABLES: [[u8; 256]; 16] = crc8_tables($params.poly as u8, $params.refin);
-            let result = run(py, data.len(), move || {
+            with_data(py, data, move |data| {
                 let xorout = $params.xorout as u8;
                 let start = match initial {
                     // `initial` is a previously returned checksum, i.e. the
@@ -295,8 +356,7 @@ macro_rules! define_crc8_fn {
                     None => $params.init as u8,
                 };
                 crc8_update(start, &TABLES, data) ^ xorout
-            });
-            Ok(result)
+            })
         }
     };
 }
@@ -307,11 +367,15 @@ macro_rules! define_fast_crc_fn {
         #[pyfunction]
         #[pyo3(name = $pyname, signature = (data, initial=None))]
         #[doc = concat!($doc, doc_tail!())]
-        fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
+        fn $name(
+            py: Python<'_>,
+            data: &Bound<'_, PyAny>,
+            initial: Option<$word>,
+        ) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
             static BYTE_TABLE: ByteTable =
                 ByteTable::new($params.width, $params.poly, $params.refin);
-            let result = run(py, data.len(), move || {
+            with_data(py, data, move |data| {
                 if data.len() < SMALL_INPUT {
                     let start = match initial {
                         Some(value) => (value as u64) ^ $params.xorout,
@@ -329,8 +393,7 @@ macro_rules! define_fast_crc_fn {
                         digest.finalize() as $word
                     }
                 }
-            });
-            Ok(result)
+            })
         }
     };
 }
@@ -342,7 +405,11 @@ macro_rules! define_custom_crc_fn {
         #[pyfunction]
         #[pyo3(name = $pyname, signature = (data, initial=None))]
         #[doc = concat!($doc, doc_tail!())]
-        fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
+        fn $name(
+            py: Python<'_>,
+            data: &Bound<'_, PyAny>,
+            initial: Option<$word>,
+        ) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
             static PARAMS: OnceLock<CrcParams> = OnceLock::new();
             let params = PARAMS.get_or_init(|| {
@@ -358,7 +425,7 @@ macro_rules! define_custom_crc_fn {
             });
             static BYTE_TABLE: ByteTable =
                 ByteTable::new($params.width, $params.poly, $params.refin);
-            let result = run(py, data.len(), move || {
+            with_data(py, data, move |data| {
                 if data.len() < SMALL_INPUT {
                     let start = match initial {
                         Some(value) => (value as u64) ^ $params.xorout,
@@ -371,8 +438,7 @@ macro_rules! define_custom_crc_fn {
                     params.init_algorithm = (value as u64) ^ $params.xorout;
                 }
                 checksum_with_params(params, data) as $word
-            });
-            Ok(result)
+            })
         }
     };
 }
@@ -386,7 +452,11 @@ macro_rules! define_refin_only_crc_fn {
         #[pyfunction]
         #[pyo3(name = $pyname, signature = (data, initial=None))]
         #[doc = concat!($doc, doc_tail!())]
-        fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
+        fn $name(
+            py: Python<'_>,
+            data: &Bound<'_, PyAny>,
+            initial: Option<$word>,
+        ) -> PyResult<$word> {
             const _: () = assert!($params.refin && !$params.refout);
             static PARAMS: OnceLock<CrcParams> = OnceLock::new();
             let params = PARAMS.get_or_init(|| {
@@ -401,7 +471,7 @@ macro_rules! define_refin_only_crc_fn {
                 )
             });
             static BYTE_TABLE: ByteTable = ByteTable::new($params.width, $params.poly, true);
-            let result = run(py, data.len(), move || {
+            with_data(py, data, move |data| {
                 let xorout = $params.xorout as $word;
                 // Checksum-form value of the initial register, when none was given.
                 let start = initial.unwrap_or(($params.init as $word) ^ xorout);
@@ -414,8 +484,7 @@ macro_rules! define_refin_only_crc_fn {
                     checksum_with_params(params, data)
                 };
                 (register as $word).reverse_bits() ^ xorout
-            });
-            Ok(result)
+            })
         }
     };
 }

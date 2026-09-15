@@ -36,7 +36,7 @@ class TestPublicApi(unittest.TestCase):
                     self.assertEqual(fn.__name__, attr)
                     self.assertEqual(fn.__module__, f"fastcrc.{name}")
                     self.assertTrue(fn.__doc__.startswith(f"Compute a CRC-{name[3:]} checksum"))
-                    self.assertIn(":param bytes data:", fn.__doc__)
+                    self.assertIn(":param data:", fn.__doc__)
                     self.assertIs(pickle.loads(pickle.dumps(fn)), fn)
                     whole = fn(b"123456789")
                     self.assertIsInstance(whole, int)
