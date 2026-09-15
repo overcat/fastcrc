@@ -6,14 +6,14 @@ This document records all notable changes to `fastcrc <https://github.com/overca
 
 0.4.0 (September 15, 2026)
 --------------------------
-* perf: CRC-16, CRC-32 and CRC-64 checksums are computed with SIMD carry-less multiplication (PCLMULQDQ/VPCLMULQDQ on x86, PMULL on aarch64, table-based fallback elsewhere) via the `crc-fast <https://crates.io/crates/crc-fast>`_ crate, and CRC-8 uses slice-by-16 tables; large inputs are over 100x faster on CPUs with VPCLMULQDQ, results and the API are unchanged.
+* perf: CRC-16, CRC-32 and CRC-64 checksums are computed with SIMD carry-less multiplication (PCLMULQDQ/VPCLMULQDQ on x86, PMULL on aarch64, table-based fallback elsewhere) via the `crc-fast <https://crates.io/crates/crc-fast>`_ crate, and CRC-8 uses slice-by-16 tables; large inputs are over 100x faster on CPUs with VPCLMULQDQ, results are unchanged.
 * perf: the GIL is released while computing checksums of inputs of 16 KiB or more.
 * perf: release builds use fat LTO, reducing per-call overhead for small inputs.
-* perf: the functions in ``fastcrc.crc8``/``crc16``/``crc32``/``crc64`` are now the extension functions themselves instead of Python wrappers around them, saving about 15 ns per call; names, signatures, docstrings and behaviour are unchanged, type hints moved to ``.pyi`` stubs.
+* perf: the functions in ``fastcrc.crc8``/``crc16``/``crc32``/``crc64`` are now the extension functions themselves instead of Python wrappers around them, saving about 15 ns per call; names, positional and keyword calling and results are unchanged, type hints moved to ``.pyi`` stubs, and the note below lists what changes about the function objects.
 * perf: inputs shorter than 8 bytes are computed with a lookup table, avoiding the SIMD setup cost.
-* feat: every function accepts any bytes-like object (``bytearray``, ``memoryview``, ``array``, ``mmap``, NumPy arrays, ...) through the buffer protocol, treated as raw bytes like ``zlib.crc32`` does; ``bytes`` keeps its zero-copy fast path, and as with ``hashlib`` a mutable buffer must not be modified by another thread while its checksum is computed.
+* feat: every function accepts any bytes-like object (``bytearray``, ``memoryview``, ``array``, ``mmap``, NumPy arrays, ...) through the buffer protocol, treated as raw bytes like ``zlib.crc32`` does; ``bytes`` keeps its zero-copy fast path, and as with ``hashlib`` a mutable buffer must not be modified by another thread while its checksum is computed. Unsupported objects raise the standard ``a bytes-like object is required`` TypeError and non-contiguous buffers raise BufferError.
 * chore: the ``crc`` crate is no longer a dependency; building from source requires Rust 1.89 or newer.
-* note: the public functions are now built-in functions rather than Python functions, so ``inspect.isfunction`` is false and they carry no runtime ``__annotations__``; the private ``fastcrc.fastcrc.crc_32_iscsi``-style names and ``fastcrc.crc32._crc_32_iscsi``-style aliases no longer exist.
+* note: the public functions are now built-in functions rather than Python functions: ``inspect.isfunction`` is false, they have no ``__annotations__``, ``__code__`` or ``__dict__`` (attributes cannot be set on them), they do not bind as methods when stored on a class, and they do not appear as frames in tracebacks or ``sys.settrace``; the private, undocumented ``fastcrc.fastcrc.crc_32_iscsi``-style names and ``fastcrc.crc32._crc_32_iscsi``-style aliases no longer exist.
 * deprecation: this is the last release series to support Python 3.7; fastcrc 0.5.0 will drop it.
 
 0.3.6 (May 06, 2026)
