@@ -55,8 +55,7 @@ class TestModules(unittest.TestCase):
                 with self.subTest(function=str(algorithm)):
                     args = node.args
                     self.assertEqual(["data", "initial"], [a.arg for a in args.args])
-                    # `posonlyargs` only exists from Python 3.8 on.
-                    self.assertFalse(getattr(args, "posonlyargs", None) or args.kwonlyargs)
+                    self.assertFalse(args.posonlyargs or args.kwonlyargs)
                     self.assertIsNone(args.vararg)
                     self.assertIsNone(args.kwarg)
                     self.assertEqual(1, len(args.defaults))

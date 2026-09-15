@@ -4,6 +4,12 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+Unreleased
+----------
+* chore: upgrade PyO3 from 0.26 to 0.29.2 and refresh the Rust dependency lock file.
+* breaking: Python 3.7, Python 3.8 and PyPy 3.9/3.10 are no longer supported: PyO3 0.29 requires CPython 3.8+ and PyPy 3.11+, the manylinux build images no longer ship Python 3.8, and the 3.7 drop was announced in 0.4.0; ``requires-python`` is now ``>=3.9`` and no wheels are built for those interpreters.
+* note: the ``TypeError`` raised for an invalid ``initial`` no longer carries the ``argument 'initial':`` prefix, following PyO3's new error reporting; the exception type is unchanged.
+
 0.4.1 (September 15, 2026)
 --------------------------
 * feat: add ``fastcrc.crc16.autosar``, the CRC16 routine of the AUTOSAR CRC library (CRC-16/CCITT-FALSE); it is an alias of ``crc16.ibm_3740``. (`#9 <https://github.com/overcat/fastcrc/issues/9>`_)
