@@ -174,7 +174,9 @@ jobs:
       - name: Build fastcrc
         run: uv run pip install .
       - name: Run unit tests
-        run: uv run python tests/test_fastcrc.py
+        run: |
+          uv run python tests/test_fastcrc.py
+          uv run python tests/test_reference.py
 
   release:
     name: Release
