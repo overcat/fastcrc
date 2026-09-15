@@ -266,7 +266,7 @@ fn with_data<T: Send>(
     f: impl FnOnce(&[u8]) -> T + Send,
 ) -> PyResult<T> {
     let buffer;
-    let bytes: &[u8] = match data.downcast::<PyBytes>() {
+    let bytes: &[u8] = match data.cast::<PyBytes>() {
         Ok(bytes) => bytes.as_bytes(),
         Err(_) => {
             buffer = SimpleBuffer::get(data)?;
