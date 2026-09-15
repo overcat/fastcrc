@@ -4,6 +4,10 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+0.4.1 (September 15, 2026)
+--------------------------
+* feat: add ``fastcrc.crc16.autosar``, the CRC16 routine of the AUTOSAR CRC library (CRC-16/CCITT-FALSE); it is an alias of ``crc16.ibm_3740``. (`#9 <https://github.com/overcat/fastcrc/issues/9>`_)
+
 0.4.0 (September 15, 2026)
 --------------------------
 * perf: CRC-16, CRC-32 and CRC-64 checksums are computed with SIMD carry-less multiplication (PCLMULQDQ/VPCLMULQDQ on x86, PMULL on aarch64, table-based fallback elsewhere) via the `crc-fast <https://crates.io/crates/crc-fast>`_ crate, and CRC-8 uses slice-by-16 tables; large inputs are over 100x faster on CPUs with VPCLMULQDQ, results are unchanged.
