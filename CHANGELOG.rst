@@ -4,6 +4,18 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+0.4.0 (September 15, 2026)
+--------------------------
+* perf: CRC-16, CRC-32 and CRC-64 checksums are computed with SIMD carry-less multiplication (PCLMULQDQ/VPCLMULQDQ on x86, PMULL on aarch64, table-based fallback elsewhere) via the `crc-fast <https://crates.io/crates/crc-fast>`_ crate, and CRC-8 uses slice-by-16 tables; large inputs are over 100x faster on CPUs with VPCLMULQDQ, results and the API are unchanged.
+* perf: the GIL is released while computing checksums of inputs of 16 KiB or more.
+* perf: release builds use fat LTO, reducing per-call overhead for small inputs.
+* perf: the functions in ``fastcrc.crc8``/``crc16``/``crc32``/``crc64`` are now the extension functions themselves instead of Python wrappers around them, saving about 15 ns per call; names, signatures, docstrings and behaviour are unchanged, type hints moved to ``.pyi`` stubs.
+* perf: inputs shorter than 8 bytes are computed with a lookup table, avoiding the SIMD setup cost.
+* feat: every function accepts any bytes-like object (``bytearray``, ``memoryview``, ``array``, ``mmap``, NumPy arrays, ...) through the buffer protocol, treated as raw bytes like ``zlib.crc32`` does; ``bytes`` keeps its zero-copy fast path, and as with ``hashlib`` a mutable buffer must not be modified by another thread while its checksum is computed.
+* chore: the ``crc`` crate is no longer a dependency; building from source requires Rust 1.89 or newer.
+* note: the public functions are now built-in functions rather than Python functions, so ``inspect.isfunction`` is false and they carry no runtime ``__annotations__``; the private ``fastcrc.fastcrc.crc_32_iscsi``-style names and ``fastcrc.crc32._crc_32_iscsi``-style aliases no longer exist.
+* deprecation: this is the last release series to support Python 3.7; fastcrc 0.5.0 will drop it.
+
 0.3.6 (May 06, 2026)
 --------------------
 * feat: add `fastcrc.crc64.tms570_iso` for the TI Hercules TMS570 CRC-64-ISO algorithm. (`#30 <https://github.com/overcat/fastcrc/pull/30>`_)
@@ -30,7 +42,7 @@ This document records all notable changes to `fastcrc <https://github.com/overca
 * chore: drop support for Python 3.6. (`#6 <https://github.com/overcat/fastcrc/pull/6>`_)
 
 0.2.1 (September 15, 2022)
----------------------
+--------------------------
 * feat: add `fastcrc.crc16.ibm_refin` and `fastcrc.crc32.reversed_reciprocal_refin`, these are two experimental functions that may be removed in the future.
 * chore: build wheels for more platforms.
 * docs: improve documentation.

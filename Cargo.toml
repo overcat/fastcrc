@@ -1,6 +1,6 @@
 [package]
 name = "fastcrc"
-version = "0.3.6"
+version = "0.4.0"
 authors = ["overcat <4catcode@gmail.com>"]
 edition = "2021"
 rust-version = "1.89"
