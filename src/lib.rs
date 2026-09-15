@@ -105,6 +105,19 @@ mod params {
 }
 use params::*;
 
+/// Inputs at least this large are processed with the GIL released so other
+/// Python threads can run while the checksum is computed.
+const DETACH_THRESHOLD: usize = 16 * 1024;
+
+#[inline(always)]
+fn run<T: Send>(py: Python<'_>, len: usize, f: impl FnOnce() -> T + Send) -> T {
+    if len >= DETACH_THRESHOLD {
+        py.detach(f)
+    } else {
+        f()
+    }
+}
+
 /// Slice-by-16 tables for an 8-bit CRC: `tables[k][v]` is the register after
 /// feeding byte `v` followed by `k` zero bytes into an all-zero register.
 const fn crc8_tables(poly: u8, reflected: bool) -> [[u8; 256]; 16] {
@@ -176,10 +189,10 @@ macro_rules! define_crc8_fn {
     ($name:ident, $params:expr) => {
         #[pyfunction]
         #[pyo3(signature = (data, initial=None))]
-        fn $name(data: &[u8], initial: Option<u8>) -> PyResult<u8> {
+        fn $name(py: Python<'_>, data: &[u8], initial: Option<u8>) -> PyResult<u8> {
             const _: () = assert!($params.width == 8 && $params.refin == $params.refout);
             static TABLES: [[u8; 256]; 16] = crc8_tables($params.poly as u8, $params.refin);
-            let result = {
+            let result = run(py, data.len(), move || {
                 let xorout = $params.xorout as u8;
                 let start = match initial {
                     // `initial` is a previously returned checksum, i.e. the
@@ -189,7 +202,7 @@ macro_rules! define_crc8_fn {
                     None => $params.init as u8,
                 };
                 crc8_update(start, &TABLES, data) ^ xorout
-            };
+            });
             Ok(result)
         }
     };
@@ -200,9 +213,9 @@ macro_rules! define_fast_crc_fn {
     ($name:ident, $word:ty, $params:expr, $alg:expr) => {
         #[pyfunction]
         #[pyo3(signature = (data, initial=None))]
-        fn $name(data: &[u8], initial: Option<$word>) -> PyResult<$word> {
+        fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
-            let result = match initial {
+            let result = run(py, data.len(), move || match initial {
                 // One-shot path: avoids copying `CrcParams` into a `Digest`.
                 None => checksum($alg, data) as $word,
                 Some(value) => {
@@ -211,7 +224,7 @@ macro_rules! define_fast_crc_fn {
                     digest.update(data);
                     digest.finalize() as $word
                 }
-            };
+            });
             Ok(result)
         }
     };
@@ -223,7 +236,7 @@ macro_rules! define_custom_crc_fn {
     ($name:ident, $word:ty, $params:expr) => {
         #[pyfunction]
         #[pyo3(signature = (data, initial=None))]
-        fn $name(data: &[u8], initial: Option<$word>) -> PyResult<$word> {
+        fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
             static PARAMS: OnceLock<CrcParams> = OnceLock::new();
             let params = PARAMS.get_or_init(|| {
@@ -237,13 +250,13 @@ macro_rules! define_custom_crc_fn {
                     $params.check,
                 )
             });
-            let result = {
+            let result = run(py, data.len(), move || {
                 let mut params = *params;
                 if let Some(value) = initial {
                     params.init_algorithm = (value as u64) ^ $params.xorout;
                 }
                 checksum_with_params(params, data) as $word
-            };
+            });
             Ok(result)
         }
     };
@@ -257,7 +270,7 @@ macro_rules! define_refin_only_crc_fn {
     ($name:ident, $word:ty, $params:expr) => {
         #[pyfunction]
         #[pyo3(signature = (data, initial=None))]
-        fn $name(data: &[u8], initial: Option<$word>) -> PyResult<$word> {
+        fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin && !$params.refout);
             static PARAMS: OnceLock<CrcParams> = OnceLock::new();
             let params = PARAMS.get_or_init(|| {
@@ -271,14 +284,14 @@ macro_rules! define_refin_only_crc_fn {
                     0,
                 )
             });
-            let result = {
+            let result = run(py, data.len(), move || {
                 let xorout = $params.xorout as $word;
                 // Checksum-form value of the initial register, when none was given.
                 let start = initial.unwrap_or(($params.init as $word) ^ xorout);
                 let mut params = *params;
                 params.init_algorithm = (start ^ xorout).reverse_bits() as u64;
                 (checksum_with_params(params, data) as $word).reverse_bits() ^ xorout
-            };
+            });
             Ok(result)
         }
     };
