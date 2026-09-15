@@ -212,12 +212,13 @@ impl SimpleBuffer {
             return Err(PyErr::fetch(obj.py()));
         }
         let buffer = Self(unsafe { view.assume_init() });
-        // A PyBUF_SIMPLE request may only succeed for C-contiguous data, but
-        // PyPy 3.10 also exports strided memoryviews through it (as the first
-        // `len` bytes of the underlying buffer) while still filling in shape
-        // and strides, so check those. CPython and PyPy 3.11 refuse such
-        // views themselves and leave `strides` NULL, which by the protocol
-        // means C-contiguous, so they skip the call.
+        // The buffer protocol only allows a PyBUF_SIMPLE request to succeed
+        // for C-contiguous data, and conforming exporters (CPython's own
+        // types, PyPy 3.11) leave `strides` NULL, which means contiguous, so
+        // this costs a null check. An exporter that fills in strides anyway
+        // is verified rather than trusted: PyPy 3.10 used to hand out the
+        // first `len` bytes of a strided memoryview's underlying buffer,
+        // which would silently checksum the wrong bytes.
         // SAFETY: `buffer.0` is a fully initialised, still exported view.
         if !buffer.0.strides.is_null()
             && unsafe { ffi::PyBuffer_IsContiguous(&buffer.0, b'C' as std::ffi::c_char) } == 0
