@@ -1,15 +1,10 @@
-import sys
+from _typeshed import ReadableBuffer
 from typing import Optional, Set
-
-if sys.version_info >= (3, 12):
-    from collections.abc import Buffer
-else:
-    from typing_extensions import Buffer
 
 algorithms_guaranteed: Set[str]
 algorithms_available: Set[str]
 
-def aixm(data: Buffer, initial: Optional[int] = None) -> int:
+def aixm(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `aixm` algorithm.
 
@@ -27,7 +22,7 @@ def aixm(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def autosar(data: Buffer, initial: Optional[int] = None) -> int:
+def autosar(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `autosar` algorithm.
 
@@ -45,7 +40,7 @@ def autosar(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def base91_d(data: Buffer, initial: Optional[int] = None) -> int:
+def base91_d(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `base91 d` algorithm.
 
@@ -63,7 +58,7 @@ def base91_d(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def bzip2(data: Buffer, initial: Optional[int] = None) -> int:
+def bzip2(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `bzip2` algorithm.
 
@@ -81,7 +76,7 @@ def bzip2(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def cd_rom_edc(data: Buffer, initial: Optional[int] = None) -> int:
+def cd_rom_edc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `cd rom edc` algorithm.
 
@@ -99,7 +94,7 @@ def cd_rom_edc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def cksum(data: Buffer, initial: Optional[int] = None) -> int:
+def cksum(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `cksum` algorithm.
 
@@ -117,7 +112,7 @@ def cksum(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def iscsi(data: Buffer, initial: Optional[int] = None) -> int:
+def iscsi(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `iscsi` algorithm.
 
@@ -135,7 +130,7 @@ def iscsi(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def iso_hdlc(data: Buffer, initial: Optional[int] = None) -> int:
+def iso_hdlc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `iso hdlc` algorithm.
 
@@ -153,7 +148,7 @@ def iso_hdlc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def jamcrc(data: Buffer, initial: Optional[int] = None) -> int:
+def jamcrc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `jamcrc` algorithm.
 
@@ -171,7 +166,7 @@ def jamcrc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def mpeg_2(data: Buffer, initial: Optional[int] = None) -> int:
+def mpeg_2(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `mpeg 2` algorithm.
 
@@ -189,7 +184,7 @@ def mpeg_2(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def xfer(data: Buffer, initial: Optional[int] = None) -> int:
+def xfer(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `xfer` algorithm.
 
@@ -207,7 +202,7 @@ def xfer(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def k_reversed_reciprocal_refin(data: Buffer, initial: Optional[int] = None) -> int:
+def k_reversed_reciprocal_refin(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-32 checksum of data with the `k reversed reciprocal refin` algorithm.
 

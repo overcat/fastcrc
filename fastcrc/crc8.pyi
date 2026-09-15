@@ -1,15 +1,10 @@
-import sys
+from _typeshed import ReadableBuffer
 from typing import Optional, Set
-
-if sys.version_info >= (3, 12):
-    from collections.abc import Buffer
-else:
-    from typing_extensions import Buffer
 
 algorithms_guaranteed: Set[str]
 algorithms_available: Set[str]
 
-def autosar(data: Buffer, initial: Optional[int] = None) -> int:
+def autosar(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `autosar` algorithm.
 
@@ -27,7 +22,7 @@ def autosar(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def bluetooth(data: Buffer, initial: Optional[int] = None) -> int:
+def bluetooth(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `bluetooth` algorithm.
 
@@ -45,7 +40,7 @@ def bluetooth(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def cdma2000(data: Buffer, initial: Optional[int] = None) -> int:
+def cdma2000(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `cdma2000` algorithm.
 
@@ -63,7 +58,7 @@ def cdma2000(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def darc(data: Buffer, initial: Optional[int] = None) -> int:
+def darc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `darc` algorithm.
 
@@ -81,7 +76,7 @@ def darc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def dvb_s2(data: Buffer, initial: Optional[int] = None) -> int:
+def dvb_s2(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `dvb_s2` algorithm.
 
@@ -99,7 +94,7 @@ def dvb_s2(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def gsm_a(data: Buffer, initial: Optional[int] = None) -> int:
+def gsm_a(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `gsm_a` algorithm.
 
@@ -117,7 +112,7 @@ def gsm_a(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def gsm_b(data: Buffer, initial: Optional[int] = None) -> int:
+def gsm_b(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `gsm_b` algorithm.
 
@@ -135,7 +130,7 @@ def gsm_b(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def i_432_1(data: Buffer, initial: Optional[int] = None) -> int:
+def i_432_1(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `i_432_1` algorithm.
 
@@ -153,7 +148,7 @@ def i_432_1(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def i_code(data: Buffer, initial: Optional[int] = None) -> int:
+def i_code(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `i_code` algorithm.
 
@@ -171,7 +166,7 @@ def i_code(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def lte(data: Buffer, initial: Optional[int] = None) -> int:
+def lte(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `lte` algorithm.
 
@@ -189,7 +184,7 @@ def lte(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def maxim_dow(data: Buffer, initial: Optional[int] = None) -> int:
+def maxim_dow(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `maxim_dow` algorithm.
 
@@ -207,7 +202,7 @@ def maxim_dow(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def mifare_mad(data: Buffer, initial: Optional[int] = None) -> int:
+def mifare_mad(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `mifare_mad` algorithm.
 
@@ -225,7 +220,7 @@ def mifare_mad(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def nrsc_5(data: Buffer, initial: Optional[int] = None) -> int:
+def nrsc_5(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `nrsc_5` algorithm.
 
@@ -243,7 +238,7 @@ def nrsc_5(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def opensafety(data: Buffer, initial: Optional[int] = None) -> int:
+def opensafety(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `opensafety` algorithm.
 
@@ -261,7 +256,7 @@ def opensafety(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def rohc(data: Buffer, initial: Optional[int] = None) -> int:
+def rohc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `rohc` algorithm.
 
@@ -279,7 +274,7 @@ def rohc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def sae_j1850(data: Buffer, initial: Optional[int] = None) -> int:
+def sae_j1850(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `sae_j1850` algorithm.
 
@@ -297,7 +292,7 @@ def sae_j1850(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def smbus(data: Buffer, initial: Optional[int] = None) -> int:
+def smbus(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `smbus` algorithm.
 
@@ -315,7 +310,7 @@ def smbus(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def tech_3250(data: Buffer, initial: Optional[int] = None) -> int:
+def tech_3250(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `tech_3250` algorithm.
 
@@ -333,7 +328,7 @@ def tech_3250(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def wcdma(data: Buffer, initial: Optional[int] = None) -> int:
+def wcdma(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-8 checksum of data with the `wcdma` algorithm.
 
