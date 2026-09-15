@@ -808,6 +808,26 @@ define_fast_crc_fn!(
     )
 );
 define_fast_crc_fn!(
+    crc_16_autosar,
+    "autosar",
+    u16,
+    CRC_16_IBM_3740,
+    CrcAlgorithm::Crc16Ibm3740,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `autosar` algorithm.\n",
+        "\n",
+        "This is the CRC16 routine of the AUTOSAR CRC library, also known as CRC-16/CCITT-FALSE;\n",
+        "it is the same algorithm as `ibm_3740`.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
     crc_16_cdma2000,
     "cdma2000",
     u16,
@@ -1634,6 +1654,7 @@ fn fastcrc(py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     let crc16 = PyModule::new(py, "fastcrc.crc16")?;
     crc16.add_function(wrap_pyfunction!(crc_16_arc, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_autosar, &crc16)?)?;
     crc16.add_function(wrap_pyfunction!(crc_16_cdma2000, &crc16)?)?;
     crc16.add_function(wrap_pyfunction!(crc_16_cms, &crc16)?)?;
     crc16.add_function(wrap_pyfunction!(crc_16_dds_110, &crc16)?)?;

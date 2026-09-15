@@ -105,6 +105,12 @@ class TestCrc16(unittest.TestCase):
     def test_arc_init(self):
         self.assertEqual(47933, crc16.arc(data_part2, crc16.arc(data_part1)))
 
+    def test_autosar(self):
+        self.assertEqual(10673, crc16.autosar(data))
+
+    def test_autosar_init(self):
+        self.assertEqual(10673, crc16.autosar(data_part2, crc16.autosar(data_part1)))
+
     def test_cdma2000(self):
         self.assertEqual(19462, crc16.cdma2000(data))
 

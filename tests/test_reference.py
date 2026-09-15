@@ -30,6 +30,7 @@ PARAMS = [
     ("crc8", "tech_3250", 8, 0x1d, 0xff, True, True, 0x00),
     ("crc8", "wcdma", 8, 0x9b, 0x00, True, True, 0x00),
     ("crc16", "arc", 16, 0x8005, 0x0000, True, True, 0x0000),
+    ("crc16", "autosar", 16, 0x1021, 0xffff, False, False, 0x0000),
     ("crc16", "cdma2000", 16, 0xc867, 0xffff, False, False, 0x0000),
     ("crc16", "cms", 16, 0x8005, 0xffff, False, False, 0x0000),
     ("crc16", "dds_110", 16, 0x8005, 0x800d, False, False, 0x0000),
