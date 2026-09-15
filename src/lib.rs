@@ -13,6 +13,7 @@
 use std::sync::OnceLock;
 
 use crc_fast::{checksum, checksum_with_params, CrcAlgorithm, CrcParams, Digest};
+use pyo3::exceptions::PyBufferError;
 use pyo3::prelude::*;
 use pyo3::types::PyBytes;
 use pyo3::{ffi, wrap_pyfunction};
@@ -200,6 +201,7 @@ const DETACH_THRESHOLD: usize = 16 * 1024;
 struct SimpleBuffer(ffi::Py_buffer);
 
 impl SimpleBuffer {
+    #[inline(always)]
     fn get(obj: &Bound<'_, PyAny>) -> PyResult<Self> {
         let mut view = std::mem::MaybeUninit::<ffi::Py_buffer>::uninit();
         // SAFETY: `PyObject_GetBuffer` fully initialises `view` when it
@@ -209,9 +211,23 @@ impl SimpleBuffer {
         if rc != 0 {
             return Err(PyErr::fetch(obj.py()));
         }
-        Ok(Self(unsafe { view.assume_init() }))
+        let buffer = Self(unsafe { view.assume_init() });
+        // A PyBUF_SIMPLE request may only succeed for C-contiguous data, but
+        // PyPy 3.10 also exports strided memoryviews through it (as the first
+        // `len` bytes of the underlying buffer) while still filling in shape
+        // and strides, so check those. CPython and PyPy 3.11 refuse such
+        // views themselves and leave `strides` NULL, which by the protocol
+        // means C-contiguous, so they skip the call.
+        // SAFETY: `buffer.0` is a fully initialised, still exported view.
+        if !buffer.0.strides.is_null()
+            && unsafe { ffi::PyBuffer_IsContiguous(&buffer.0, b'C' as std::ffi::c_char) } == 0
+        {
+            return Err(PyBufferError::new_err("buffer is not C-contiguous"));
+        }
+        Ok(buffer)
     }
 
+    #[inline(always)]
     fn as_bytes(&self) -> &[u8] {
         if self.0.len == 0 {
             return &[];
