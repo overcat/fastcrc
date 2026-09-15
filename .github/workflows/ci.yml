@@ -178,6 +178,7 @@ jobs:
           uv run python tests/test_fastcrc.py
           uv run python tests/test_reference.py
           uv run python tests/test_api.py
+          uv run python tests/test_buffers.py
 
   release:
     name: Release
