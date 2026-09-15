@@ -177,6 +177,7 @@ jobs:
         run: |
           uv run python tests/test_fastcrc.py
           uv run python tests/test_reference.py
+          uv run python tests/test_api.py
 
   release:
     name: Release
