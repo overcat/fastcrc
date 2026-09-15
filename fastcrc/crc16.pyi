@@ -22,6 +22,27 @@ def arc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
+def autosar(data: ReadableBuffer, initial: Optional[int] = None) -> int:
+    """
+    Compute a CRC-16 checksum of data with the `autosar` algorithm.
+
+    This is the CRC16 routine of the AUTOSAR CRC library, also known as CRC-16/CCITT-FALSE;
+    it is the same algorithm as `ibm_3740`.
+
+    Algorithm parameters:
+        - poly: 0x1021
+        - init: 0xffff
+        - xorout: 0x0000
+        - refin: False
+        - refout: False
+
+    :param data: The data to be computed, any bytes-like object; a mutable buffer must not be modified by another thread while its checksum is computed
+    :param Optional[int] initial: The optional starting value of the checksum
+    :return: The checksum
+    :rtype: int
+    :raises TypeError: if the data is not a bytes-like object
+    """
+
 def cdma2000(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `cdma2000` algorithm.

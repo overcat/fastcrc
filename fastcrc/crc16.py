@@ -7,6 +7,7 @@ __all__ = [
     "algorithms_available",
     "algorithms_guaranteed",
     "arc",
+    "autosar",
     "cdma2000",
     "cms",
     "dds_110",
@@ -41,6 +42,7 @@ __all__ = [
 
 __always_supported = (
     "arc",
+    "autosar",
     "cdma2000",
     "cms",
     "dds_110",
@@ -76,6 +78,7 @@ algorithms_guaranteed = set(__always_supported)
 algorithms_available = set(__always_supported)
 
 arc = _crc16.arc
+autosar = _crc16.autosar
 cdma2000 = _crc16.cdma2000
 cms = _crc16.cms
 dds_110 = _crc16.dds_110
