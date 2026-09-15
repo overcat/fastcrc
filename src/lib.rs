@@ -269,11 +269,19 @@ fn crc8_update(mut crc: u8, tables: &[[u8; 256]; 16], data: &[u8]) -> u8 {
     crc
 }
 
+// Shared tail of every function's docstring.
+macro_rules! doc_tail {
+    () => {
+        "\n\n:param bytes data: The data to be computed\n:param Optional[int] initial: The optional starting value of the checksum\n:return: The checksum\n:rtype: int\n:raises TypeError: if the data is not a bytes-like object"
+    };
+}
+
 // CRC-8 variants (`refin == refout`), slice-by-16 tables built at compile time.
 macro_rules! define_crc8_fn {
-    ($name:ident, $params:expr) => {
+    ($name:ident, $pyname:literal, $params:expr, $doc:expr) => {
         #[pyfunction]
-        #[pyo3(signature = (data, initial=None))]
+        #[pyo3(name = $pyname, signature = (data, initial=None))]
+        #[doc = concat!($doc, doc_tail!())]
         fn $name(py: Python<'_>, data: &[u8], initial: Option<u8>) -> PyResult<u8> {
             const _: () = assert!($params.width == 8 && $params.refin == $params.refout);
             static TABLES: [[u8; 256]; 16] = crc8_tables($params.poly as u8, $params.refin);
@@ -295,9 +303,10 @@ macro_rules! define_crc8_fn {
 
 // Variants in crc-fast's catalogue.
 macro_rules! define_fast_crc_fn {
-    ($name:ident, $word:ty, $params:expr, $alg:expr) => {
+    ($name:ident, $pyname:literal, $word:ty, $params:expr, $alg:expr, $doc:expr) => {
         #[pyfunction]
-        #[pyo3(signature = (data, initial=None))]
+        #[pyo3(name = $pyname, signature = (data, initial=None))]
+        #[doc = concat!($doc, doc_tail!())]
         fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
             static BYTE_TABLE: ByteTable =
@@ -329,9 +338,10 @@ macro_rules! define_fast_crc_fn {
 // Variants outside crc-fast's catalogue with `refin == refout`; folding keys
 // are generated once at first use.
 macro_rules! define_custom_crc_fn {
-    ($name:ident, $word:ty, $params:expr) => {
+    ($name:ident, $pyname:literal, $word:ty, $params:expr, $doc:expr) => {
         #[pyfunction]
-        #[pyo3(signature = (data, initial=None))]
+        #[pyo3(name = $pyname, signature = (data, initial=None))]
+        #[doc = concat!($doc, doc_tail!())]
         fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
             static PARAMS: OnceLock<CrcParams> = OnceLock::new();
@@ -372,9 +382,10 @@ macro_rules! define_custom_crc_fn {
 // and init, no xorout) with its register bit-reversed, so run that variant
 // and reverse on the way in and out.
 macro_rules! define_refin_only_crc_fn {
-    ($name:ident, $word:ty, $params:expr) => {
+    ($name:ident, $pyname:literal, $word:ty, $params:expr, $doc:expr) => {
         #[pyfunction]
-        #[pyo3(signature = (data, initial=None))]
+        #[pyo3(name = $pyname, signature = (data, initial=None))]
+        #[doc = concat!($doc, doc_tail!())]
         fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin && !$params.refout);
             static PARAMS: OnceLock<CrcParams> = OnceLock::new();
@@ -409,251 +420,1192 @@ macro_rules! define_refin_only_crc_fn {
     };
 }
 
-define_crc8_fn!(crc_8_autosar, CRC_8_AUTOSAR);
-define_crc8_fn!(crc_8_bluetooth, CRC_8_BLUETOOTH);
-define_crc8_fn!(crc_8_cdma2000, CRC_8_CDMA2000);
-define_crc8_fn!(crc_8_darc, CRC_8_DARC);
-define_crc8_fn!(crc_8_dvb_s2, CRC_8_DVB_S2);
-define_crc8_fn!(crc_8_gsm_a, CRC_8_GSM_A);
-define_crc8_fn!(crc_8_gsm_b, CRC_8_GSM_B);
-define_crc8_fn!(crc_8_i_432_1, CRC_8_I_432_1);
-define_crc8_fn!(crc_8_i_code, CRC_8_I_CODE);
-define_crc8_fn!(crc_8_lte, CRC_8_LTE);
-define_crc8_fn!(crc_8_maxim_dow, CRC_8_MAXIM_DOW);
-define_crc8_fn!(crc_8_mifare_mad, CRC_8_MIFARE_MAD);
-define_crc8_fn!(crc_8_nrsc_5, CRC_8_NRSC_5);
-define_crc8_fn!(crc_8_opensafety, CRC_8_OPENSAFETY);
-define_crc8_fn!(crc_8_rohc, CRC_8_ROHC);
-define_crc8_fn!(crc_8_sae_j1850, CRC_8_SAE_J1850);
-define_crc8_fn!(crc_8_smbus, CRC_8_SMBUS);
-define_crc8_fn!(crc_8_tech_3250, CRC_8_TECH_3250);
-define_crc8_fn!(crc_8_wcdma, CRC_8_WCDMA);
-define_fast_crc_fn!(crc_16_arc, u16, CRC_16_ARC, CrcAlgorithm::Crc16Arc);
+define_crc8_fn!(
+    crc_8_autosar,
+    "autosar",
+    CRC_8_AUTOSAR,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `autosar` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x2f\n",
+        "    - init: 0xff\n",
+        "    - xorout: 0xff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_bluetooth,
+    "bluetooth",
+    CRC_8_BLUETOOTH,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `bluetooth` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xa7\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_crc8_fn!(
+    crc_8_cdma2000,
+    "cdma2000",
+    CRC_8_CDMA2000,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `cdma2000` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x9b\n",
+        "    - init: 0xff\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_darc,
+    "darc",
+    CRC_8_DARC,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `darc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x39\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_crc8_fn!(
+    crc_8_dvb_s2,
+    "dvb_s2",
+    CRC_8_DVB_S2,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `dvb_s2` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xd5\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_gsm_a,
+    "gsm_a",
+    CRC_8_GSM_A,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `gsm_a` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1d\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_gsm_b,
+    "gsm_b",
+    CRC_8_GSM_B,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `gsm_b` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x49\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0xff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_i_432_1,
+    "i_432_1",
+    CRC_8_I_432_1,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `i_432_1` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x07\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x55\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_i_code,
+    "i_code",
+    CRC_8_I_CODE,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `i_code` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1d\n",
+        "    - init: 0xfd\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_lte,
+    "lte",
+    CRC_8_LTE,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `lte` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x9b\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_maxim_dow,
+    "maxim_dow",
+    CRC_8_MAXIM_DOW,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `maxim_dow` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x31\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_crc8_fn!(
+    crc_8_mifare_mad,
+    "mifare_mad",
+    CRC_8_MIFARE_MAD,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `mifare_mad` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1d\n",
+        "    - init: 0xc7\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_nrsc_5,
+    "nrsc_5",
+    CRC_8_NRSC_5,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `nrsc_5` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x31\n",
+        "    - init: 0xff\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_opensafety,
+    "opensafety",
+    CRC_8_OPENSAFETY,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `opensafety` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x2f\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_rohc,
+    "rohc",
+    CRC_8_ROHC,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `rohc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x07\n",
+        "    - init: 0xff\n",
+        "    - xorout: 0x00\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_crc8_fn!(
+    crc_8_sae_j1850,
+    "sae_j1850",
+    CRC_8_SAE_J1850,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `sae_j1850` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1d\n",
+        "    - init: 0xff\n",
+        "    - xorout: 0xff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_smbus,
+    "smbus",
+    CRC_8_SMBUS,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `smbus` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x07\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_crc8_fn!(
+    crc_8_tech_3250,
+    "tech_3250",
+    CRC_8_TECH_3250,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `tech_3250` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1d\n",
+        "    - init: 0xff\n",
+        "    - xorout: 0x00\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_crc8_fn!(
+    crc_8_wcdma,
+    "wcdma",
+    CRC_8_WCDMA,
+    concat!(
+        "Compute a CRC-8 checksum of data with the `wcdma` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x9b\n",
+        "    - init: 0x00\n",
+        "    - xorout: 0x00\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_arc,
+    "arc",
+    u16,
+    CRC_16_ARC,
+    CrcAlgorithm::Crc16Arc,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `arc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
 define_fast_crc_fn!(
     crc_16_cdma2000,
+    "cdma2000",
     u16,
     CRC_16_CDMA2000,
-    CrcAlgorithm::Crc16Cdma2000
+    CrcAlgorithm::Crc16Cdma2000,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `cdma2000` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xc867\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
-define_fast_crc_fn!(crc_16_cms, u16, CRC_16_CMS, CrcAlgorithm::Crc16Cms);
+define_fast_crc_fn!(
+    crc_16_cms,
+    "cms",
+    u16,
+    CRC_16_CMS,
+    CrcAlgorithm::Crc16Cms,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `cms` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 define_fast_crc_fn!(
     crc_16_dds_110,
+    "dds_110",
     u16,
     CRC_16_DDS_110,
-    CrcAlgorithm::Crc16Dds110
+    CrcAlgorithm::Crc16Dds110,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `dds 110` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0x800d\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
-define_fast_crc_fn!(crc_16_dect_r, u16, CRC_16_DECT_R, CrcAlgorithm::Crc16DectR);
-define_fast_crc_fn!(crc_16_dect_x, u16, CRC_16_DECT_X, CrcAlgorithm::Crc16DectX);
-define_fast_crc_fn!(crc_16_dnp, u16, CRC_16_DNP, CrcAlgorithm::Crc16Dnp);
+define_fast_crc_fn!(
+    crc_16_dect_r,
+    "dect_r",
+    u16,
+    CRC_16_DECT_R,
+    CrcAlgorithm::Crc16DectR,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `dect r` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x0589\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0001\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_dect_x,
+    "dect_x",
+    u16,
+    CRC_16_DECT_X,
+    CrcAlgorithm::Crc16DectX,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `dect x` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x0589\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_dnp,
+    "dnp",
+    u16,
+    CRC_16_DNP,
+    CrcAlgorithm::Crc16Dnp,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `dnp` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x3d65\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
 define_fast_crc_fn!(
     crc_16_en_13757,
+    "en_13757",
     u16,
     CRC_16_EN_13757,
-    CrcAlgorithm::Crc16En13757
+    CrcAlgorithm::Crc16En13757,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `en 13757` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x3d65\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_genibus,
+    "genibus",
     u16,
     CRC_16_GENIBUS,
-    CrcAlgorithm::Crc16Genibus
+    CrcAlgorithm::Crc16Genibus,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `genibus` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
-define_fast_crc_fn!(crc_16_gsm, u16, CRC_16_GSM, CrcAlgorithm::Crc16Gsm);
+define_fast_crc_fn!(
+    crc_16_gsm,
+    "gsm",
+    u16,
+    CRC_16_GSM,
+    CrcAlgorithm::Crc16Gsm,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `gsm` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 define_fast_crc_fn!(
     crc_16_ibm_3740,
+    "ibm_3740",
     u16,
     CRC_16_IBM_3740,
-    CrcAlgorithm::Crc16Ibm3740
+    CrcAlgorithm::Crc16Ibm3740,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `ibm 3740` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_ibm_sdlc,
+    "ibm_sdlc",
     u16,
     CRC_16_IBM_SDLC,
-    CrcAlgorithm::Crc16IbmSdlc
+    CrcAlgorithm::Crc16IbmSdlc,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `ibm sdlc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
 define_fast_crc_fn!(
     crc_16_iso_iec_14443_3_a,
+    "iso_iec_14443_3_a",
     u16,
     CRC_16_ISO_IEC_14443_3_A,
-    CrcAlgorithm::Crc16IsoIec144433A
+    CrcAlgorithm::Crc16IsoIec144433A,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `iso iec 14443 3 a` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xc6c6\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
-define_fast_crc_fn!(crc_16_kermit, u16, CRC_16_KERMIT, CrcAlgorithm::Crc16Kermit);
-define_fast_crc_fn!(crc_16_lj1200, u16, CRC_16_LJ1200, CrcAlgorithm::Crc16Lj1200);
+define_fast_crc_fn!(
+    crc_16_kermit,
+    "kermit",
+    u16,
+    CRC_16_KERMIT,
+    CrcAlgorithm::Crc16Kermit,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `kermit` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_lj1200,
+    "lj1200",
+    u16,
+    CRC_16_LJ1200,
+    CrcAlgorithm::Crc16Lj1200,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `lj1200` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x6f63\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 define_fast_crc_fn!(
     crc_16_maxim_dow,
+    "maxim_dow",
     u16,
     CRC_16_MAXIM_DOW,
-    CrcAlgorithm::Crc16MaximDow
+    CrcAlgorithm::Crc16MaximDow,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `maxim dow` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
 define_fast_crc_fn!(
     crc_16_mcrf4xx,
+    "mcrf4xx",
     u16,
     CRC_16_MCRF4XX,
-    CrcAlgorithm::Crc16Mcrf4xx
+    CrcAlgorithm::Crc16Mcrf4xx,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `mcrf4xx` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
-define_fast_crc_fn!(crc_16_modbus, u16, CRC_16_MODBUS, CrcAlgorithm::Crc16Modbus);
-define_fast_crc_fn!(crc_16_nrsc_5, u16, CRC_16_NRSC_5, CrcAlgorithm::Crc16Nrsc5);
+define_fast_crc_fn!(
+    crc_16_modbus,
+    "modbus",
+    u16,
+    CRC_16_MODBUS,
+    CrcAlgorithm::Crc16Modbus,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `modbus` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_nrsc_5,
+    "nrsc_5",
+    u16,
+    CRC_16_NRSC_5,
+    CrcAlgorithm::Crc16Nrsc5,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `nrsc 5` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x080b\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
 define_fast_crc_fn!(
     crc_16_opensafety_a,
+    "opensafety_a",
     u16,
     CRC_16_OPENSAFETY_A,
-    CrcAlgorithm::Crc16OpensafetyA
+    CrcAlgorithm::Crc16OpensafetyA,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `opensafety a` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x5935\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_opensafety_b,
+    "opensafety_b",
     u16,
     CRC_16_OPENSAFETY_B,
-    CrcAlgorithm::Crc16OpensafetyB
+    CrcAlgorithm::Crc16OpensafetyB,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `opensafety b` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x755b\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_profibus,
+    "profibus",
     u16,
     CRC_16_PROFIBUS,
-    CrcAlgorithm::Crc16Profibus
+    CrcAlgorithm::Crc16Profibus,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `profibus` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1dcf\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
-define_fast_crc_fn!(crc_16_riello, u16, CRC_16_RIELLO, CrcAlgorithm::Crc16Riello);
+define_fast_crc_fn!(
+    crc_16_riello,
+    "riello",
+    u16,
+    CRC_16_RIELLO,
+    CrcAlgorithm::Crc16Riello,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `riello` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0xb2aa\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
 define_fast_crc_fn!(
     crc_16_spi_fujitsu,
+    "spi_fujitsu",
     u16,
     CRC_16_SPI_FUJITSU,
-    CrcAlgorithm::Crc16SpiFujitsu
+    CrcAlgorithm::Crc16SpiFujitsu,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `spi fujitsu` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0x1d0f\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_t10_dif,
+    "t10_dif",
     u16,
     CRC_16_T10_DIF,
-    CrcAlgorithm::Crc16T10Dif
+    CrcAlgorithm::Crc16T10Dif,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `t10 dif` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8bb7\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_teledisk,
+    "teledisk",
     u16,
     CRC_16_TELEDISK,
-    CrcAlgorithm::Crc16Teledisk
+    CrcAlgorithm::Crc16Teledisk,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `teledisk` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xa097\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
 define_fast_crc_fn!(
     crc_16_tms37157,
+    "tms37157",
     u16,
     CRC_16_TMS37157,
-    CrcAlgorithm::Crc16Tms37157
+    CrcAlgorithm::Crc16Tms37157,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `tms37157` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0x89ec\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
-define_fast_crc_fn!(crc_16_umts, u16, CRC_16_UMTS, CrcAlgorithm::Crc16Umts);
-define_fast_crc_fn!(crc_16_usb, u16, CRC_16_USB, CrcAlgorithm::Crc16Usb);
-define_fast_crc_fn!(crc_16_xmodem, u16, CRC_16_XMODEM, CrcAlgorithm::Crc16Xmodem);
-define_fast_crc_fn!(crc_32_aixm, u32, CRC_32_AIXM, CrcAlgorithm::Crc32Aixm);
+define_fast_crc_fn!(
+    crc_16_umts,
+    "umts",
+    u16,
+    CRC_16_UMTS,
+    CrcAlgorithm::Crc16Umts,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `umts` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_usb,
+    "usb",
+    u16,
+    CRC_16_USB,
+    CrcAlgorithm::Crc16Usb,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `usb` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0xffff\n",
+        "    - xorout: 0xffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_fast_crc_fn!(
+    crc_16_xmodem,
+    "xmodem",
+    u16,
+    CRC_16_XMODEM,
+    CrcAlgorithm::Crc16Xmodem,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `xmodem` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1021\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_32_aixm,
+    "aixm",
+    u32,
+    CRC_32_AIXM,
+    CrcAlgorithm::Crc32Aixm,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `aixm` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x814141ab\n",
+        "    - init: 0x00000000\n",
+        "    - xorout: 0x00000000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 define_fast_crc_fn!(
     crc_32_autosar,
+    "autosar",
     u32,
     CRC_32_AUTOSAR,
-    CrcAlgorithm::Crc32Autosar
+    CrcAlgorithm::Crc32Autosar,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `autosar` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xf4acfb13\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0xffffffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
 define_fast_crc_fn!(
     crc_32_base91_d,
+    "base91_d",
     u32,
     CRC_32_BASE91_D,
-    CrcAlgorithm::Crc32Base91D
+    CrcAlgorithm::Crc32Base91D,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `base91 d` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xa833982b\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0xffffffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
-define_fast_crc_fn!(crc_32_bzip2, u32, CRC_32_BZIP2, CrcAlgorithm::Crc32Bzip2);
+define_fast_crc_fn!(
+    crc_32_bzip2,
+    "bzip2",
+    u32,
+    CRC_32_BZIP2,
+    CrcAlgorithm::Crc32Bzip2,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `bzip2` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x04c11db7\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0xffffffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 define_fast_crc_fn!(
     crc_32_cd_rom_edc,
+    "cd_rom_edc",
     u32,
     CRC_32_CD_ROM_EDC,
-    CrcAlgorithm::Crc32CdRomEdc
+    CrcAlgorithm::Crc32CdRomEdc,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `cd rom edc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8001801b\n",
+        "    - init: 0x00000000\n",
+        "    - xorout: 0x00000000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
-define_fast_crc_fn!(crc_32_cksum, u32, CRC_32_CKSUM, CrcAlgorithm::Crc32Cksum);
-define_fast_crc_fn!(crc_32_iscsi, u32, CRC_32_ISCSI, CrcAlgorithm::Crc32Iscsi);
+define_fast_crc_fn!(
+    crc_32_cksum,
+    "cksum",
+    u32,
+    CRC_32_CKSUM,
+    CrcAlgorithm::Crc32Cksum,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `cksum` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x04c11db7\n",
+        "    - init: 0x00000000\n",
+        "    - xorout: 0xffffffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_32_iscsi,
+    "iscsi",
+    u32,
+    CRC_32_ISCSI,
+    CrcAlgorithm::Crc32Iscsi,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `iscsi` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x1edc6f41\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0xffffffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
 define_fast_crc_fn!(
     crc_32_iso_hdlc,
+    "iso_hdlc",
     u32,
     CRC_32_ISO_HDLC,
-    CrcAlgorithm::Crc32IsoHdlc
+    CrcAlgorithm::Crc32IsoHdlc,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `iso hdlc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x04c11db7\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0xffffffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
 );
-define_fast_crc_fn!(crc_32_jamcrc, u32, CRC_32_JAMCRC, CrcAlgorithm::Crc32Jamcrc);
-define_fast_crc_fn!(crc_32_mpeg_2, u32, CRC_32_MPEG_2, CrcAlgorithm::Crc32Mpeg2);
-define_fast_crc_fn!(crc_32_xfer, u32, CRC_32_XFER, CrcAlgorithm::Crc32Xfer);
+define_fast_crc_fn!(
+    crc_32_jamcrc,
+    "jamcrc",
+    u32,
+    CRC_32_JAMCRC,
+    CrcAlgorithm::Crc32Jamcrc,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `jamcrc` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x04c11db7\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0x00000000\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_fast_crc_fn!(
+    crc_32_mpeg_2,
+    "mpeg_2",
+    u32,
+    CRC_32_MPEG_2,
+    CrcAlgorithm::Crc32Mpeg2,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `mpeg 2` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x04c11db7\n",
+        "    - init: 0xffffffff\n",
+        "    - xorout: 0x00000000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_32_xfer,
+    "xfer",
+    u32,
+    CRC_32_XFER,
+    CrcAlgorithm::Crc32Xfer,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `xfer` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x000000af\n",
+        "    - init: 0x00000000\n",
+        "    - xorout: 0x00000000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 define_fast_crc_fn!(
     crc_64_ecma_182,
+    "ecma_182",
     u64,
     CRC_64_ECMA_182,
-    CrcAlgorithm::Crc64Ecma182
+    CrcAlgorithm::Crc64Ecma182,
+    concat!(
+        "Compute a CRC-64 checksum of data with the `ecma 182` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x42f0e1eba9ea3693\n",
+        "    - init: 0x0000000000000000\n",
+        "    - xorout: 0x0000000000000000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
 );
-define_fast_crc_fn!(crc_64_go_iso, u64, CRC_64_GO_ISO, CrcAlgorithm::Crc64GoIso);
-define_fast_crc_fn!(crc_64_we, u64, CRC_64_WE, CrcAlgorithm::Crc64We);
-define_fast_crc_fn!(crc_64_xz, u64, CRC_64_XZ, CrcAlgorithm::Crc64Xz);
-define_refin_only_crc_fn!(crc_16_ibm_refin, u16, CRC_16_IBM_REFIN);
+define_fast_crc_fn!(
+    crc_64_go_iso,
+    "go_iso",
+    u64,
+    CRC_64_GO_ISO,
+    CrcAlgorithm::Crc64GoIso,
+    concat!(
+        "Compute a CRC-64 checksum of data with the `go iso` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x000000000000001b\n",
+        "    - init: 0xffffffffffffffff\n",
+        "    - xorout: 0xffffffffffffffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_fast_crc_fn!(
+    crc_64_we,
+    "we",
+    u64,
+    CRC_64_WE,
+    CrcAlgorithm::Crc64We,
+    concat!(
+        "Compute a CRC-64 checksum of data with the `we` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x42f0e1eba9ea3693\n",
+        "    - init: 0xffffffffffffffff\n",
+        "    - xorout: 0xffffffffffffffff\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
+define_fast_crc_fn!(
+    crc_64_xz,
+    "xz",
+    u64,
+    CRC_64_XZ,
+    CrcAlgorithm::Crc64Xz,
+    concat!(
+        "Compute a CRC-64 checksum of data with the `xz` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x42f0e1eba9ea3693\n",
+        "    - init: 0xffffffffffffffff\n",
+        "    - xorout: 0xffffffffffffffff\n",
+        "    - refin: True\n",
+        "    - refout: True",
+    )
+);
+define_refin_only_crc_fn!(
+    crc_16_ibm_refin,
+    "ibm_refin",
+    u16,
+    CRC_16_IBM_REFIN,
+    concat!(
+        "Compute a CRC-16 checksum of data with the `ibm refin` algorithm.\n",
+        "\n",
+        "**This method may be removed in the future.**\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x8005\n",
+        "    - init: 0x0000\n",
+        "    - xorout: 0x0000\n",
+        "    - refin: True\n",
+        "    - refout: False",
+    )
+);
 define_refin_only_crc_fn!(
     crc_32_k_reversed_reciprocal_refin,
+    "k_reversed_reciprocal_refin",
     u32,
-    CRC_32_K_REVERSED_RECIPROCAL_REFIN
+    CRC_32_K_REVERSED_RECIPROCAL_REFIN,
+    concat!(
+        "Compute a CRC-32 checksum of data with the `k reversed reciprocal refin` algorithm.\n",
+        "\n",
+        "**This method may be removed in the future.**\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0xba0dc66b\n",
+        "    - init: 0x00000000\n",
+        "    - xorout: 0x00000000\n",
+        "    - refin: True\n",
+        "    - refout: False",
+    )
 );
-define_custom_crc_fn!(crc_64_tms570_iso, u64, CRC_64_TMS570_ISO);
+define_custom_crc_fn!(
+    crc_64_tms570_iso,
+    "tms570_iso",
+    u64,
+    CRC_64_TMS570_ISO,
+    concat!(
+        "Compute a CRC-64 checksum of data with the `tms570_iso` algorithm.\n",
+        "\n",
+        "Algorithm parameters:\n",
+        "    - poly: 0x000000000000001b\n",
+        "    - init: 0x0000000000000000\n",
+        "    - xorout: 0x0000000000000000\n",
+        "    - refin: False\n",
+        "    - refout: False",
+    )
+);
 
 #[pymodule(gil_used = false)]
-fn fastcrc(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    m.add_function(wrap_pyfunction!(crc_8_autosar, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_bluetooth, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_cdma2000, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_darc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_dvb_s2, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_gsm_a, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_gsm_b, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_i_432_1, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_i_code, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_lte, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_maxim_dow, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_mifare_mad, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_nrsc_5, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_opensafety, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_rohc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_sae_j1850, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_smbus, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_tech_3250, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_8_wcdma, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_arc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_cdma2000, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_cms, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_dds_110, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_dect_r, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_dect_x, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_dnp, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_en_13757, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_genibus, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_gsm, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_ibm_3740, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_ibm_sdlc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_iso_iec_14443_3_a, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_kermit, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_lj1200, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_maxim_dow, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_mcrf4xx, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_modbus, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_nrsc_5, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_opensafety_a, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_opensafety_b, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_profibus, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_riello, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_spi_fujitsu, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_t10_dif, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_teledisk, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_tms37157, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_umts, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_usb, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_xmodem, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_16_ibm_refin, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_aixm, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_autosar, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_base91_d, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_bzip2, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_cd_rom_edc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_cksum, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_iscsi, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_iso_hdlc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_jamcrc, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_mpeg_2, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_xfer, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_32_k_reversed_reciprocal_refin, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_64_ecma_182, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_64_go_iso, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_64_we, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_64_xz, m)?)?;
-    m.add_function(wrap_pyfunction!(crc_64_tms570_iso, m)?)?;
+fn fastcrc(py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+    let crc8 = PyModule::new(py, "fastcrc.crc8")?;
+    crc8.add_function(wrap_pyfunction!(crc_8_autosar, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_bluetooth, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_cdma2000, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_darc, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_dvb_s2, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_gsm_a, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_gsm_b, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_i_432_1, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_i_code, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_lte, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_maxim_dow, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_mifare_mad, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_nrsc_5, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_opensafety, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_rohc, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_sae_j1850, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_smbus, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_tech_3250, &crc8)?)?;
+    crc8.add_function(wrap_pyfunction!(crc_8_wcdma, &crc8)?)?;
+    m.add("crc8", &crc8)?;
+
+    let crc16 = PyModule::new(py, "fastcrc.crc16")?;
+    crc16.add_function(wrap_pyfunction!(crc_16_arc, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_cdma2000, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_cms, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_dds_110, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_dect_r, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_dect_x, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_dnp, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_en_13757, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_genibus, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_gsm, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_ibm_3740, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_ibm_sdlc, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_iso_iec_14443_3_a, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_kermit, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_lj1200, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_maxim_dow, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_mcrf4xx, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_modbus, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_nrsc_5, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_opensafety_a, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_opensafety_b, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_profibus, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_riello, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_spi_fujitsu, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_t10_dif, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_teledisk, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_tms37157, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_umts, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_usb, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_xmodem, &crc16)?)?;
+    crc16.add_function(wrap_pyfunction!(crc_16_ibm_refin, &crc16)?)?;
+    m.add("crc16", &crc16)?;
+
+    let crc32 = PyModule::new(py, "fastcrc.crc32")?;
+    crc32.add_function(wrap_pyfunction!(crc_32_aixm, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_autosar, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_base91_d, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_bzip2, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_cd_rom_edc, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_cksum, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_iscsi, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_iso_hdlc, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_jamcrc, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_mpeg_2, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(crc_32_xfer, &crc32)?)?;
+    crc32.add_function(wrap_pyfunction!(
+        crc_32_k_reversed_reciprocal_refin,
+        &crc32
+    )?)?;
+    m.add("crc32", &crc32)?;
+
+    let crc64 = PyModule::new(py, "fastcrc.crc64")?;
+    crc64.add_function(wrap_pyfunction!(crc_64_ecma_182, &crc64)?)?;
+    crc64.add_function(wrap_pyfunction!(crc_64_go_iso, &crc64)?)?;
+    crc64.add_function(wrap_pyfunction!(crc_64_we, &crc64)?)?;
+    crc64.add_function(wrap_pyfunction!(crc_64_xz, &crc64)?)?;
+    crc64.add_function(wrap_pyfunction!(crc_64_tms570_iso, &crc64)?)?;
+    m.add("crc64", &crc64)?;
+
     Ok(())
 }
