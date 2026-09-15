@@ -1,15 +1,10 @@
-import sys
+from _typeshed import ReadableBuffer
 from typing import Optional, Set
-
-if sys.version_info >= (3, 12):
-    from collections.abc import Buffer
-else:
-    from typing_extensions import Buffer
 
 algorithms_guaranteed: Set[str]
 algorithms_available: Set[str]
 
-def ecma_182(data: Buffer, initial: Optional[int] = None) -> int:
+def ecma_182(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-64 checksum of data with the `ecma 182` algorithm.
 
@@ -27,7 +22,7 @@ def ecma_182(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def go_iso(data: Buffer, initial: Optional[int] = None) -> int:
+def go_iso(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-64 checksum of data with the `go iso` algorithm.
 
@@ -45,7 +40,7 @@ def go_iso(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def we(data: Buffer, initial: Optional[int] = None) -> int:
+def we(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-64 checksum of data with the `we` algorithm.
 
@@ -63,7 +58,7 @@ def we(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def xz(data: Buffer, initial: Optional[int] = None) -> int:
+def xz(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-64 checksum of data with the `xz` algorithm.
 
@@ -81,7 +76,7 @@ def xz(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def tms570_iso(data: Buffer, initial: Optional[int] = None) -> int:
+def tms570_iso(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-64 checksum of data with the `tms570_iso` algorithm.
 

@@ -1,15 +1,10 @@
-import sys
+from _typeshed import ReadableBuffer
 from typing import Optional, Set
-
-if sys.version_info >= (3, 12):
-    from collections.abc import Buffer
-else:
-    from typing_extensions import Buffer
 
 algorithms_guaranteed: Set[str]
 algorithms_available: Set[str]
 
-def arc(data: Buffer, initial: Optional[int] = None) -> int:
+def arc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `arc` algorithm.
 
@@ -27,7 +22,7 @@ def arc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def cdma2000(data: Buffer, initial: Optional[int] = None) -> int:
+def cdma2000(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `cdma2000` algorithm.
 
@@ -45,7 +40,7 @@ def cdma2000(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def cms(data: Buffer, initial: Optional[int] = None) -> int:
+def cms(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `cms` algorithm.
 
@@ -63,7 +58,7 @@ def cms(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def dds_110(data: Buffer, initial: Optional[int] = None) -> int:
+def dds_110(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `dds 110` algorithm.
 
@@ -81,7 +76,7 @@ def dds_110(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def dect_r(data: Buffer, initial: Optional[int] = None) -> int:
+def dect_r(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `dect r` algorithm.
 
@@ -99,7 +94,7 @@ def dect_r(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def dect_x(data: Buffer, initial: Optional[int] = None) -> int:
+def dect_x(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `dect x` algorithm.
 
@@ -117,7 +112,7 @@ def dect_x(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def dnp(data: Buffer, initial: Optional[int] = None) -> int:
+def dnp(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `dnp` algorithm.
 
@@ -135,7 +130,7 @@ def dnp(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def en_13757(data: Buffer, initial: Optional[int] = None) -> int:
+def en_13757(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `en 13757` algorithm.
 
@@ -153,7 +148,7 @@ def en_13757(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def genibus(data: Buffer, initial: Optional[int] = None) -> int:
+def genibus(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `genibus` algorithm.
 
@@ -171,7 +166,7 @@ def genibus(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def gsm(data: Buffer, initial: Optional[int] = None) -> int:
+def gsm(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `gsm` algorithm.
 
@@ -189,7 +184,7 @@ def gsm(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def ibm_3740(data: Buffer, initial: Optional[int] = None) -> int:
+def ibm_3740(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `ibm 3740` algorithm.
 
@@ -207,7 +202,7 @@ def ibm_3740(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def ibm_sdlc(data: Buffer, initial: Optional[int] = None) -> int:
+def ibm_sdlc(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `ibm sdlc` algorithm.
 
@@ -225,7 +220,7 @@ def ibm_sdlc(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def iso_iec_14443_3_a(data: Buffer, initial: Optional[int] = None) -> int:
+def iso_iec_14443_3_a(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `iso iec 14443 3 a` algorithm.
 
@@ -243,7 +238,7 @@ def iso_iec_14443_3_a(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def kermit(data: Buffer, initial: Optional[int] = None) -> int:
+def kermit(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `kermit` algorithm.
 
@@ -261,7 +256,7 @@ def kermit(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def lj1200(data: Buffer, initial: Optional[int] = None) -> int:
+def lj1200(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `lj1200` algorithm.
 
@@ -279,7 +274,7 @@ def lj1200(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def maxim_dow(data: Buffer, initial: Optional[int] = None) -> int:
+def maxim_dow(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `maxim dow` algorithm.
 
@@ -297,7 +292,7 @@ def maxim_dow(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def mcrf4xx(data: Buffer, initial: Optional[int] = None) -> int:
+def mcrf4xx(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `mcrf4xx` algorithm.
 
@@ -315,7 +310,7 @@ def mcrf4xx(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def modbus(data: Buffer, initial: Optional[int] = None) -> int:
+def modbus(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `modbus` algorithm.
 
@@ -333,7 +328,7 @@ def modbus(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def nrsc_5(data: Buffer, initial: Optional[int] = None) -> int:
+def nrsc_5(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `nrsc 5` algorithm.
 
@@ -351,7 +346,7 @@ def nrsc_5(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def opensafety_a(data: Buffer, initial: Optional[int] = None) -> int:
+def opensafety_a(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `opensafety a` algorithm.
 
@@ -369,7 +364,7 @@ def opensafety_a(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def opensafety_b(data: Buffer, initial: Optional[int] = None) -> int:
+def opensafety_b(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `opensafety b` algorithm.
 
@@ -387,7 +382,7 @@ def opensafety_b(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def profibus(data: Buffer, initial: Optional[int] = None) -> int:
+def profibus(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `profibus` algorithm.
 
@@ -405,7 +400,7 @@ def profibus(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def riello(data: Buffer, initial: Optional[int] = None) -> int:
+def riello(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `riello` algorithm.
 
@@ -423,7 +418,7 @@ def riello(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def spi_fujitsu(data: Buffer, initial: Optional[int] = None) -> int:
+def spi_fujitsu(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `spi fujitsu` algorithm.
 
@@ -441,7 +436,7 @@ def spi_fujitsu(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def t10_dif(data: Buffer, initial: Optional[int] = None) -> int:
+def t10_dif(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `t10 dif` algorithm.
 
@@ -459,7 +454,7 @@ def t10_dif(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def teledisk(data: Buffer, initial: Optional[int] = None) -> int:
+def teledisk(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `teledisk` algorithm.
 
@@ -477,7 +472,7 @@ def teledisk(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def tms37157(data: Buffer, initial: Optional[int] = None) -> int:
+def tms37157(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `tms37157` algorithm.
 
@@ -495,7 +490,7 @@ def tms37157(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def umts(data: Buffer, initial: Optional[int] = None) -> int:
+def umts(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `umts` algorithm.
 
@@ -513,7 +508,7 @@ def umts(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def usb(data: Buffer, initial: Optional[int] = None) -> int:
+def usb(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `usb` algorithm.
 
@@ -531,7 +526,7 @@ def usb(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def xmodem(data: Buffer, initial: Optional[int] = None) -> int:
+def xmodem(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `xmodem` algorithm.
 
@@ -549,7 +544,7 @@ def xmodem(data: Buffer, initial: Optional[int] = None) -> int:
     :raises TypeError: if the data is not a bytes-like object
     """
 
-def ibm_refin(data: Buffer, initial: Optional[int] = None) -> int:
+def ibm_refin(data: ReadableBuffer, initial: Optional[int] = None) -> int:
     """
     Compute a CRC-16 checksum of data with the `ibm refin` algorithm.
 
