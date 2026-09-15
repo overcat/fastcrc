@@ -3,6 +3,7 @@ name = "fastcrc"
 version = "0.3.6"
 authors = ["overcat <4catcode@gmail.com>"]
 edition = "2021"
+rust-version = "1.89"
 description = "A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum"
 license = "MIT License"
 repository = "https://github.com/overcat/fastcrc"
@@ -16,8 +17,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = "0.26.0"
-crc = "3.3.0"
-paste = "1.0.15"
+crc-fast = { version = "1.10.0", default-features = false, features = ["std"] }
 
 [profile.release]
 lto = "fat"
