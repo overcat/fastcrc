@@ -105,6 +105,91 @@ mod params {
 }
 use params::*;
 
+impl Params {
+    /// Initial value of the CRC register in the form crc-fast keeps its state
+    /// in: reflected for reflected variants, plain otherwise.
+    const fn register_init(&self) -> u64 {
+        if self.refin {
+            self.init.reverse_bits() >> (64 - self.width)
+        } else {
+            self.init
+        }
+    }
+}
+
+/// Inputs shorter than this are computed byte by byte from a lookup table.
+/// The SIMD path has a fixed setup cost of roughly 7-16 ns, the table path
+/// costs about 1.5 ns per byte, so they break even around 8 bytes.
+const SMALL_INPUT: usize = 8;
+
+/// Byte-at-a-time lookup table for a CRC of width 16, 32 or 64. The state is
+/// the CRC register in the same form crc-fast uses, so the two paths can be
+/// mixed freely.
+struct ByteTable {
+    width: u8,
+    reflected: bool,
+    table: [u64; 256],
+}
+
+impl ByteTable {
+    const fn new(width: u8, poly: u64, reflected: bool) -> Self {
+        let mask = u64::MAX >> (64 - width);
+        let mut table = [0u64; 256];
+        let mut i = 0;
+        while i < 256 {
+            let mut crc;
+            let mut bit = 0;
+            if reflected {
+                let poly = poly.reverse_bits() >> (64 - width);
+                crc = i as u64;
+                while bit < 8 {
+                    crc = if crc & 1 != 0 {
+                        (crc >> 1) ^ poly
+                    } else {
+                        crc >> 1
+                    };
+                    bit += 1;
+                }
+            } else {
+                let top = 1u64 << (width - 1);
+                crc = (i as u64) << (width - 8);
+                while bit < 8 {
+                    crc = if crc & top != 0 {
+                        (crc << 1) ^ poly
+                    } else {
+                        crc << 1
+                    } & mask;
+                    bit += 1;
+                }
+            }
+            table[i] = crc;
+            i += 1;
+        }
+        Self {
+            width,
+            reflected,
+            table,
+        }
+    }
+
+    #[inline(always)]
+    fn update(&self, mut state: u64, data: &[u8]) -> u64 {
+        if self.reflected {
+            for &byte in data {
+                state = self.table[((state ^ byte as u64) & 0xff) as usize] ^ (state >> 8);
+            }
+        } else {
+            let shift = self.width - 8;
+            let mask = u64::MAX >> (64 - self.width);
+            for &byte in data {
+                state = self.table[(((state >> shift) ^ byte as u64) & 0xff) as usize]
+                    ^ ((state << 8) & mask);
+            }
+        }
+        state
+    }
+}
+
 /// Inputs at least this large are processed with the GIL released so other
 /// Python threads can run while the checksum is computed.
 const DETACH_THRESHOLD: usize = 16 * 1024;
@@ -215,14 +300,25 @@ macro_rules! define_fast_crc_fn {
         #[pyo3(signature = (data, initial=None))]
         fn $name(py: Python<'_>, data: &[u8], initial: Option<$word>) -> PyResult<$word> {
             const _: () = assert!($params.refin == $params.refout);
-            let result = run(py, data.len(), move || match initial {
-                // One-shot path: avoids copying `CrcParams` into a `Digest`.
-                None => checksum($alg, data) as $word,
-                Some(value) => {
-                    let mut digest =
-                        Digest::new_with_init_state($alg, (value as u64) ^ $params.xorout);
-                    digest.update(data);
-                    digest.finalize() as $word
+            static BYTE_TABLE: ByteTable =
+                ByteTable::new($params.width, $params.poly, $params.refin);
+            let result = run(py, data.len(), move || {
+                if data.len() < SMALL_INPUT {
+                    let start = match initial {
+                        Some(value) => (value as u64) ^ $params.xorout,
+                        None => $params.register_init(),
+                    };
+                    return (BYTE_TABLE.update(start, data) ^ $params.xorout) as $word;
+                }
+                match initial {
+                    // One-shot path: avoids copying `CrcParams` into a `Digest`.
+                    None => checksum($alg, data) as $word,
+                    Some(value) => {
+                        let mut digest =
+                            Digest::new_with_init_state($alg, (value as u64) ^ $params.xorout);
+                        digest.update(data);
+                        digest.finalize() as $word
+                    }
                 }
             });
             Ok(result)
@@ -250,7 +346,16 @@ macro_rules! define_custom_crc_fn {
                     $params.check,
                 )
             });
+            static BYTE_TABLE: ByteTable =
+                ByteTable::new($params.width, $params.poly, $params.refin);
             let result = run(py, data.len(), move || {
+                if data.len() < SMALL_INPUT {
+                    let start = match initial {
+                        Some(value) => (value as u64) ^ $params.xorout,
+                        None => $params.register_init(),
+                    };
+                    return (BYTE_TABLE.update(start, data) ^ $params.xorout) as $word;
+                }
                 let mut params = *params;
                 if let Some(value) = initial {
                     params.init_algorithm = (value as u64) ^ $params.xorout;
@@ -284,13 +389,20 @@ macro_rules! define_refin_only_crc_fn {
                     0,
                 )
             });
+            static BYTE_TABLE: ByteTable = ByteTable::new($params.width, $params.poly, true);
             let result = run(py, data.len(), move || {
                 let xorout = $params.xorout as $word;
                 // Checksum-form value of the initial register, when none was given.
                 let start = initial.unwrap_or(($params.init as $word) ^ xorout);
-                let mut params = *params;
-                params.init_algorithm = (start ^ xorout).reverse_bits() as u64;
-                (checksum_with_params(params, data) as $word).reverse_bits() ^ xorout
+                let state = (start ^ xorout).reverse_bits() as u64;
+                let register = if data.len() < SMALL_INPUT {
+                    BYTE_TABLE.update(state, data)
+                } else {
+                    let mut params = *params;
+                    params.init_algorithm = state;
+                    checksum_with_params(params, data)
+                };
+                (register as $word).reverse_bits() ^ xorout
             });
             Ok(result)
         }
