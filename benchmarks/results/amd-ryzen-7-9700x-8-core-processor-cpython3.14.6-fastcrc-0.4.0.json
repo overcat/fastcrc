@@ -1,0 +1,1695 @@
+{
+ "environment": {
+  "timestamp": "2026-09-15T10:29:26+00:00",
+  "cpu": {
+   "model": "AMD Ryzen 7 9700X 8-Core Processor",
+   "governor": "performance",
+   "simd": [
+    "sse4_2",
+    "pclmulqdq",
+    "avx2",
+    "avx512f",
+    "avx512vl",
+    "vpclmulqdq",
+    "aes"
+   ],
+   "logical_cpus": 16
+  },
+  "os": "Linux 7.0.0-31-generic",
+  "python": "CPython 3.14.6",
+  "fastcrc": "0.4.0"
+ },
+ "label": "fastcrc 0.4.0",
+ "measurements": [
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 1,
+   "ns": 18.559086004995216,
+   "ns_median": 18.60385184777606,
+   "gbps": 0.05388196378479242
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 8,
+   "ns": 21.027383221714267,
+   "ns_median": 21.065141534101453,
+   "gbps": 0.3804562800633543
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 64,
+   "ns": 24.618203567464057,
+   "ns_median": 24.6741143488652,
+   "gbps": 2.599702282281221
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 256,
+   "ns": 44.32598476525761,
+   "ns_median": 44.44667884569783,
+   "gbps": 5.7753934031185015
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 1024,
+   "ns": 123.46218474828464,
+   "ns_median": 123.71099901053519,
+   "gbps": 8.294037579909482
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 4096,
+   "ns": 444.34925799753717,
+   "ns_median": 444.8457389913081,
+   "gbps": 9.217974208978431
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 16384,
+   "ns": 1731.9713011306662,
+   "ns_median": 1757.1906227308875,
+   "gbps": 9.459741041496583
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 65536,
+   "ns": 7042.422870840383,
+   "ns_median": 7045.365764241399,
+   "gbps": 9.305888215170397
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 262144,
+   "ns": 27979.406162464988,
+   "ns_median": 28005.467787114845,
+   "gbps": 9.369176689377781
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 1048576,
+   "ns": 112273.525,
+   "ns_median": 112367.17954545455,
+   "gbps": 9.339476960396496
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 16777216,
+   "ns": 1803671.037037037,
+   "ns_median": 1806115.3333333333,
+   "gbps": 9.301705053467293
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 134217728,
+   "ns": 14431255.666666666,
+   "ns_median": 14477797.666666666,
+   "gbps": 9.300488543766589
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 1,
+   "ns": 21.651256964143478,
+   "ns_median": 21.716518828960417,
+   "gbps": 0.04618669491827169
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 8,
+   "ns": 30.09583203086202,
+   "ns_median": 30.192232579027255,
+   "gbps": 0.2658175388471179
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 64,
+   "ns": 35.716801110987284,
+   "ns_median": 35.793313645312736,
+   "gbps": 1.7918737963437654
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 256,
+   "ns": 36.84369599238949,
+   "ns_median": 36.96551452904436,
+   "gbps": 6.948271423498877
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 1024,
+   "ns": 43.29822361329008,
+   "ns_median": 43.388469573859716,
+   "gbps": 23.649930979747875
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 4096,
+   "ns": 78.04213688056463,
+   "ns_median": 78.0981385764521,
+   "gbps": 52.48446754179094
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 16384,
+   "ns": 232.34578658335616,
+   "ns_median": 233.66402684999932,
+   "gbps": 70.51558903187639
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 65536,
+   "ns": 806.3347194356352,
+   "ns_median": 808.9684001035532,
+   "gbps": 81.27642084650597
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 262144,
+   "ns": 3052.9581830408997,
+   "ns_median": 3060.2834871920277,
+   "gbps": 85.8655717776296
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 1048576,
+   "ns": 12200.601376259523,
+   "ns_median": 12205.58491029737,
+   "gbps": 85.94461597937018
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 16777216,
+   "ns": 199697.012,
+   "ns_median": 200465.964,
+   "gbps": 84.01335519231505
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 134217728,
+   "ns": 2370648.15,
+   "ns_median": 2420698.05,
+   "gbps": 56.61646921328246
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 1,
+   "ns": 25.20502452273699,
+   "ns_median": 25.3674992059713,
+   "gbps": 0.03967462912396369
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 8,
+   "ns": 26.674060887391818,
+   "ns_median": 26.77246425196313,
+   "gbps": 0.2999168380762528
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 64,
+   "ns": 26.5203963879802,
+   "ns_median": 26.581103359669875,
+   "gbps": 2.413236931443703
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 256,
+   "ns": 35.41532622768922,
+   "ns_median": 35.45115308850529,
+   "gbps": 7.228508876471911
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 1024,
+   "ns": 43.4001189148627,
+   "ns_median": 43.49791115510207,
+   "gbps": 23.59440539803045
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 4096,
+   "ns": 77.8302790484476,
+   "ns_median": 77.97977062460828,
+   "gbps": 52.627332833412204
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 16384,
+   "ns": 235.07831553614236,
+   "ns_median": 235.25754446139416,
+   "gbps": 69.69592224035239
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 65536,
+   "ns": 797.2732378186923,
+   "ns_median": 797.7876447876448,
+   "gbps": 82.20017541201291
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 262144,
+   "ns": 3009.281112649768,
+   "ns_median": 3014.5583117586852,
+   "gbps": 87.11183508182584
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 1048576,
+   "ns": 12047.676151434773,
+   "ns_median": 12055.168314444176,
+   "gbps": 87.03554003442596
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 16777216,
+   "ns": 196389.78656126483,
+   "ns_median": 197713.86166007904,
+   "gbps": 85.42814926257002
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 134217728,
+   "ns": 2323339.05,
+   "ns_median": 2333776.5,
+   "gbps": 57.769324713928434
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 1,
+   "ns": 24.935324564675437,
+   "ns_median": 25.73971876028124,
+   "gbps": 0.040103749097240446
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 8,
+   "ns": 42.839111332329814,
+   "ns_median": 42.969134824377996,
+   "gbps": 0.18674523703208945
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 64,
+   "ns": 38.68894479131824,
+   "ns_median": 38.729912290482034,
+   "gbps": 1.6542193214419623
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 256,
+   "ns": 38.61643582597997,
+   "ns_median": 38.687230576382994,
+   "gbps": 6.629301604985796
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 1024,
+   "ns": 42.38606554385476,
+   "ns_median": 42.42038647974449,
+   "gbps": 24.158883040005634
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 4096,
+   "ns": 81.15740794961384,
+   "ns_median": 81.15999752753866,
+   "gbps": 50.469822823111606
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 16384,
+   "ns": 228.86276027591765,
+   "ns_median": 228.92641279554428,
+   "gbps": 71.58875467659045
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 65536,
+   "ns": 801.3180528618827,
+   "ns_median": 801.5289233679014,
+   "gbps": 81.78525339088543
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 262144,
+   "ns": 3019.9659674786917,
+   "ns_median": 3020.5413165689415,
+   "gbps": 86.80362720075905
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 1048576,
+   "ns": 12058.166626301769,
+   "ns_median": 12066.674013078227,
+   "gbps": 86.95982005363925
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 16777216,
+   "ns": 195744.36078431373,
+   "ns_median": 195956.21568627452,
+   "gbps": 85.7098305809506
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 134217728,
+   "ns": 2343691.45,
+   "ns_median": 2363801.4,
+   "gbps": 57.267661235867884
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 1,
+   "ns": 21.69512066241358,
+   "ns_median": 21.754241744076257,
+   "gbps": 0.04609331358698007
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 8,
+   "ns": 46.848319965152605,
+   "ns_median": 46.88876528328527,
+   "gbps": 0.1707638610296095
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 64,
+   "ns": 40.61654539545439,
+   "ns_median": 40.70597276671861,
+   "gbps": 1.5757125421888436
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 256,
+   "ns": 39.64740388136796,
+   "ns_median": 39.66017018024552,
+   "gbps": 6.4569170976742205
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 1024,
+   "ns": 46.31428558194686,
+   "ns_median": 46.353018119835475,
+   "gbps": 22.10980882320144
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 4096,
+   "ns": 81.57093625198539,
+   "ns_median": 81.62450569633904,
+   "gbps": 50.21396330853449
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 16384,
+   "ns": 234.2604367704098,
+   "ns_median": 234.50468436732936,
+   "gbps": 69.93925319134176
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 65536,
+   "ns": 814.7697940279522,
+   "ns_median": 815.6290872323424,
+   "gbps": 80.43498971164813
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 262144,
+   "ns": 3069.595393120393,
+   "ns_median": 3071.7757985257986,
+   "gbps": 85.40018029331151
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 1048576,
+   "ns": 12203.903042295326,
+   "ns_median": 12272.52584714321,
+   "gbps": 85.92136436727888
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 16777216,
+   "ns": 201288.38709677418,
+   "ns_median": 202545.14516129033,
+   "gbps": 83.3491501520848
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 134217728,
+   "ns": 2465269.6315789474,
+   "ns_median": 2491001.5789473685,
+   "gbps": 54.44342731550897
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 1,
+   "ns": 25.237607866950725,
+   "ns_median": 25.269371371009505,
+   "gbps": 0.03962340667435145
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 8,
+   "ns": 37.51540903466986,
+   "ns_median": 37.56540430507051,
+   "gbps": 0.21324570905269355
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 64,
+   "ns": 52.16905029442349,
+   "ns_median": 52.2081866800989,
+   "gbps": 1.2267810059567281
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 256,
+   "ns": 41.603758246117906,
+   "ns_median": 41.851535969265356,
+   "gbps": 6.153290250500089
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 1024,
+   "ns": 47.431019100300304,
+   "ns_median": 47.50478456638028,
+   "gbps": 21.589247277917263
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 4096,
+   "ns": 83.27572588617545,
+   "ns_median": 83.33435358329457,
+   "gbps": 49.18600175996754
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 16384,
+   "ns": 232.03713494822946,
+   "ns_median": 232.2472534314148,
+   "gbps": 70.6093876036501
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 65536,
+   "ns": 804.4641294556685,
+   "ns_median": 805.2866909020718,
+   "gbps": 81.46540983044724
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 262144,
+   "ns": 3041.996287505325,
+   "ns_median": 3042.6791430831963,
+   "gbps": 86.17499011314658
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 1048576,
+   "ns": 12076.349033816425,
+   "ns_median": 12086.278743961353,
+   "gbps": 86.82889150220463
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 16777216,
+   "ns": 196456.38188976378,
+   "ns_median": 196636.76377952757,
+   "gbps": 85.39919059190494
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 134217728,
+   "ns": 2334378.0,
+   "ns_median": 2339243.3,
+   "gbps": 57.49614158461055
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.autosar",
+   "size": 64,
+   "ns": 24.880315945197406,
+   "ns_median": 24.889742234274916,
+   "gbps": 2.5723146016702323
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.autosar",
+   "size": 1048576,
+   "ns": 112335.32882882883,
+   "ns_median": 112785.85585585586,
+   "gbps": 9.334338635335012
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.bluetooth",
+   "size": 64,
+   "ns": 24.713387472934727,
+   "ns_median": 24.74789566427058,
+   "gbps": 2.589689498054067
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.bluetooth",
+   "size": 1048576,
+   "ns": 112347.5701357466,
+   "ns_median": 112545.59954751132,
+   "gbps": 9.33332157280334
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.cdma2000",
+   "size": 64,
+   "ns": 24.727966032805348,
+   "ns_median": 24.778149529411998,
+   "gbps": 2.5881627269745686
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.cdma2000",
+   "size": 1048576,
+   "ns": 112123.75225225225,
+   "ns_median": 112333.84009009009,
+   "gbps": 9.35195245375796
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.darc",
+   "size": 64,
+   "ns": 24.73216389690097,
+   "ns_median": 24.792196443114264,
+   "gbps": 2.5877234303796373
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.darc",
+   "size": 1048576,
+   "ns": 112324.99324324324,
+   "ns_median": 112378.76801801802,
+   "gbps": 9.33519753461526
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.dvb_s2",
+   "size": 64,
+   "ns": 24.745679285032978,
+   "ns_median": 24.830800019413378,
+   "gbps": 2.586310089240887
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.dvb_s2",
+   "size": 1048576,
+   "ns": 112345.55079006772,
+   "ns_median": 112786.53273137698,
+   "gbps": 9.33348933380905
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.gsm_a",
+   "size": 64,
+   "ns": 24.707766774741135,
+   "ns_median": 24.75489561509733,
+   "gbps": 2.5902786190060487
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.gsm_a",
+   "size": 1048576,
+   "ns": 112028.69662921349,
+   "ns_median": 112060.86966292135,
+   "gbps": 9.359887524805542
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.gsm_b",
+   "size": 64,
+   "ns": 24.861595428639962,
+   "ns_median": 24.870086525031795,
+   "gbps": 2.5742515271676223
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.gsm_b",
+   "size": 1048576,
+   "ns": 112039.46621621621,
+   "ns_median": 112113.3918918919,
+   "gbps": 9.358987822884082
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.i_432_1",
+   "size": 64,
+   "ns": 24.9212116423728,
+   "ns_median": 24.95077473040217,
+   "gbps": 2.56809343455768
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.i_432_1",
+   "size": 1048576,
+   "ns": 112633.59819413093,
+   "ns_median": 112719.53950338601,
+   "gbps": 9.309620014027384
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.i_code",
+   "size": 64,
+   "ns": 24.741928206206342,
+   "ns_median": 24.776872592692495,
+   "gbps": 2.5867021950191433
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.i_code",
+   "size": 1048576,
+   "ns": 111797.2404494382,
+   "ns_median": 111869.37752808988,
+   "gbps": 9.379265496935343
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.lte",
+   "size": 64,
+   "ns": 24.659112705695655,
+   "ns_median": 24.693469979153218,
+   "gbps": 2.5953894109587146
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.lte",
+   "size": 1048576,
+   "ns": 112032.65617977528,
+   "ns_median": 112383.0786516854,
+   "gbps": 9.359556719938722
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.maxim_dow",
+   "size": 64,
+   "ns": 24.653860484699095,
+   "ns_median": 24.762656861068805,
+   "gbps": 2.5959423287772827
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.maxim_dow",
+   "size": 1048576,
+   "ns": 112436.89616252821,
+   "ns_median": 112605.43792325056,
+   "gbps": 9.32590667110089
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.mifare_mad",
+   "size": 64,
+   "ns": 24.676047630461156,
+   "ns_median": 24.707048942547424,
+   "gbps": 2.593608221155956
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.mifare_mad",
+   "size": 1048576,
+   "ns": 111731.88116591929,
+   "ns_median": 111821.60538116592,
+   "gbps": 9.384752042641157
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.nrsc_5",
+   "size": 64,
+   "ns": 24.657802804942644,
+   "ns_median": 24.693646575625014,
+   "gbps": 2.5955272862824272
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.nrsc_5",
+   "size": 1048576,
+   "ns": 111803.52242152467,
+   "ns_median": 111890.50224215246,
+   "gbps": 9.378738498476196
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.opensafety",
+   "size": 64,
+   "ns": 24.688199849868475,
+   "ns_median": 24.7423914993336,
+   "gbps": 2.592331574970662
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.opensafety",
+   "size": 1048576,
+   "ns": 112474.12189616253,
+   "ns_median": 112833.2099322799,
+   "gbps": 9.322820061383169
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.rohc",
+   "size": 64,
+   "ns": 24.694736415800136,
+   "ns_median": 24.714852065102615,
+   "gbps": 2.5916453985332537
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.rohc",
+   "size": 1048576,
+   "ns": 112716.11990950226,
+   "ns_median": 112792.87556561086,
+   "gbps": 9.302804255876469
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.sae_j1850",
+   "size": 64,
+   "ns": 24.79723101778671,
+   "ns_median": 24.861999172247348,
+   "gbps": 2.5809333289710326
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.sae_j1850",
+   "size": 1048576,
+   "ns": 111750.07623318386,
+   "ns_median": 112912.88565022421,
+   "gbps": 9.383224024044365
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 64,
+   "ns": 24.709940208712446,
+   "ns_median": 24.740585038561047,
+   "gbps": 2.5900507835884734
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.smbus",
+   "size": 1048576,
+   "ns": 112760.41609195403,
+   "ns_median": 112844.32643678162,
+   "gbps": 9.299149793353953
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.tech_3250",
+   "size": 64,
+   "ns": 24.72321449772051,
+   "ns_median": 24.765120425188375,
+   "gbps": 2.588660143926706
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.tech_3250",
+   "size": 1048576,
+   "ns": 112282.02304147465,
+   "ns_median": 112447.84792626728,
+   "gbps": 9.338770104032395
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.wcdma",
+   "size": 64,
+   "ns": 24.708396477910945,
+   "ns_median": 24.83093197671213,
+   "gbps": 2.5902126047400666
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc8.wcdma",
+   "size": 1048576,
+   "ns": 112502.06787330317,
+   "ns_median": 112783.98868778281,
+   "gbps": 9.32050423447219
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.arc",
+   "size": 64,
+   "ns": 37.50218964732941,
+   "ns_median": 37.53257297448239,
+   "gbps": 1.7065670192022386
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.arc",
+   "size": 1048576,
+   "ns": 12065.18342621759,
+   "ns_median": 12070.68233583717,
+   "gbps": 86.90924646213409
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.cdma2000",
+   "size": 64,
+   "ns": 38.09332872424366,
+   "ns_median": 38.137566064890486,
+   "gbps": 1.6800842074814166
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.cdma2000",
+   "size": 1048576,
+   "ns": 12142.371532846715,
+   "ns_median": 12160.225790754257,
+   "gbps": 86.35677117632777
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.cms",
+   "size": 64,
+   "ns": 38.15004462828406,
+   "ns_median": 38.30654723179086,
+   "gbps": 1.6775865041203923
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.cms",
+   "size": 1048576,
+   "ns": 12211.99291473247,
+   "ns_median": 12225.786709015392,
+   "gbps": 85.86444549398688
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dds_110",
+   "size": 64,
+   "ns": 38.347343124249,
+   "ns_median": 38.3821144690233,
+   "gbps": 1.668955259628652
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dds_110",
+   "size": 1048576,
+   "ns": 12165.343978547051,
+   "ns_median": 12171.450268161872,
+   "gbps": 86.19369923687394
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dect_r",
+   "size": 64,
+   "ns": 37.739815825612716,
+   "ns_median": 37.80742087723575,
+   "gbps": 1.6958217362726344
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dect_r",
+   "size": 1048576,
+   "ns": 12182.949255916077,
+   "ns_median": 12197.871676018542,
+   "gbps": 86.06914286299012
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dect_x",
+   "size": 64,
+   "ns": 38.13621937130462,
+   "ns_median": 38.19421844308703,
+   "gbps": 1.6781946678268909
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dect_x",
+   "size": 1048576,
+   "ns": 12199.54347826087,
+   "ns_median": 12212.020029311187,
+   "gbps": 85.95206876950135
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dnp",
+   "size": 64,
+   "ns": 37.64445580524175,
+   "ns_median": 37.714866860001294,
+   "gbps": 1.70011755067232
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.dnp",
+   "size": 1048576,
+   "ns": 12047.106100795756,
+   "ns_median": 12067.951531227392,
+   "gbps": 87.03965842309114
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.en_13757",
+   "size": 64,
+   "ns": 39.33121048222424,
+   "ns_median": 39.44661046535912,
+   "gbps": 1.627206465687722
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.en_13757",
+   "size": 1048576,
+   "ns": 12161.199805305427,
+   "ns_median": 12174.964224872232,
+   "gbps": 86.2230714721544
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.genibus",
+   "size": 64,
+   "ns": 37.80828733775665,
+   "ns_median": 37.85570209584897,
+   "gbps": 1.6927505715416895
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.genibus",
+   "size": 1048576,
+   "ns": 12167.370622568093,
+   "ns_median": 12178.298881322957,
+   "gbps": 86.17934248300915
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.gsm",
+   "size": 64,
+   "ns": 39.13314803494512,
+   "ns_median": 39.183018517021736,
+   "gbps": 1.6354421561702441
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.gsm",
+   "size": 1048576,
+   "ns": 12157.346864365581,
+   "ns_median": 12174.31939718036,
+   "gbps": 86.25039753315609
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.ibm_3740",
+   "size": 64,
+   "ns": 38.21724859849114,
+   "ns_median": 38.25721521775879,
+   "gbps": 1.6746365148465134
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.ibm_3740",
+   "size": 1048576,
+   "ns": 12160.70726963287,
+   "ns_median": 12175.67152929735,
+   "gbps": 86.22656369818664
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.ibm_sdlc",
+   "size": 64,
+   "ns": 37.58932149561434,
+   "ns_median": 37.668432883266995,
+   "gbps": 1.7026112058837526
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.ibm_sdlc",
+   "size": 1048576,
+   "ns": 12086.685355244079,
+   "ns_median": 12102.784436926051,
+   "gbps": 86.75463695636388
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.iso_iec_14443_3_a",
+   "size": 64,
+   "ns": 37.446437208437345,
+   "ns_median": 37.51818121146086,
+   "gbps": 1.7091078556755106
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.iso_iec_14443_3_a",
+   "size": 1048576,
+   "ns": 12061.183112183353,
+   "ns_median": 12072.785524728588,
+   "gbps": 86.9380715181086
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.kermit",
+   "size": 64,
+   "ns": 37.7394727915514,
+   "ns_median": 37.923035406034934,
+   "gbps": 1.6958371504947851
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.kermit",
+   "size": 1048576,
+   "ns": 12102.955974842767,
+   "ns_median": 12118.639332365747,
+   "gbps": 86.63800828323036
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.lj1200",
+   "size": 64,
+   "ns": 38.031649910159516,
+   "ns_median": 38.18904677648694,
+   "gbps": 1.6828089275954203
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.lj1200",
+   "size": 1048576,
+   "ns": 12171.936,
+   "ns_median": 12201.947636363637,
+   "gbps": 86.14701884728937
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.maxim_dow",
+   "size": 64,
+   "ns": 37.65630739870484,
+   "ns_median": 37.69520670134004,
+   "gbps": 1.6995824715994652
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.maxim_dow",
+   "size": 1048576,
+   "ns": 12066.835305481767,
+   "ns_median": 12080.595025356195,
+   "gbps": 86.89734909397902
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.mcrf4xx",
+   "size": 64,
+   "ns": 37.447572753581845,
+   "ns_median": 37.46577456805787,
+   "gbps": 1.7090560293758539
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.mcrf4xx",
+   "size": 1048576,
+   "ns": 12037.824154589372,
+   "ns_median": 12064.76231884058,
+   "gbps": 87.10677166689086
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.modbus",
+   "size": 64,
+   "ns": 37.66594006722489,
+   "ns_median": 37.70143619550222,
+   "gbps": 1.699147821235179
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.modbus",
+   "size": 1048576,
+   "ns": 12064.725670127988,
+   "ns_median": 12350.145134025597,
+   "gbps": 86.91254394588123
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.nrsc_5",
+   "size": 64,
+   "ns": 37.69333692617097,
+   "ns_median": 37.72138906571335,
+   "gbps": 1.697912820118719
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.nrsc_5",
+   "size": 1048576,
+   "ns": 12068.577118030413,
+   "ns_median": 12077.164615013275,
+   "gbps": 86.88480752494269
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.opensafety_a",
+   "size": 64,
+   "ns": 38.18109479346547,
+   "ns_median": 38.225642220761955,
+   "gbps": 1.6762222337048682
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.opensafety_a",
+   "size": 1048576,
+   "ns": 12205.559814453125,
+   "ns_median": 12219.37548828125,
+   "gbps": 85.90970147541584
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.opensafety_b",
+   "size": 64,
+   "ns": 37.80335820584055,
+   "ns_median": 37.87987512397679,
+   "gbps": 1.6929712871411544
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.opensafety_b",
+   "size": 1048576,
+   "ns": 12210.193273214722,
+   "ns_median": 12221.841091883987,
+   "gbps": 85.87710092191924
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.profibus",
+   "size": 64,
+   "ns": 38.06511606572917,
+   "ns_median": 38.14975976515467,
+   "gbps": 1.6813294326881234
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.profibus",
+   "size": 1048576,
+   "ns": 12199.148427979528,
+   "ns_median": 12226.202534730684,
+   "gbps": 85.95485219238941
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.riello",
+   "size": 64,
+   "ns": 38.988795276123916,
+   "ns_median": 39.01371023436411,
+   "gbps": 1.6414972441888331
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.riello",
+   "size": 1048576,
+   "ns": 12135.321861366941,
+   "ns_median": 12152.346825012119,
+   "gbps": 86.40693769632631
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.spi_fujitsu",
+   "size": 64,
+   "ns": 38.2532910572757,
+   "ns_median": 38.51416781123735,
+   "gbps": 1.6730586632186597
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.spi_fujitsu",
+   "size": 1048576,
+   "ns": 12203.387570344996,
+   "ns_median": 12224.117200880843,
+   "gbps": 85.92499369176032
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.t10_dif",
+   "size": 64,
+   "ns": 39.02535781469163,
+   "ns_median": 39.10570642698203,
+   "gbps": 1.639959338845737
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.t10_dif",
+   "size": 1048576,
+   "ns": 12189.16447368421,
+   "ns_median": 12200.113791423002,
+   "gbps": 86.02525646969671
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.teledisk",
+   "size": 64,
+   "ns": 38.04995022839974,
+   "ns_median": 38.06041295160857,
+   "gbps": 1.6819995720318093
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.teledisk",
+   "size": 1048576,
+   "ns": 12182.035339995125,
+   "ns_median": 12188.118206190593,
+   "gbps": 86.07559990877678
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.tms37157",
+   "size": 64,
+   "ns": 37.65503954741648,
+   "ns_median": 37.70015435165129,
+   "gbps": 1.699639696816918
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.tms37157",
+   "size": 1048576,
+   "ns": 12077.350470673426,
+   "ns_median": 12110.605117064928,
+   "gbps": 86.82169177305758
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.umts",
+   "size": 64,
+   "ns": 38.18226875406999,
+   "ns_median": 38.20274666117753,
+   "gbps": 1.676170696199869
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.umts",
+   "size": 1048576,
+   "ns": 12202.236964504284,
+   "ns_median": 12218.346389228886,
+   "gbps": 85.93309596021261
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.usb",
+   "size": 64,
+   "ns": 37.46619930760878,
+   "ns_median": 37.514280944804206,
+   "gbps": 1.7082063615404572
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.usb",
+   "size": 1048576,
+   "ns": 12068.711352657005,
+   "ns_median": 12084.187681159421,
+   "gbps": 86.8838411459024
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 64,
+   "ns": 35.6114763230401,
+   "ns_median": 35.697881262304,
+   "gbps": 1.797173456653156
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.xmodem",
+   "size": 1048576,
+   "ns": 12178.290550414029,
+   "ns_median": 12207.37700925475,
+   "gbps": 86.10206791004434
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.ibm_refin",
+   "size": 64,
+   "ns": 44.99351720801259,
+   "ns_median": 46.436512507040625,
+   "gbps": 1.4224271399836836
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc16.ibm_refin",
+   "size": 1048576,
+   "ns": 12101.054976992007,
+   "ns_median": 12120.360620004843,
+   "gbps": 86.65161855670269
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.aixm",
+   "size": 64,
+   "ns": 40.8700945813925,
+   "ns_median": 41.02803260679333,
+   "gbps": 1.565937163970699
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.aixm",
+   "size": 1048576,
+   "ns": 12198.015617374329,
+   "ns_median": 12250.4121522694,
+   "gbps": 85.96283468488542
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.autosar",
+   "size": 64,
+   "ns": 40.121212510240255,
+   "ns_median": 40.16435035669382,
+   "gbps": 1.5951661476747516
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.autosar",
+   "size": 1048576,
+   "ns": 12135.195092322643,
+   "ns_median": 12155.425655976676,
+   "gbps": 86.40784033734933
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.base91_d",
+   "size": 64,
+   "ns": 37.21718612237536,
+   "ns_median": 37.25983169828814,
+   "gbps": 1.7196356486908755
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.base91_d",
+   "size": 1048576,
+   "ns": 12115.637024472982,
+   "ns_median": 12125.70947419433,
+   "gbps": 86.54732705196837
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 64,
+   "ns": 40.62909873904976,
+   "ns_median": 40.70616711312272,
+   "gbps": 1.575225687654445
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.bzip2",
+   "size": 1048576,
+   "ns": 12209.51808406647,
+   "ns_median": 12228.672287390029,
+   "gbps": 85.8818499452817
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.cd_rom_edc",
+   "size": 64,
+   "ns": 39.90188505042082,
+   "ns_median": 39.916905073390936,
+   "gbps": 1.6039342481972547
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.cd_rom_edc",
+   "size": 1048576,
+   "ns": 12095.038983050847,
+   "ns_median": 12106.821791767554,
+   "gbps": 86.6947185097462
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.cksum",
+   "size": 64,
+   "ns": 40.74709964849178,
+   "ns_median": 40.84548107577863,
+   "gbps": 1.5706639380986935
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.cksum",
+   "size": 1048576,
+   "ns": 12244.89152791381,
+   "ns_median": 12249.55999020568,
+   "gbps": 85.63375164325758
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 64,
+   "ns": 26.503122157295056,
+   "ns_median": 26.564572167423126,
+   "gbps": 2.4148098333533063
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iscsi",
+   "size": 1048576,
+   "ns": 12019.201828241521,
+   "ns_median": 12030.0644695694,
+   "gbps": 87.24173326852377
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 64,
+   "ns": 38.792345218033795,
+   "ns_median": 38.854112718579586,
+   "gbps": 1.6498100241242353
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.iso_hdlc",
+   "size": 1048576,
+   "ns": 12108.708363636364,
+   "ns_median": 12111.749333333333,
+   "gbps": 86.59684984642757
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.jamcrc",
+   "size": 64,
+   "ns": 40.206147116547534,
+   "ns_median": 40.37826750643141,
+   "gbps": 1.5917963940807374
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.jamcrc",
+   "size": 1048576,
+   "ns": 12069.874124184586,
+   "ns_median": 12074.129499879198,
+   "gbps": 86.87547104563028
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.mpeg_2",
+   "size": 64,
+   "ns": 41.18020108723071,
+   "ns_median": 41.30079057038673,
+   "gbps": 1.554144912124903
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.mpeg_2",
+   "size": 1048576,
+   "ns": 12241.268197361993,
+   "ns_median": 12263.94968246214,
+   "gbps": 85.6590986402838
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.xfer",
+   "size": 64,
+   "ns": 40.995944038729796,
+   "ns_median": 41.061853614507264,
+   "gbps": 1.5611300459269275
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.xfer",
+   "size": 1048576,
+   "ns": 12244.562837506137,
+   "ns_median": 12290.150957290132,
+   "gbps": 85.63605037724356
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.k_reversed_reciprocal_refin",
+   "size": 64,
+   "ns": 46.15119976925381,
+   "ns_median": 46.34318873485266,
+   "gbps": 1.386746180380714
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc32.k_reversed_reciprocal_refin",
+   "size": 1048576,
+   "ns": 12128.937788578372,
+   "ns_median": 12152.017010935602,
+   "gbps": 86.4524180334594
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.ecma_182",
+   "size": 64,
+   "ns": 47.4007083295292,
+   "ns_median": 47.445359338385224,
+   "gbps": 1.3501907936706916
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.ecma_182",
+   "size": 1048576,
+   "ns": 12179.087962962964,
+   "ns_median": 12196.157894736842,
+   "gbps": 86.09643047071806
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.go_iso",
+   "size": 64,
+   "ns": 50.315753559876285,
+   "ns_median": 50.3447337116361,
+   "gbps": 1.2719674350864947
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.go_iso",
+   "size": 1048576,
+   "ns": 12061.310585965759,
+   "ns_median": 12071.735471425127,
+   "gbps": 86.9371526855545
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.tms570_iso",
+   "size": 64,
+   "ns": 52.041469956746376,
+   "ns_median": 52.40975778388183,
+   "gbps": 1.2297884754829718
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.tms570_iso",
+   "size": 1048576,
+   "ns": 12154.48164356917,
+   "ns_median": 12191.165086311694,
+   "gbps": 86.27072965754918
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.we",
+   "size": 64,
+   "ns": 47.411275049797794,
+   "ns_median": 47.513215277358604,
+   "gbps": 1.3498898718243384
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.we",
+   "size": 1048576,
+   "ns": 12172.819970845481,
+   "ns_median": 12191.62657920311,
+   "gbps": 86.14076298765549
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 64,
+   "ns": 50.263651398620325,
+   "ns_median": 50.37482289318224,
+   "gbps": 1.273285927686438
+  },
+  {
+   "library": "fastcrc 0.4.0",
+   "algorithm": "crc64.xz",
+   "size": 1048576,
+   "ns": 12077.421637285679,
+   "ns_median": 12084.873702004346,
+   "gbps": 86.82118017332552
+  }
+ ],
+ "threads": {
+  "algorithm": "crc32.iscsi",
+  "size": 1048576,
+  "rows": [
+   {
+    "threads": 1,
+    "gbps": 85.554902167412
+   },
+   {
+    "threads": 2,
+    "gbps": 163.0360732713086
+   },
+   {
+    "threads": 4,
+    "gbps": 310.06635038115155
+   },
+   {
+    "threads": 8,
+    "gbps": 525.3397832214497
+   }
+  ]
+ }
+}
