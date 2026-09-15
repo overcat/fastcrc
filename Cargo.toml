@@ -16,7 +16,7 @@ name = "fastcrc"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.26.0"
+pyo3 = "0.29.2"
 crc-fast = { version = "1.10.0", default-features = false, features = ["std"] }
 
 [profile.release]
