@@ -7,15 +7,11 @@ version: 2
 
 # Set the version of Python and other tools you might need
 build:
-  os: ubuntu-22.04
+  os: ubuntu-24.04
   tools:
-    python: "3.12"
-    rust: "1.70"
-  jobs:
-    pre_install:
-      - pip install maturin
-      - maturin build --release
-      - pip install target/wheels/fastcrc*.whl
+    python: "3.13"
+    # The Rust extension needs rustc 1.89 or newer (see rust-version in Cargo.toml).
+    rust: "1.96"
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
@@ -23,10 +19,11 @@ sphinx:
   builder: html
   fail_on_warning: false
 
-# We recommend specifying your dependencies to enable reproducible builds:
-# https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+# Build the extension with maturin through pip, then install the docs tooling.
 python:
   install:
+    - method: pip
+      path: .
     - requirements: docs/requirements.txt
 
 # Build PDF & ePub
