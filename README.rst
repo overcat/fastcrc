@@ -2,16 +2,20 @@
 fastcrc
 =======
 
+.. image:: https://img.shields.io/github/actions/workflow/status/overcat/fastcrc/ci.yml?branch=main
+    :alt: GitHub Workflow Status
+    :target: https://github.com/overcat/fastcrc/actions
+
 .. image:: https://img.shields.io/readthedocs/fastcrc.svg?style=flat&maxAge=1800
     :alt: Read the Docs
     :target: https://fastcrc.readthedocs.io/
 
-.. image:: https://img.shields.io/pypi/v/fastcrc.svg?style=flat&maxAge=1800
-    :alt: PyPI
+.. image:: https://static.pepy.tech/personalized-badge/fastcrc?period=total&units=abbreviation&left_color=grey&right_color=brightgreen&left_text=Downloads
+    :alt: PyPI - Downloads
     :target: https://pypi.python.org/pypi/fastcrc
 
-.. image:: https://img.shields.io/badge/python-%3E%3D3.7-blue?style=flat
-    :alt: Python - Version
+.. image:: https://img.shields.io/pypi/v/fastcrc.svg?style=flat&maxAge=1800
+    :alt: PyPI
     :target: https://pypi.python.org/pypi/fastcrc
 
 A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum.
@@ -20,9 +24,15 @@ A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum.
 Installation
 ============
 
+fastcrc needs Python 3.7 or newer. Prebuilt wheels are available for recent CPython versions on
+Linux, macOS and Windows, so on most machines this is all it takes:
+
 .. code-block:: text
 
    pip install fastcrc
+
+If pip can't find a wheel for your interpreter it falls back to building from source, which
+needs a Rust toolchain (1.89 or newer).
 
 Usage
 =====
