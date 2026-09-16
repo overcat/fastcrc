@@ -4,8 +4,8 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
-Unreleased
-----------
+0.5.0 (September 16, 2026)
+--------------------------
 * feat: support Python 3.15 and its free-threaded build, with wheels for both.
 * breaking: Python 3.7, the free-threaded build of 3.13 (3.13t) and PyPy 3.9/3.10 are no longer supported: the 3.7 drop was announced in 0.4.0, and PyO3 0.29 requires CPython 3.8+, free-threaded 3.14t+ and PyPy 3.11+. ``requires-python`` is now ``>=3.8`` and no wheels are built for those interpreters.
 * feat: wheels are built for every supported interpreter each platform has; Windows on ARM64 is new.
