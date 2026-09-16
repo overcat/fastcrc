@@ -24,7 +24,7 @@ A hyper-fast Python module for computing CRC(8, 16, 32, 64) checksum.
 Installation
 ============
 
-fastcrc needs Python 3.9 or newer. Prebuilt wheels are available for recent CPython versions on
+fastcrc needs Python 3.8 or newer. Prebuilt wheels are available for recent CPython versions on
 Linux, macOS and Windows, so on most machines this is all it takes:
 
 .. code-block:: text

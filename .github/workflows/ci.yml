@@ -48,7 +48,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.platform.target }}
-          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
+          args: --release --out dist --interpreter 3.8 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
           sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
           manylinux: auto
       - name: Upload wheels
@@ -79,7 +79,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.platform.target }}
-          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
+          args: --release --out dist --interpreter 3.8 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
           sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
           manylinux: musllinux_1_2
       - name: Upload wheels
@@ -96,11 +96,11 @@ jobs:
           - runner: windows-latest
             target: x64
             python_arch: x64
-            interpreters: 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
+            interpreters: 3.8 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
           - runner: windows-latest
             target: x86
             python_arch: x86
-            interpreters: 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t
+            interpreters: 3.8 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t
           - runner: windows-11-arm
             target: aarch64
             python_arch: arm64
@@ -141,7 +141,7 @@ jobs:
         uses: PyO3/maturin-action@v1
         with:
           target: ${{ matrix.platform.target }}
-          args: --release --out dist --interpreter 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
+          args: --release --out dist --interpreter 3.8 3.9 3.10 3.11 3.12 3.13 3.14 3.14t 3.15 3.15t pypy3.11
           sccache: ${{ !startsWith(github.ref, 'refs/tags/') }}
       - name: Upload wheels
         uses: actions/upload-artifact@v7
@@ -171,7 +171,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.14t", "3.15", "3.15t", "pypy3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.14t", "3.15", "3.15t", "pypy3.11"]
     steps:
       - uses: actions/checkout@v7
       - name: Set up Python
