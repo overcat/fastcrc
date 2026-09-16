@@ -11,6 +11,7 @@ Unreleased
 * feat: wheels are built for every supported interpreter each platform has; Windows on ARM64 is new.
 * chore: upgrade PyO3 from 0.26 to 0.29.2 and refresh the Rust dependency lock file.
 * note: the ``TypeError`` raised for an invalid ``initial`` no longer carries the ``argument 'initial':`` prefix, following PyO3's new error reporting; on Python 3.11 and newer the exception carries a note naming the argument instead. The exception type is unchanged.
+* deprecation: this is the last release series to support Python 3.8, which the next PyO3 release drops (`PyO3/pyo3#6128 <https://github.com/PyO3/pyo3/pull/6128>`_); fastcrc will follow when it upgrades.
 
 0.4.1 (September 15, 2026)
 --------------------------
