@@ -73,9 +73,9 @@ Single-threaded throughput on an AMD Ryzen 7 9700X (Zen 5) with CPython 3.14, in
 ===========  ============  ==============  ============  ==========  ==========
 Input        crc32.iscsi   crc32.iso_hdlc  crc16.xmodem  crc64.xz    crc8.smbus
 ===========  ============  ==============  ============  ==========  ==========
-64 B         2.4           1.6             1.8           1.3         2.6
-1 KiB        23.6          24.2            23.6          21.6        8.3
-1 MiB        87.2          86.6            86.1          86.8        9.3
+64 B         2.3           1.5             1.5           1.3         2.4
+1 KiB        21.5          21.5            22.8          20.9        8.2
+1 MiB        86.8          87.0            86.4          86.6        9.4
 ===========  ============  ==============  ============  ==========  ==========
 
 Full tables for every algorithm, per-call latencies, multi-threaded scaling and the harness
