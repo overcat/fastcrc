@@ -4,6 +4,11 @@ Change Log
 
 This document records all notable changes to `fastcrc <https://github.com/overcat/fastcrc/>`_.
 
+Unreleased
+----------
+* breaking: Python 3.8 is no longer supported, as announced in 0.5.0: PyO3 0.30 requires CPython 3.9+ (`PyO3/pyo3#6128 <https://github.com/PyO3/pyo3/pull/6128>`_). ``requires-python`` is now ``>=3.9`` and no wheels are built for 3.8.
+* chore: upgrade PyO3 from 0.29.2 to 0.30.1 and refresh the Rust dependency lock file.
+
 0.5.0 (September 16, 2026)
 --------------------------
 * feat: support Python 3.15 and its free-threaded build, with wheels for both.
