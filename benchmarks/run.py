@@ -18,6 +18,10 @@ The iteration count is chosen so that one sample lasts at least
 fastest one is reported (the usual choice for microbenchmarks, since noise
 only ever makes a sample slower). The garbage collector is disabled while
 timing. Throughput is bytes / best time, using 1 GB = 10**9 bytes.
+
+Besides the plain `fn(data)` call on `bytes`, a few functions are also
+measured with a starting value (`fn(data, 0)`) and with the payload held in a
+`bytearray` and a `memoryview`, which take the buffer-protocol path.
 """
 
 import argparse
@@ -38,26 +42,61 @@ SAMPLE_SECONDS = 0.05
 REPEATS = 7
 KIB, MIB = 1024, 1024 * 1024
 
-# Algorithms profiled across all input sizes: one per width plus the three
-# CRC-32 code paths (hardware-assisted ISCSI, reflected and forward generic).
-PROFILE = ["crc8.smbus", "crc16.xmodem", "crc32.iscsi", "crc32.iso_hdlc", "crc32.bzip2", "crc64.xz"]
-PROFILE_SIZES = [1, 8, 64, 256, KIB, 4 * KIB, 16 * KIB, 64 * KIB, 256 * KIB, MIB, 16 * MIB, 128 * MIB]
+# Algorithms profiled across all input sizes: one per width, the three CRC-32
+# code paths (hardware-assisted ISCSI, reflected and forward generic),
+# CRC-32/JAMCRC, which differs from ISO-HDLC only in xorout, and one variant
+# outside crc-fast's catalogue, computed from custom parameters.
+PROFILE = ["crc8.smbus", "crc16.xmodem", "crc32.iscsi", "crc32.iso_hdlc", "crc32.jamcrc", "crc32.bzip2", "crc64.xz",
+           "crc64.tms570_iso"]
+# Up to 256 B the sizes come in pairs around the lengths where fastcrc or
+# crc-fast change code path (8, 16, 128, 256): one byte short of such a length
+# is the longest tail the previous path has to handle, so it is the worst case
+# that a profile of round sizes alone would never show. 12 B sits inside the
+# 8-15 B range, for tuning the lookup-table threshold.
+PROFILE_SIZES = [1, 7, 8, 12, 15, 16, 64, 127, 128, 255, 256,
+                 KIB, 4 * KIB, 16 * KIB, 64 * KIB, 256 * KIB, MIB, 16 * MIB, 128 * MIB]
 # Every algorithm is measured at these two sizes.
 SMALL, LARGE = 64, MIB
+# Other ways of making the same call, measured for these functions and sizes
+# (subsets of PROFILE and PROFILE_SIZES): "initial" passes a starting value,
+# the other two pass the payload as that type instead of `bytes`.
+VARIANTS = ["initial", "bytearray", "memoryview"]
+VARIANT_ALGORITHMS = ["crc16.xmodem", "crc32.iso_hdlc", "crc64.xz"]
+VARIANT_SIZES = [1, 7, 8, 12, 15, 16, 64, 128, KIB]
 THREAD_COUNTS = [1, 2, 4, 8]
 
 
 # --------------------------------------------------------------------------- timing
 
-def time_call(fn, data, repeats=REPEATS, sample_seconds=SAMPLE_SECONDS):
-    """Best and median time per call in nanoseconds."""
+# The timed loops are functions of their own so that `fn` and its arguments are
+# fast locals in both, and the two kinds of call carry the same loop overhead.
+
+def _loop(fn, data, iterations):
+    start = time.perf_counter_ns()
+    for _ in range(iterations):
+        fn(data)
+    return time.perf_counter_ns() - start
+
+
+def _loop_initial(fn, data, initial, iterations):
+    start = time.perf_counter_ns()
+    for _ in range(iterations):
+        fn(data, initial)
+    return time.perf_counter_ns() - start
+
+
+def time_call(fn, data, initial=None, repeats=REPEATS, sample_seconds=SAMPLE_SECONDS):
+    """Best and median time per call of `fn(data)`, or of `fn(data, initial)`, in nanoseconds."""
+    if initial is None:
+        def sample(iterations):
+            return _loop(fn, data, iterations)
+    else:
+        def sample(iterations):
+            return _loop_initial(fn, data, initial, iterations)
     iterations = 1
-    fn(data)
+    sample(1)
     while True:  # warm up and calibrate the iteration count
-        start = time.perf_counter_ns()
-        for _ in range(iterations):
-            fn(data)
-        elapsed = time.perf_counter_ns() - start
+        elapsed = sample(iterations)
         if elapsed >= sample_seconds * 1e9 / 4:
             break
         iterations *= 4
@@ -67,10 +106,7 @@ def time_call(fn, data, repeats=REPEATS, sample_seconds=SAMPLE_SECONDS):
     gc.disable()
     try:
         for _ in range(repeats):
-            start = time.perf_counter_ns()
-            for _ in range(iterations):
-                fn(data)
-            samples.append((time.perf_counter_ns() - start) / iterations)
+            samples.append(sample(iterations) / iterations)
     finally:
         if gc_enabled:
             gc.enable()
@@ -82,6 +118,20 @@ def payloads(sizes):
 
 
 # --------------------------------------------------------------------------- environment
+
+def darwin_cpu_flags():
+    """CPU features reported by sysctl, spelled the way Linux does in /proc/cpuinfo."""
+    out = subprocess.run(["sysctl", "hw.optional", "machdep.cpu"], capture_output=True, text=True).stdout
+    flags = set()
+    for line in out.splitlines():
+        key, _, value = line.partition(":")
+        value = value.strip()
+        if key.startswith("hw.optional.arm.FEAT_") and value == "1":  # Apple silicon
+            flags.add(key.rpartition("FEAT_")[2].lower())
+        elif key in ("machdep.cpu.features", "machdep.cpu.leaf7_features"):  # Intel
+            flags.update(value.lower().replace(".", "_").split())
+    return sorted(flags)
+
 
 def cpu_info():
     info = {"model": platform.processor() or platform.machine(), "flags": []}
@@ -102,6 +152,7 @@ def cpu_info():
             out = subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True)
             if out.returncode == 0:
                 info["model"] = out.stdout.strip()
+            info["flags"] = darwin_cpu_flags()
     except OSError:
         pass
     interesting = ["sse4_2", "pclmulqdq", "avx2", "avx512f", "avx512vl", "vpclmulqdq", "aes", "pmull", "sha3", "crc32"]
@@ -136,24 +187,29 @@ def fastcrc_functions():
             yield f"{module}.{name}", getattr(mod, name)
 
 
-def thread_scaling(fn, data, counts):
+def thread_scaling(fn, data, counts, repeats=REPEATS):
     """Aggregate throughput in GB/s when `n` threads each hash `data` repeatedly."""
     rows = []
     for n in counts:
-        calls = max(20, int(2e9 / len(data) / n))  # ~2 GB of work per thread
+        calls = max(20, int(2e9 / len(data) / n))  # ~2 GB of work in total
 
         def work():
             for _ in range(calls):
                 fn(data)
 
-        threads = [threading.Thread(target=work) for _ in range(n)]
-        start = time.perf_counter_ns()
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join()
-        elapsed = (time.perf_counter_ns() - start) / 1e9
-        rows.append({"threads": n, "gbps": n * calls * len(data) / elapsed / 1e9})
+        # A run lasts a few milliseconds, so where the scheduler happens to put
+        # the threads (two of them on one physical core, say) decides the
+        # figure. As for the latencies, the fastest run is the one reported.
+        best = float("inf")
+        for _ in range(repeats):
+            threads = [threading.Thread(target=work) for _ in range(n)]
+            start = time.perf_counter_ns()
+            for t in threads:
+                t.start()
+            for t in threads:
+                t.join()
+            best = min(best, (time.perf_counter_ns() - start) / 1e9)
+        rows.append({"threads": n, "gbps": n * calls * len(data) / best / 1e9})
     return rows
 
 
@@ -169,21 +225,39 @@ def run(args):
     data = payloads(profile_sizes + [SMALL, LARGE])
     measurements = []
 
-    def record(library, algorithm, size, fn):
-        best, median = time_call(fn, data[size], repeats=repeats)
-        measurements.append({"library": library, "algorithm": algorithm, "size": size,
-                             "ns": best, "ns_median": median, "gbps": size / best})
+    def record(library, algorithm, size, fn, variant=None):
+        payload = data[size]
+        if variant == "bytearray":
+            payload = bytearray(payload)
+        elif variant == "memoryview":
+            payload = memoryview(payload)
+        best, median = time_call(fn, payload, initial=0 if variant == "initial" else None, repeats=repeats)
+        measurement = {"library": library, "algorithm": algorithm, "size": size,
+                       "ns": best, "ns_median": median, "gbps": size / best}
+        if variant:
+            measurement["variant"] = variant
+        measurements.append(measurement)
 
     functions = dict(fastcrc_functions())
     for name in PROFILE:
         print(f"profile {name}", file=sys.stderr)
         for size in profile_sizes:
             record(label, name, size, functions[name])
+            # Right after the plain call they are compared with, so that a
+            # drift in machine state does not come between the two.
+            if name in VARIANT_ALGORITHMS and size in VARIANT_SIZES:
+                for variant in VARIANTS:
+                    record(label, name, size, functions[name], variant)
+    profiled = {(m["algorithm"], m["size"]) for m in measurements}
     for name, fn in functions.items():
         print(f"all {name}", file=sys.stderr)
         for size in (SMALL, LARGE):
-            record(label, name, size, fn)
-    threads = thread_scaling(functions["crc32.iscsi"], data[MIB], THREAD_COUNTS[:2] if quick else THREAD_COUNTS)
+            # A second figure would replace the profiled one in the report and
+            # separate it from the variants measured next to it.
+            if (name, size) not in profiled:
+                record(label, name, size, fn)
+    threads = thread_scaling(functions["crc32.iscsi"], data[MIB], THREAD_COUNTS[:2] if quick else THREAD_COUNTS,
+                             repeats=repeats)
 
     result = {"environment": env, "label": label, "measurements": measurements,
               "threads": {"algorithm": "crc32.iscsi", "size": MIB, "rows": threads}}
@@ -233,9 +307,9 @@ def render(results):
     by_key = {}
     for r in results:
         for m in r["measurements"]:
-            by_key[(m["library"], m["algorithm"], m["size"])] = m
-    def get(lib, alg, size):
-        return by_key.get((lib, alg, size))
+            by_key[(m["library"], m["algorithm"], m["size"], m.get("variant"))] = m
+    def get(lib, alg, size, variant=None):
+        return by_key.get((lib, alg, size, variant))
 
     out = ["# fastcrc benchmarks", ""]
     out += ["Generated by `benchmarks/run.py`; raw measurements are in `benchmarks/results/`.", ""]
@@ -258,14 +332,31 @@ def render(results):
     # --- profile tables
     new = labels[-1]
     sizes = sorted({m["size"] for r in results for m in r["measurements"] if m["library"] == new and m["algorithm"] in PROFILE})
+    # Every algorithm has figures at SMALL and LARGE; only those measured at
+    # other sizes too were profiled when the results were recorded.
+    profile = [a for a in PROFILE if any(get(new, a, s) for s in sizes if s not in (SMALL, LARGE))]
     out += [f"## {new}: latency and throughput by input size", ""]
-    hdr = ["Input"] + PROFILE
-    out += ["Per-call latency:", "", table(hdr, [[fmt_size(s)] + [fmt_ns(get(new, a, s)["ns"]) if get(new, a, s) else "" for a in PROFILE] for s in sizes]), ""]
-    out += ["Throughput (GB/s):", "", table(hdr, [[fmt_size(s)] + [fmt_gbps(get(new, a, s)["gbps"]) if get(new, a, s) else "" for a in PROFILE] for s in sizes]), ""]
+    hdr = ["Input"] + profile
+    out += ["Per-call latency:", "", table(hdr, [[fmt_size(s)] + [fmt_ns(get(new, a, s)["ns"]) if get(new, a, s) else "" for a in profile] for s in sizes]), ""]
+    out += ["Throughput (GB/s):", "", table(hdr, [[fmt_size(s)] + [fmt_gbps(get(new, a, s)["gbps"]) if get(new, a, s) else "" for a in profile] for s in sizes]), ""]
     if len(labels) > 1:
         old = labels[0]
         out += [f"Speed-up of {new} over {old} (ratio of per-call times):", "",
-                table(hdr, [[fmt_size(s)] + [f"{get(old, a, s)['ns'] / get(new, a, s)['ns']:.1f}×" if get(old, a, s) and get(new, a, s) else "" for a in PROFILE] for s in sizes]), ""]
+                table(hdr, [[fmt_size(s)] + [f"{get(old, a, s)['ns'] / get(new, a, s)['ns']:.1f}×" if get(old, a, s) and get(new, a, s) else "" for a in profile] for s in sizes]), ""]
+
+    # --- call variants
+    measured = {(alg, size) for lib, alg, size, variant in by_key if lib == new and variant}
+    if measured:
+        out += [f"## {new}: starting value and buffer type", "",
+                "Per-call latency of the same call made in other ways. `initial` passes a starting value, as in "
+                "`fn(data, 0)`; `bytearray` and `memoryview` pass the payload as that type, which goes through the "
+                "buffer protocol. The `bytes` column repeats the figure from the table above.", ""]
+        hdr = ["Input", "bytes"] + VARIANTS
+        for a in VARIANT_ALGORITHMS:
+            rows = [[fmt_size(s)] + [fmt_ns(get(new, a, s, v)["ns"]) if get(new, a, s, v) else "" for v in [None] + VARIANTS]
+                    for s in sorted(size for alg, size in measured if alg == a)]
+            if rows:
+                out += [f"### {a}", "", table(hdr, rows), ""]
 
     # --- every algorithm
     out += [f"## Every algorithm at {fmt_size(SMALL)} and {fmt_size(LARGE)}", ""]
